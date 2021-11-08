@@ -1,21 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NativeBaseProvider } from 'native-base';
+import {NavigationContainer} from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LandingStack from './stacks/Landing';
+import { LogBox, StatusBar } from 'react-native';
+import UserProvider from './components/contexts/UserProvider';
 
-export default function App() {
+const Stack = createNativeStackNavigator();
+
+const App = () => {
+
+  LogBox.ignoreAllLogs();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <UserProvider>
+      <StatusBar barStyle='light-content' />
+      <NavigationContainer>
+        <NativeBaseProvider>
+          <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName="Landing">
+            <Stack.Screen
+              name="Landing"
+              component={LandingStack}
+            />
+          </Stack.Navigator>
+        </NativeBaseProvider>
+      </NavigationContainer>
+    </UserProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;

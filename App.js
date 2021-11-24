@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LandingStack from './stacks/Landing';
 import { LogBox, StatusBar } from 'react-native';
 import UserProvider from './components/contexts/UserProvider';
+import MainTabNavigator from './stacks/Main';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,10 @@ const App = () => {
             <Stack.Screen
               name="Landing"
               component={LandingStack}
+            />
+            <Stack.Screen
+              name="Home"
+              component={MainTabNavigator}
             />
           </Stack.Navigator>
         </NativeBaseProvider>

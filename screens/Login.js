@@ -13,7 +13,7 @@ const Login = ({navigation}) => {
     })
 
     const login = () => {
-        
+        navigation.navigate('Home')
     }
 
     return(

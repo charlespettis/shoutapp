@@ -1,23 +1,29 @@
 import React from 'react';
-import {View, Text, Animated, TouchableOpacity, Dimensions} from 'react-native';
+import { Animated, Dimensions, StyleSheet} from 'react-native';
 import { Audio } from 'expo-av';
 import Visualizer from './Visualizer';
 import Timer from './Timer';
+import Player from '../player';
+import TouchableIcon from '../common/TouchableIcon';
+import RecordButton from './RecordButton';
+import PropTypes from 'prop-types';
 
 const Recorder = () => {
 
     const borderRadiusAnim = React.useRef(new Animated.Value(50)).current;
-    const size = React.useRef(new Animated.Value(47)).current;
+    const size = React.useRef(new Animated.Value(45)).current;
     const containerHeight = React.useRef(new Animated.Value(75)).current
 
     const [isRecording, setIsRecording] = React.useState(false);
     const [recording, setRecording] = React.useState();
+    const [recordingPath, setRecordingPath] = React.useState();
     const [barValues, setBarValues] = React.useState([]);
     const [soundEffect, setSoundEffect] = React.useState();
     const [durationMillis, setDurationMillis] = React.useState();
 
     const screenWidth = Dimensions.get('screen').width;
-    const handleRecording = () => {
+
+    const toggleRecording = () => {
         if(!isRecording){
             setIsRecording(!isRecording);
             animateStart();
@@ -32,8 +38,7 @@ const Recorder = () => {
     const startRecording = async () => {
 
         playSoundEffect()
-        .then(async () => {
-            setTimeout(()=>{return},1500)
+        setTimeout(async ()=>{
             await Audio.requestPermissionsAsync();
             await Audio.setAudioModeAsync({
             allowsRecordingIOS: true,
@@ -43,38 +48,33 @@ const Recorder = () => {
             const { recording } = await Audio.Recording.createAsync(
                 Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
             );
-            recording.setProgressUpdateInterval(40)
+            recording.setProgressUpdateInterval(50)
             recording.setOnRecordingStatusUpdate(e => {
-                const rawMeterValue = e.metering;
-                const oldMin = -60;
-                const oldMax = 0;
-                const newMin = 0;
-                const newMax = 50;
-                const newValue = ((rawMeterValue - oldMin) / (oldMax - oldMin)) * (newMax - newMin) + newMin;
+                const newValue = interpolateMeterValue(e.metering)
                 setBarValues(prevState => [ newValue, ...prevState] );
                 setDurationMillis(e.durationMillis);
-                console.log(barValues.length);
-                if( barValues.length > (screenWidth / 4) ){
+                if( barValues.length > (screenWidth / 5) ){
                     console.log('heehee');
                     setBarValues(prevState => {
                         const newData = prevState.slice(0,prevState.length - 1);
                         return newData
                     })
                 }
-
+    
             })
             setRecording(recording);
+    
+        },350)
 
-        })
     }
 
     const stopRecording = async () => {
         setRecording(undefined);
-        setBarValues([])
+        setBarValues([]);
         playSoundEffect();
         await recording.stopAndUnloadAsync();
         const uri = recording.getURI();
-        console.log('Recording stopped and stored at', uri);
+        setRecordingPath(uri);
     }
 
     const animateStart = () => {
@@ -98,7 +98,7 @@ const Recorder = () => {
             duration:300
         }).start()
         Animated.timing(size, {
-            toValue:47,
+            toValue:45,
             duration:300
         }).start()
         Animated.timing(containerHeight, {
@@ -113,52 +113,92 @@ const Recorder = () => {
             const { sound } = await Audio.Sound.createAsync(
                 require('../../assets/sounds/beep_down.wav')
             );
-    
             setSoundEffect(sound);
-            
             return sound.playAsync();    
-
         } else {
             const { sound } = await Audio.Sound.createAsync(
                 require('../../assets/sounds/beep_up.wav')
             );
-    
             setSoundEffect(sound);
-            
             return sound.playAsync();    
         }
     }
 
+    const interpolateMeterValue = rawMeterValue => {
+        const oldMin = -60;
+        const oldMax = 0;
+        const newMin = 0;
+        const newMax = 50;
+        return ((rawMeterValue - oldMin) / (oldMax - oldMin)) * (newMax - newMin) + newMin;
+    }
+
+    const resetRecording = () => {
+        setRecordingPath(null);
+    }
+
     return(
-        <Animated.View style={{borderTopLeftRadius:10,borderTopRightRadius:10,alignItems:'center',height:containerHeight,width:'100%',backgroundColor:'#444B49', flexDirection:'column',justifyContent:'space-evenly'}}>
-            
+        <Animated.View style={[styles.container, {height:containerHeight}]}>
             {
-            isRecording && 
-            <>
-
-            <Visualizer 
-            barValues={barValues} />
-            
-            <Timer 
-            duration = {durationMillis} />
-
-            </>
+            !recordingPath ? 
+                <>
+                    {
+                    isRecording && 
+                    <>
+                        <Visualizer 
+                        barValues={barValues}
+                        />
+                        <Timer 
+                        duration = {durationMillis}
+                        />
+                    </>
+                    }
+                    <RecordButton
+                    size={size}
+                    borderRadiusAnim={borderRadiusAnim}
+                    onPress={toggleRecording}
+                    />
+                </>
+            :
+            <Player 
+                leftIcon={
+                    <TouchableIcon
+                        onPress={resetRecording}
+                        name="trash-outline"
+                        color="#FF4747"
+                        size={24}
+                    />
+                }
+                rightIcon={
+                    <TouchableIcon
+                        name='checkmark'
+                        color='lightgreen'
+                        size={24}
+                    />
+                }
+                recording={recordingPath}
+            />
             }
-
-            <View style={{width:60,height:60,backgroundColor:'transparent',marginTop:'auto',borderWidth:3,borderColor:'gray',borderRadius:50,alignItems:'center',justifyContent:'center'}}>
-                <TouchableOpacity onPress={handleRecording} style={{width:'100%',height:'100%',alignItems:'center',justifyContent:'center'}}>
-                    <Animated.View style={{width:size,height:size,backgroundColor:'red',borderRadius:borderRadiusAnim}}/>
-                </TouchableOpacity>
-            </View>
-            
-
         </Animated.View>
     )
 }
 
+const styles = StyleSheet.create({
+    container: {
+        borderTopLeftRadius:10,
+        borderTopRightRadius:10,
+        alignItems:'center',
+        width:'100%',
+        backgroundColor:'#444B49', 
+        flexDirection:'column',
+        justifyContent:'space-evenly'
+    }
+})
+
 export default Recorder;
 
-
+Recorder.propTypes = {
+    onSubmit: PropTypes.func
+}
 
 
 

@@ -6,10 +6,11 @@ const Visualizer = props => {
     return(
     <View style={styles.barContainer}>
     {
-        props.barValues.map(e => {
+        props.barValues.map((e, i) => {
             if(e){ 
             return(
-                <Bar 
+                <Bar
+                    keyExtractor={e + i} 
                     height={e}
                 />
             )}
@@ -24,6 +25,7 @@ const Visualizer = props => {
 const Bar = props => {
     return(
         <View
+            key={props.keyExtractor}
             style={[{height: props.height}, styles.bar]}
         />
     )
@@ -33,7 +35,7 @@ const styles = StyleSheet.create({
     bar: {
         backgroundColor: 'red',
         width: 1,
-        marginRight: 3
+        marginRight: 4
     },
     barContainer: {
         height:50,

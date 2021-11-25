@@ -56,11 +56,11 @@ const Player = props => {
     },[sound])
 
     return(
-        <View style={{flexDirection:'column',alignItems:'center',width:'100%',justifyContent:'flex-end',height:'100%'}}>
-            <View style={{flexDirection:'row',alignItems:'center', justifyContent:'space-evenly',width:'100%'}}>
+        <View style={{flexDirection:'column',alignItems:'center',width:'100%',justifyContent:'flex-end'}}>
+            <View style={{flexDirection:'row',alignItems:'center', justifyContent:'space-between',width:'100%'}}>
 
                 {
-                    props.leftIcon
+                    props.leftIcon 
                 }
 
                 <TouchableOpacity onPress={rewindTenSeconds}>
@@ -80,9 +80,6 @@ const Player = props => {
                 }
 
             </View>
-            <ProgressBar
-            progress={sound && `${progress}%`}
-            />
 
         </View>
     )

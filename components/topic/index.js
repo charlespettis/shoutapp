@@ -1,17 +1,50 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
-import Snake from '../../assets/images/snake.jpg';
+import {View, TouchableOpacity, Text, Image, StyleSheet} from 'react-native';
 
 const Topic = props => {
+
+    const getColor = () => {
+        switch(props.category){
+            case "Tech":
+                return 'lightblue'
+            case "Science":
+                return '#A0548B'
+            case "Politics":
+                return '#ECFEAA'
+            case "Sports":
+                return '#5C7457'
+        }
+    }
+
+    const goToTopic = () => {
+        if(props.navigation){
+            props.navigation.push('Home', {screen: 'Topic', params: {id: props.id}})
+        }
+    }
+
     return(
-        <View style={{flexDirection:'row',justifyContent:'space-between',width:'100%',padding:10}}>
-            <View style={{flexDirection:'column',width:'75%'}}>
-                <Text style={{color:'lightblue',marginBottom:5}}>Technology</Text>
-                <Text style={{color:'white'}}>Python 4 was just released. And while the data science community celebrates, we can all take a step back and recognize that JS is still the better language despite their whining and bullshit.</Text>
+        <TouchableOpacity onPress={goToTopic} activeOpacity={props.navigation ? 0 : 1}>
+        <View style={{height:150,flexDirection:'row',justifyContent:'space-between',width:'100%',padding:10,marginTop:5}}>
+            <View style={{paddingRight:15,flexDirection:'column',flex:3}}>
+                <View style={{flexDirection:'row',alignItems:'flex-end',marginBottom:5}}>
+                    <Text style={{color:getColor()}}>{props.category}</Text>
+                    <Text style={styles.timestamp}>{props.timestamp}</Text>
+                </View>
+                <Text style={{color:'white'}}>{props.title}</Text>
             </View>
-            <Image source={Snake} resizeMode='cover' style={{height:'100%',width:'25%'}}/>
+            <Image source={props.imageUri} resizeMode='contain' style={{height:'100%',flex:1}}/>
         </View>
+        </TouchableOpacity>
     )
 }
+
+const styles = StyleSheet.create({
+    timestamp: {
+        color:'white',
+        opacity:.7,
+        fontSize:12, 
+        marginLeft:10
+    }
+})
 
 export default Topic;

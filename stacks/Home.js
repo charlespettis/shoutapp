@@ -8,7 +8,7 @@ const Tab = createMaterialTopTabNavigator();
 const Home = () => {
     return(
     <SafeAreaView style={{flex:1,backgroundColor:'#444B49'}}>
-        <Tab.Navigator initialRouteName="Yee" screenOptions={{ tabBarInactiveTintColor:'white',tabBarActiveTintColor:'white', tabBarStyle:{backgroundColor:'#444B49'}, tabBarScrollEnabled:true}}>
+        <Tab.Navigator initialRouteName="Latest" screenOptions={{ tabBarInactiveTintColor:'white',tabBarActiveTintColor:'white', tabBarStyle:{backgroundColor:'#444B49'}, tabBarScrollEnabled:true}}>
             <Tab.Screen component={Feed} name="Latest"/>
             <Tab.Screen component={Feed} name="Tech" />
             <Tab.Screen component={Feed} name="Science" />

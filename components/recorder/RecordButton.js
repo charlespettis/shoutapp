@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
         height:60,
         backgroundColor:'transparent',
         marginTop:'auto',
+        marginBottom:10,
         borderWidth:3,
         borderColor:'gray',
         borderRadius:50,

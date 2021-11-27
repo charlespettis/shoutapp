@@ -4,25 +4,16 @@ import {View, StyleSheet} from 'react-native';
 
 const ProgressBar = props => {
     return(
-        <View style={{flexDirection:'row',alignItems:'flex-end',width:'100%'}}>
-            <View style={[{width: props.progress}, styles.filled]}/>
-            <View style={styles.handle}/>
-        </View>
+        <View style={[{width: props.progress}, styles.container]}/>
     )
 }
 
 const styles = StyleSheet.create({
-    filled: {
+    container: {
         height:2,
         backgroundColor:'red',
         marginTop:20,
-    },
-    handle: {
-        height:5,
-        width:5,
-        borderRadius:50,
-        backgroundColor:'white',
-        top:1
+        alignSelf:'flex-start'
     }
 })
 

@@ -1,9 +1,12 @@
 import React from 'react';
+import { Pressable} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './Home';
 import { View, Text } from 'native-base';
 import {Ionicons} from '@expo/vector-icons';
 import ViewTopic from '../screens/ViewTopic';
+import Profile from '../screens/Profile';
+import Search from '../screens/Search';
 
 const Tab = createBottomTabNavigator()
 
@@ -21,19 +24,15 @@ const MainTabNavigator = () => {
             />
             <Tab.Screen 
             name="Search" 
-            component={HomeScreen} 
+            component={Search} 
             options={{tabBarIcon: ({color,size}) => <Ionicons name="search-outline" color={color} size={size}/>}}
             />
             <Tab.Screen 
             name="Profile" 
-            component={HomeScreen} 
+            component={Profile} 
             options={{tabBarIcon: ({color,size}) => <Ionicons name="person-outline" color={color} size={size}/>}}            
             />
-            <Tab.Screen
-            name="Topic"
-            component={ViewTopic}
-            options={{tabBarButton: () => null}}
-            />
+
         </Tab.Navigator>
     )
 }

@@ -8,11 +8,11 @@ import TouchableIcon from '../common/TouchableIcon';
 import RecordButton from './RecordButton';
 import PropTypes from 'prop-types';
 
-const Recorder = () => {
+const Recorder = props => {
 
     const borderRadiusAnim = React.useRef(new Animated.Value(50)).current;
     const size = React.useRef(new Animated.Value(45)).current;
-    const containerHeight = React.useRef(new Animated.Value(75)).current
+    const containerHeight = React.useRef(new Animated.Value(80)).current
 
     const [isRecording, setIsRecording] = React.useState(false);
     const [recording, setRecording] = React.useState();
@@ -36,7 +36,7 @@ const Recorder = () => {
     }
 
     const startRecording = async () => {
-
+        if(props.onRecordingStart) props.onRecordingStart();
         playSoundEffect()
         setTimeout(async ()=>{
             await Audio.requestPermissionsAsync();
@@ -69,6 +69,7 @@ const Recorder = () => {
     }
 
     const stopRecording = async () => {
+        if(props.onRecordingStop) props.onRecordingStop();
         setRecording(undefined);
         setBarValues([]);
         playSoundEffect();
@@ -102,7 +103,7 @@ const Recorder = () => {
             duration:300
         }).start()
         Animated.timing(containerHeight, {
-            toValue: 75,
+            toValue: 80,
             duration: 300
         }).start()
 
@@ -137,7 +138,7 @@ const Recorder = () => {
     }
 
     return(
-        <Animated.View style={[styles.container, {height:containerHeight}]}>
+        <Animated.View style={[styles.container, {height:containerHeight}, {...props.style}]}>
             {
             !recordingPath ? 
                 <>
@@ -197,7 +198,9 @@ const styles = StyleSheet.create({
 export default Recorder;
 
 Recorder.propTypes = {
-    onSubmit: PropTypes.func
+    onSubmit: PropTypes.func,
+    onRecordingStart: PropTypes.func,
+    onRecordingStop: PropTypes.func
 }
 
 

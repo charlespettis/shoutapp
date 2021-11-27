@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TouchableOpacity, Text, Image, StyleSheet} from 'react-native';
+import {View, Pressable, Text, Image, StyleSheet} from 'react-native';
 
 const Topic = props => {
 
@@ -18,13 +18,13 @@ const Topic = props => {
 
     const goToTopic = () => {
         if(props.navigation){
-            props.navigation.push('Home', {screen: 'Topic', params: {id: props.id}})
+            props.navigation.navigate('Topic', {id: props.id})
         }
     }
 
     return(
-        <TouchableOpacity onPress={goToTopic} activeOpacity={props.navigation ? 0 : 1}>
-        <View style={{height:150,flexDirection:'row',justifyContent:'space-between',width:'100%',padding:10,marginTop:5}}>
+        <Pressable onPress={goToTopic} >
+        <View style={{minHeight:150,flexDirection:'row',justifyContent:'space-between',backgroundColor:'#1D201F',width:'100%',padding:10,marginBottom:1,borderBottomWidth:1,borderBottomColor:'rgba(68, 75, 73, .5)'}}>
             <View style={{paddingRight:15,flexDirection:'column',flex:3}}>
                 <View style={{flexDirection:'row',alignItems:'flex-end',marginBottom:5}}>
                     <Text style={{color:getColor()}}>{props.category}</Text>
@@ -34,7 +34,7 @@ const Topic = props => {
             </View>
             <Image source={props.imageUri} resizeMode='contain' style={{height:'100%',flex:1}}/>
         </View>
-        </TouchableOpacity>
+        </Pressable>
     )
 }
 

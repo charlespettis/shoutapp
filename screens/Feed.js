@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, FlatList, RefreshControl} from 'react-native';
+import {View, FlatList, RefreshControl, Text} from 'react-native';
 import Topic from '../components/topic';
 import {DUMMY_DATA} from '../data';
 
@@ -33,6 +33,7 @@ const Feed = ({navigation, route}) => {
                 keyExtractor={item => item.id}
                 //refreshing={true}
                 //onRefresh={()=>alert('refreshing')}
+                ListEmptyComponent={<Text>There's nothing here!</Text>}
                 refreshControl={
                     <RefreshControl
                     refreshing={isRefreshing}

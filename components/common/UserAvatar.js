@@ -2,10 +2,9 @@ import React from 'react';
 import { TouchableOpacity, View} from 'react-native';
 import {Avatar} from 'native-base';
 import * as ImagePicker from 'expo-image-picker';
-import Basic from '../../assets/images/defaultAvatar.png';
 import {Ionicons} from '@expo/vector-icons';
 
-const UserAvatar = () => {
+const UserAvatar = props => {
     const [image, setImage] = React.useState(null)
 
     React.useEffect(() => {
@@ -35,6 +34,7 @@ const UserAvatar = () => {
     return(
         <>
             <TouchableOpacity
+            style={props.style}
             onPress={pickImage}
             >
             <Avatar

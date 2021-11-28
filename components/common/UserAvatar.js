@@ -1,6 +1,6 @@
 import React from 'react';
-import { TouchableOpacity, View} from 'react-native';
-import {Avatar} from 'native-base';
+import { TouchableOpacity, Image} from 'react-native';
+import DefaultAvatar from '../../assets/images/defaultAvatar.png';
 import * as ImagePicker from 'expo-image-picker';
 import {Ionicons} from '@expo/vector-icons';
 
@@ -25,6 +25,8 @@ const UserAvatar = props => {
           aspect: [4, 3],
           quality: 1,
         });
+
+        console.log(result);
     
         if (!result.cancelled) {
           setImage(result.uri);
@@ -37,12 +39,11 @@ const UserAvatar = props => {
             style={props.style}
             onPress={pickImage}
             >
-            <Avatar
+            <Image
 
-                size='xl'
-                source={{uri:image}}
+                style={{height:100,width:100,borderRadius:100}}
+                source={image ? {uri:image} : DefaultAvatar}
             />
-            <Ionicons name='brush' size={22} color='cyan' style={{alignSelf:'flex-end',top:'-10%'}}/>
             </TouchableOpacity>
         </>
     )

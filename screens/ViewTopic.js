@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, View, FlatList, Animated} from 'react-native';
+import {SafeAreaView, FlatList} from 'react-native';
 import {Fab, Icon} from 'native-base';
 import TouchableIcon from '../components/common/TouchableIcon';
 import Topic from '../components/topic';
@@ -7,6 +7,7 @@ import {DUMMY_DATA} from '../data';
 import Post from '../components/post';
 import Recorder from '../components/recorder';
 import {Ionicons} from '@expo/vector-icons';
+import EmptyListComponent from '../components/common/EmptyListComponent';
 
 const ViewTopic = ({navigation, route}) => {
     const [isRecorderShown, setIsRecorderShown] = React.useState(false);
@@ -16,6 +17,7 @@ const ViewTopic = ({navigation, route}) => {
         const index = DUMMY_DATA.findIndex(e => e.id === route.params.id);
         return(
             <Topic
+            id={DUMMY_DATA[index]['id']}
             category={DUMMY_DATA[index]['category']}
             title={DUMMY_DATA[index]['title']}
             imageUri={DUMMY_DATA[index]['imageUri']}
@@ -54,6 +56,7 @@ const ViewTopic = ({navigation, route}) => {
              ListHeaderComponent={getTopic()}
              data={POSTS_DATA}
              renderItem={renderItem}
+             ListEmptyComponent={<EmptyListComponent style={{paddingTop:'25%'}}/>}
             />
             
             {

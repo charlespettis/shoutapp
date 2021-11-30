@@ -14,6 +14,10 @@ const App = () => {
 
   LogBox.ignoreAllLogs();
 
+  React.useEffect(()=>{
+    console.log('ree');
+  },[])
+
   return (
     <UserProvider>
       <StatusBar barStyle='light-content' />
@@ -25,7 +29,7 @@ const App = () => {
               component={LandingStack}
             />
             <Stack.Screen
-              name="Home"
+              name="Main"
               component={MainTabNavigator}
             />
             <Stack.Screen

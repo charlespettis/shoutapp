@@ -2,7 +2,7 @@ import React from 'react';
 import {View, FlatList, RefreshControl, Text} from 'react-native';
 import Topic from '../components/topic';
 import {DUMMY_DATA} from '../data';
-import {Ionicons} from '@expo/vector-icons';
+import EmptyListComponent from '../components/common/EmptyListComponent';
 
 const Feed = ({navigation, route}) => {
 
@@ -34,7 +34,7 @@ const Feed = ({navigation, route}) => {
                 keyExtractor={item => item.id}
                 //refreshing={true}
                 //onRefresh={()=>alert('refreshing')}
-                ListEmptyComponent={<Empty/>}
+                ListEmptyComponent={<EmptyListComponent style={{paddingTop:'50%'}}/>}
                 refreshControl={
                     <RefreshControl
                     refreshing={isRefreshing}
@@ -49,14 +49,4 @@ const Feed = ({navigation, route}) => {
 
 export default Feed;
 
-const Empty = () => {
-    return(
-        <View style={{flex:1,justifyContent:'center',height:'100%',paddingTop:'50%',alignItems:'center'}}>
-            <View style={{alignItems:'center',width:'75%'}}>
-            <Ionicons name='sad-outline' color='white' size={32}/>
-            <Text style={{textAlign:'center',color:'white',marginTop:25}}>There's nothing here! Click the plus button at the bottom to add a post.</Text>
-            </View>
-        </View>
-    )
-}
 

@@ -81,30 +81,36 @@ const Recorder = props => {
     const animateStart = () => {
         Animated.timing(borderRadiusAnim, {
             toValue: 3,
-            duration:300
+            duration:300,
+            useNativeDriver:false
         }).start()
         Animated.timing(size, {
             toValue:25,
-            duration:300
+            duration:300,
+            useNativeDriver:false
         }).start()
         Animated.timing(containerHeight, {
             toValue: 175,
-            duration: 300
+            duration: 300,
+            useNativeDriver:false
         }).start()
     }
 
     const animateEnd = () => {
         Animated.timing(borderRadiusAnim, {
             toValue: 50,
-            duration:300
+            duration:300,
+            useNativeDriver:false
         }).start()
         Animated.timing(size, {
             toValue:45,
-            duration:300
+            duration:300,
+            useNativeDriver:false
         }).start()
         Animated.timing(containerHeight, {
             toValue: 80,
-            duration: 300
+            duration: 300,
+            useNativeDriver:false
         }).start()
 
     }

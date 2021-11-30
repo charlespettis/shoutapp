@@ -13,7 +13,7 @@ const Login = ({navigation}) => {
     })
 
     const login = () => {
-        navigation.navigate('Home')
+        navigation.navigate('Main')
     }
 
     return(
@@ -43,7 +43,7 @@ const Login = ({navigation}) => {
                 color='white'
                 w={{base:'90%', md:'25%'}}
                 placeholder="Email or Username"
-                autoCapitalize={false}
+                autoCapitalize={'none'}
                 InputLeftElement={
                 <Icon
                     color="white"

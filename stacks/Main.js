@@ -18,7 +18,7 @@ const MainTabNavigator = () => {
             <Tab.Screen 
             name="Explore" 
             component={SuggestTopic} 
-            options={{tabBarIcon: ({color,size}) => <Ionicons name="add-circle-outline" color={color} size={size}/>}}
+            options={{tabBarIcon: ({color,size}) => <Ionicons name="add-outline" color={color} size={size}/>}}
             />
             <Tab.Screen 
             name="Search" 

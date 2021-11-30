@@ -58,7 +58,7 @@ const Register = ({navigation}) => {
                 color='white'
                 w={{base:'90%', md:'25%'}}
                 placeholder="Username"
-                autoCapitalize={false}
+                autoCapitalize={'none'}
                 InputLeftElement={
                 <Icon
                     color="white"
@@ -77,7 +77,7 @@ const Register = ({navigation}) => {
                 })}
                 w={{base:'90%', md:'25%'}}
                 placeholder="Email"
-                autoCapitalize={false}
+                autoCapitalize={'none'}
                 keyboardType='email-address'
                 InputLeftElement={
                 <Icon

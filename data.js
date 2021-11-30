@@ -19,30 +19,35 @@ export const DUMMY_DATA = [
         timestamp: '9h' 
     },
     {
+        id:3,
         category: 'Politics',
         title: 'Python 4 was just released. And while the data science community celebrates, we can all take a step back and recognize that JS is still the better language despite their whining and bullshit.',
         imageUri: Grandleton,
         timestamp: '9h' 
     },
     {
+        id:4,
         category: 'Tech',
         title: 'Python 4 was just released. And while the data science community celebrates, we can all take a step back and recognize that JS is still the better language despite their whining and bullshit.',
         imageUri: Snake,
         timestamp: '9h' 
     },
     {
+        id:5,
         category: 'Tech',
         title: 'Python 4 was just released. And while the data science community celebrates, we can all take a step back and recognize that JS is still the better language despite their whining and bullshit.',
         imageUri: Skiing,
         timestamp: '9h' 
     },
     {
+        id:6,
         category: 'Tech',
         title: 'Python 4 was just released. And while the data science community celebrates, we can all take a step back and recognize that JS is still the better language despite their whining and bullshit.',
         imageUri: Grandleton,
         timestamp: '9h' 
     },
     {
+        id:7,
         category: 'Tech',
         title: 'Python 4 was just released. And while the data science community celebrates, we can all take a step back and recognize that JS is still the better language despite their whining and bullshit.',
         imageUri: Water,

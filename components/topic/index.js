@@ -23,7 +23,7 @@ const Topic = props => {
     }
 
     return(
-        <Pressable onPress={goToTopic} >
+        <Pressable key={props.id} onPress={goToTopic} >
         <View style={{minHeight:150,flexDirection:'row',justifyContent:'space-between',backgroundColor:'#1D201F',width:'100%',padding:10,marginBottom:1,borderBottomWidth:1,borderBottomColor:'rgba(68, 75, 73, .5)'}}>
             <View style={{paddingRight:15,flexDirection:'column',flex:3}}>
                 <View style={{flexDirection:'row',alignItems:'flex-end',marginBottom:5}}>

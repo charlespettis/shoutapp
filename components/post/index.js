@@ -14,7 +14,12 @@ const Post = props => {
                 <Player 
                 recording={'../../assets/sounds/beep_up.wav'} 
                 rightIcon={<TouchableIcon name="flag-outline" size={22} color='white' onPress={()=>alert('re')}/>} 
-                leftIcon={<TouchableIcon name="heart-outline" size={22} color='white' onPress={()=>alert('re')}/>} 
+                leftIcon={
+                <View>
+                <TouchableIcon name="heart-outline" size={22} color='white' onPress={()=>alert('re')}/>
+                <Text style={{position:'absolute',color:'white',left:22,top:10,fontSize:12}}>1k</Text>
+                </View>
+                }                 
                 />
             </View>
         </View>

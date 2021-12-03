@@ -10,9 +10,10 @@ const ProgressBar = props => {
 
 const styles = StyleSheet.create({
     container: {
-        height:2,
+        position:'relative',
+        top:10,
+        height:1,
         backgroundColor:'red',
-        marginTop:20,
         alignSelf:'flex-start'
     }
 })

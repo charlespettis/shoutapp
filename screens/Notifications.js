@@ -61,7 +61,16 @@ const styles = StyleSheet.create({
         alignItems:'center',
         width:'100%',
         opacity:.9,
-        marginTop:15
+        marginTop:15,
+        shadowColor: "black",
+        shadowOffset: {
+            width: 2,
+            height: 2,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 2.62,
+
+        elevation: 4,
     },
     cardImage:{
         height:70,

@@ -41,6 +41,7 @@ const Login = ({navigation}) => {
                 })}
                 size='lg'
                 color='white'
+                autoFocus
                 w={{base:'90%', md:'25%'}}
                 placeholder="Email or Username"
                 autoCapitalize={'none'}
@@ -84,13 +85,6 @@ const Login = ({navigation}) => {
                 onPress={login}
                 variant='outline'>
                     Login
-                </Button>
-                <Divider my="2" opacity={.1}/>
-                <Text fontSize='md' color="white">
-                    Forgot your password?
-                </Text>
-                <Button width='90%' variant='ghost'>
-                    Reset Password
                 </Button>
             </Stack>
         </KeyboardAvoidingView>

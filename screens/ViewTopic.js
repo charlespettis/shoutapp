@@ -1,6 +1,6 @@
 import React from 'react';
-import {SafeAreaView, FlatList} from 'react-native';
-import {Fab, Icon} from 'native-base';
+import {SafeAreaView, FlatList,View, Text} from 'react-native';
+import {Fab, Icon, Switch} from 'native-base';
 import TouchableIcon from '../components/common/TouchableIcon';
 import Topic from '../components/topic';
 import {DUMMY_DATA} from '../data';

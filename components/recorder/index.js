@@ -142,6 +142,11 @@ const Recorder = props => {
     const resetRecording = () => {
         setRecordingPath(null);
     }
+    React.useEffect(()=>{
+        return async () => {
+            await recording.stopAndUnloadAsync();
+        }
+    },[recording])
 
     return(
         <Animated.View style={[styles.container, {height:containerHeight}, {...props.style}]}>
@@ -197,7 +202,7 @@ const styles = StyleSheet.create({
         width:'100%',
         backgroundColor:'#444B49', 
         flexDirection:'column',
-        justifyContent:'space-evenly'
+        justifyContent:'space-evenly',
     }
 })
 

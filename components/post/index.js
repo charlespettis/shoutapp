@@ -7,17 +7,23 @@ import TouchableIcon from '../common/TouchableIcon';
 const Post = props => {
     return(
         <View style={styles.container}>
-            <Image source={Skiier} style={styles.avatar} resizeMode='cover'/>
             <View style={styles.wrapper}>
-                <Text style={{color:'white'}}>{props.fullName}</Text>
-                <Text style={{color:'white',marginBottom:10}}>{props.jobTitle} @ {props.company}</Text>
-                <Player 
+
+                <View style={{flexDirection:'row',alignItems:'center',justifyContent:'flex-strt',width:'100%',marginBottom:10}}>
+                <Image source={Skiier} style={styles.avatar} resizeMode='cover'/>
+                    <View style={{marginLeft:'5%'}}>
+                        <Text style={{color:'white'}}>{props.fullName}</Text>
+                        <Text style={{color:'white',marginBottom:5}}>{props.jobTitle} @ {props.company}</Text>
+                    </View>
+                </View>
+                
+                <Player
                 recording={'../../assets/sounds/beep_up.wav'} 
                 rightIcon={<TouchableIcon name="flag-outline" size={22} color='white' onPress={()=>alert('re')}/>} 
                 leftIcon={
                 <View>
-                <TouchableIcon name="heart-outline" size={22} color='white' onPress={()=>alert('re')}/>
-                <Text style={{position:'absolute',color:'white',left:22,top:10,fontSize:12}}>1k</Text>
+                <TouchableIcon name="heart-outline" size={24} color='white' onPress={()=>alert('re')}/>
+                <Text style={{color:'white',fontSize:14,position:'absolute',left:25,top:10}}>1k</Text>
                 </View>
                 }                 
                 />
@@ -29,22 +35,24 @@ const Post = props => {
 const styles = StyleSheet.create({
     container: {
         flexDirection:'row',
-        marginTop:10,
-        marginBottom:10,
-        width:'95%',
-        alignSelf:'center'
+        alignItems:'flex-start',
+        justifyContent:'space-between',
+        borderBottomWidth:2,
+        borderBottomColor:'rgba(68, 75, 73,.2)',
+        margin:12,
+        paddingBottom:20
+        
     },
     avatar: {
-        width:70,
-        height:70,
-        borderRadius:100
+        width:50,
+        height:50,
+        borderRadius:100,
     },
     wrapper: {
         flexDirection:'column',
         alignItems:'flex-start',
-        flex:4,
-        paddingLeft:20,
-        paddingRight:20
+        justifyContent:'center',
+        flex:1,
     }
 })
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {KeyboardAvoidingView, StyleSheet, Platform} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, Platform, ImageBackground} from 'react-native';
 import {Text, Button, Input, Stack, Icon, Divider} from 'native-base';
 import Logo from '../components/common/Logo';
 import {Ionicons} from '@expo/vector-icons';
@@ -39,6 +39,9 @@ const Register = ({navigation}) => {
     }
 
     return(
+        <ImageBackground 
+        style={{flex:1}}
+        source={{uri:'https://cdn.pixabay.com/photo/2018/12/18/22/29/background-3883181_960_720.jpg'}}>
         <KeyboardAvoidingView 
             style={styles.container}       
             behavior={Platform.OS === "ios" ? "padding" : "height"}>
@@ -129,13 +132,13 @@ const Register = ({navigation}) => {
                 </Button>
             </Stack>
         </KeyboardAvoidingView>
+        </ImageBackground>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#1D201F',
       alignItems: 'center',
       justifyContent: 'center',
     },

@@ -11,7 +11,7 @@ const Tab = createBottomTabNavigator()
 
 const MainTabNavigator = () => {
     return(
-        <Tab.Navigator initialRouteName="Home" screenOptions={{ tabBarStyle:{borderTopWidth:0},headerShown:false,tabBarShowLabel:false,tabBarInactiveBackgroundColor:'#444B49',tabBarActiveBackgroundColor:'#444B49', tabBarInactiveTintColor:'white'}}>
+        <Tab.Navigator initialRouteName="Home" screenOptions={{ tabBarStyle:{borderTopWidth:0},headerShown:false,tabBarShowLabel:false,tabBarInactiveBackgroundColor:'#2A2A2C',tabBarActiveBackgroundColor:'#2A2A2C', tabBarInactiveTintColor:'white'}}>
             <Tab.Screen name="Home" 
             component={Home} 
             options={{tabBarIcon: ({color,size}) => <Ionicons name="home-outline" color={color} size={size}/>}} 

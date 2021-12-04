@@ -27,7 +27,7 @@ const Feed = ({navigation, route}) => {
     }
 
     return(
-        <View style={{flex:1,backgroundColor:'#1D201F'}}>
+        <View style={{flex:1,backgroundColor:'black'}}>
             <FlatList
                 data={route.name !== 'Latest' ? DUMMY_DATA.filter(e => e.category === route.name) : DUMMY_DATA}
                 renderItem={renderItem}

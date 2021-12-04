@@ -17,12 +17,12 @@ const Search = ({navigation, route}) => {
     },[])
 
     return(
-        <View style={{flex:1,backgroundColor:'#1D201F'}}>
-            <View style={{width:'100%',height:70,backgroundColor:'#303634',justifyContent:'flex-end',paddingBottom:10}}>
+        <View style={{flex:1,backgroundColor:'black'}}>
+            <View style={{width:'100%',height:70,backgroundColor:'#191919',justifyContent:'flex-end',paddingBottom:10}}>
                 <View style={{flexDirection:'row', alignItems:'center',alignSelf:'center'}}>   
-                    <View style={{backgroundColor:'#434C49',width:'80%',height:30, alignSelf:'center',borderRadius:4,alignItems:'center',flexDirection:'row'}}>
+                    <View style={{backgroundColor:'#242424',width:'80%',height:30, alignSelf:'center',borderRadius:4,alignItems:'center',flexDirection:'row'}}>
                         <Ionicons name='search' color='white' size={18} style={{paddingLeft:10,paddingRight:10}} />
-                        <TextInput ref={inputRef} autoFocus style={{color:'white',width:'100%'}}/>
+                        <TextInput placeholder='Search' placeholderTextColor='white' ref={inputRef} autoFocus style={{color:'white',width:'100%'}}/>
                     </View>
                     <TouchableOpacity onPress={dismiss}>
                         <Text style={{color: 'white',marginLeft:10}}>Cancel</Text>

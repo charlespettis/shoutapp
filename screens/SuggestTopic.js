@@ -10,7 +10,7 @@ const SuggestTopic = () => {
     const [title, setTitle] = React.useState('');
 
     return(
-        <SafeAreaView style={{backgroundColor:'#1D201F',flex:1}}>        
+        <SafeAreaView style={{backgroundColor:'black',flex:1}}>        
             <View style={{width:'90%',alignSelf:'center',alignItems:'flex-start',justifyContent:'space-evenly',flex:1}}>    
                 <Text style={{color:'white',fontSize:22,}}>Suggest A Topic</Text>
                 <UserAvatar style={{width:'30%', alignSelf:'center',}}/>
@@ -27,8 +27,8 @@ const SuggestTopic = () => {
                 </Picker>
 
                 <TouchableOpacity style={{flexDirection:'row',alignItems:'center',alignSelf:'flex-end'}}>
-                    <Text style={{fontSize:18, color:'lightblue'}}>Submit</Text>
-                    <Ionicons name='chevron-forward' size={32} color='lightblue' />
+                    <Text style={{fontSize:18, color:'cyan'}}>Submit</Text>
+                    <Ionicons name='chevron-forward' size={32} color='cyan' />
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

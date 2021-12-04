@@ -43,7 +43,7 @@ const ViewTopic = ({navigation, route}) => {
     }
 
     return(
-        <SafeAreaView style={{flex:1,backgroundColor:'#1D201F'}}>
+        <SafeAreaView style={{flex:1,backgroundColor:'black'}}>
             
             <TouchableIcon
             color="white"
@@ -53,6 +53,7 @@ const ViewTopic = ({navigation, route}) => {
             style={{marginLeft:5,marginTop:10,marginBottom:10}}
             />
             <FlatList
+             stickyHeaderIndices={[0]}
              ListHeaderComponent={getTopic()}
              data={POSTS_DATA}
              renderItem={renderItem}
@@ -86,6 +87,21 @@ const ViewTopic = ({navigation, route}) => {
 export default ViewTopic;
 
 const POSTS_DATA = [
+    {
+        fullName: 'Anika Ledouchey',
+        jobTitle:'Software Developer',
+        company: 'Shout, LLC.'
+    },
+    {
+        fullName: 'Anika Ledouchey',
+        jobTitle:'Software Developer',
+        company: 'Shout, LLC.'
+    },
+    {
+        fullName: 'Anika Ledouchey',
+        jobTitle:'Software Developer',
+        company: 'Shout, LLC.'
+    },
     {
         fullName: 'Anika Ledouchey',
         jobTitle:'Software Developer',

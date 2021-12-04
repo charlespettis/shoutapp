@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius:10,
         alignItems:'center',
         width:'100%',
-        backgroundColor:'#444B49', 
+        backgroundColor:'#1C1C1E', 
         flexDirection:'column',
         justifyContent:'space-evenly',
     }

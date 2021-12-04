@@ -48,7 +48,7 @@ const NotificationCard = props => {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:'#1D201F',
+        backgroundColor:'black',
         alignItems:'center'
     },
     wrapper:{

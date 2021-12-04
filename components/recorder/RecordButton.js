@@ -5,7 +5,7 @@ const RecordButton = props => {
     return(
         <View style={styles.container}>
             <TouchableOpacity onPress={props.onPress} style={styles.button}>
-                <Animated.View style={{width:props.size,height:props.size,borderRadius:props.borderRadiusAnim, backgroundColor:'red'}}/>
+                <Animated.View style={{width:props.size,height:props.size,borderRadius:props.borderRadiusAnim, backgroundColor:'#FF443B'}}/>
             </TouchableOpacity>
         </View>
 
@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
         backgroundColor:'transparent',
         marginTop:'auto',
         marginBottom:10,
-        borderWidth:3,
-        borderColor:'gray',
+        borderWidth:2,
+        borderColor:'#FDFDFD',
         borderRadius:50,
         alignItems:'center',
         justifyContent:'center'

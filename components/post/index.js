@@ -3,31 +3,24 @@ import {View, Text, Image, StyleSheet} from 'react-native';
 import Skiier from '../../assets/images/skiing.jpg';
 import Player from '../player';
 import TouchableIcon from '../common/TouchableIcon';
+import {Ionicons} from '@expo/vector-icons';
 
 const Post = props => {
     return(
         <View style={styles.container}>
-            <View style={styles.wrapper}>
 
-                <View style={{flexDirection:'row',alignItems:'center',justifyContent:'flex-strt',width:'100%',marginBottom:10}}>
+                <View style={{flexDirection:'row',alignItems:'center'}}>
                 <Image source={Skiier} style={styles.avatar} resizeMode='cover'/>
-                    <View style={{marginLeft:'5%'}}>
-                        <Text style={{color:'white'}}>{props.fullName}</Text>
-                        <Text style={{color:'white',marginBottom:5}}>{props.jobTitle} @ {props.company}</Text>
+                    <View style={{marginLeft:15,justifyContent:'space-between'}}>
+                        <Text style={{color:'white',fontSize:16,marginBottom:5}}>{props.fullName}</Text>
+                        <Text style={{color:'white',marginBottom:5,fontWeight:'200'}}>@itsanikabitch</Text>
                     </View>
                 </View>
-                
-                <Player
-                recording={'../../assets/sounds/beep_up.wav'} 
-                rightIcon={<TouchableIcon name="flag-outline" size={22} color='white' onPress={()=>alert('re')}/>} 
-                leftIcon={
-                <View>
-                <TouchableIcon name="heart-outline" size={24} color='white' onPress={()=>alert('re')}/>
-                <Text style={{color:'white',fontSize:14,position:'absolute',left:25,top:10}}>1k</Text>
+                <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <Ionicons name='heart-outline' color='rgba(255,255,255,.7)' size={22} style={{marginRight:15}}/>
+                    <Ionicons name='person-outline' color='rgba(255,255,255,.7)' size={22} style={{marginRight:15}}/>
+                    <Ionicons name='flag-outline' color='rgba(255,255,255,.7)' size={22}/>
                 </View>
-                }                 
-                />
-            </View>
         </View>
     )
 }
@@ -35,18 +28,14 @@ const Post = props => {
 const styles = StyleSheet.create({
     container: {
         flexDirection:'row',
-        alignItems:'flex-start',
+        alignItems:'center',
         justifyContent:'space-between',
-        borderBottomWidth:2,
-        borderBottomColor:'rgba(68, 75, 73,.2)',
-        margin:12,
-        paddingBottom:20
+        margin:15
         
     },
     avatar: {
         width:50,
         height:50,
-        borderRadius:100,
     },
     wrapper: {
         flexDirection:'column',

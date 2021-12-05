@@ -1,27 +1,37 @@
 import React from 'react';
-import {SafeAreaView,ScrollView, View, Text, Image, StyleSheet} from 'react-native';
+import {SafeAreaView,ScrollView, View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Skiier from '../assets/images/skiing.jpg';
 import {List, ListItem} from '../components/list';
+import {UserContext} from '../components/contexts/UserProvider';
 
 const Profile = () => {
+
+    const { userFunctions, userState } = React.useContext(UserContext);
+
     return(
         <SafeAreaView style={{flex:1, backgroundColor:'black',alignItems:'center'}}>
             <ScrollView style={{flex:1,width:'100%'}} contentContainerStyle={{alignItems:'center',paddingBottom:20}}>
             <Image source={Skiier} style={{width:125,height:125,borderRadius:100,marginTop:20}} resizeMode='cover'/>
-            <Text style={{color:'white',fontSize:24,marginTop:20}}>Anika Bodanika</Text>
-            <Text style={styles.text}>Software Developer</Text>
-            <Text style={styles.text}>Shout, LLC.</Text>
-            
+            <Text style={{color:'white',fontSize:24,marginTop:20}}>{userState.fullName}</Text>
+            <TouchableOpacity>
+            <Text style={styles.text}>{userState.jobTitle}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+            <Text style={[styles.text, !userState.company  && {color:'lightblue',opacity:.9}]}>
+                {userState.company ? userState.company : 'Add your company'}</Text>
+            </TouchableOpacity>
             <View style={{alignItems:'flex-start',width:'90%',marginTop:20}}>
             <Text style={{color:'white',opacity:.5}}>ABOUT ME</Text>
-            <Text style={styles.text}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac nulla eu ipsum fringilla accumsan. </Text>
+            <TouchableOpacity>
+            <Text style={[styles.text, !userState.bio && {color:'lightblue',opacity:.9}]}>{userState.bio ? userState.bio : 'Add a bio'}</Text>
+            </TouchableOpacity>
             </View>
 
             <List title="Account">
                 <ListItem onPress={()=>alert('hi')} icon="star" title="Liked Posts"/>
                 <ListItem onPress={()=>alert('hi')} icon="chatbubble" title="Recent Posts"/>
                 <ListItem onPress={()=>alert('hi')} icon="lock-closed-outline" title="Reset Password"/>
-                <ListItem onPress={()=>alert('hi')} icon="arrow-back" title="Log Out"/>
+                <ListItem onPress={()=>userFunctions.logOut()} icon="arrow-back" title="Log Out"/>
             </List>
 
             <List title="Support">
@@ -39,7 +49,7 @@ const Profile = () => {
 const styles = StyleSheet.create({
     text: {
         color:'white',
-        marginTop:5
+        marginTop:10
     }
 })
 

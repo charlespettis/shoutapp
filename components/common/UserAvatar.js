@@ -2,10 +2,11 @@ import React from 'react';
 import { TouchableOpacity, Image} from 'react-native';
 import DefaultAvatar from '../../assets/images/defaultAvatar.png';
 import * as ImagePicker from 'expo-image-picker';
-import {Ionicons} from '@expo/vector-icons';
+import {UserContext} from '../contexts/UserProvider';
 
 const UserAvatar = props => {
     const [image, setImage] = React.useState(null)
+    const {userFunctions, userState} = React.useContext(UserContext)
 
     React.useEffect(() => {
         (async () => {
@@ -25,11 +26,13 @@ const UserAvatar = props => {
           aspect: [4, 3],
           quality: 1,
         });
-
-        console.log(result);
     
         if (!result.cancelled) {
           setImage(result.uri);
+          console.log(result);
+          userFunctions.updateUserInfo({
+              avatar: result.uri
+          })
         }
     };
 

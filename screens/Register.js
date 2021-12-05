@@ -1,15 +1,15 @@
 import React from 'react';
 import {KeyboardAvoidingView, StyleSheet, Platform, ImageBackground} from 'react-native';
-import {Text, Button, Input, Stack, Icon, Divider} from 'native-base';
+import {Text, Button, Input, Stack, Icon, Divider, FormControl} from 'native-base';
 import Logo from '../components/common/Logo';
 import {Ionicons} from '@expo/vector-icons';
-import UserAvatar from '../components/common/UserAvatar';
 import {UserContext} from '../components/contexts/UserProvider';
+import {checkCredentials} from '../api/user';
 
 const Register = ({navigation}) => {
     const [isPasswordShown, setIsPasswordShown] = React.useState(true);
     const [userDetails, setUserDetails] = React.useState({
-        userName: '',
+        username: '',
         email: '',
         password: ''
     })
@@ -17,31 +17,44 @@ const Register = ({navigation}) => {
 
     const createAccount = () => {
 
-        userFunctions.updateUserInfo(userDetails);
+        if(userDetails.username.length < 4){
+            alert('Please enter a valid username atleast 4 characters long');
+            return;
+        }
+        if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userDetails.email)){
+            alert('Please enter a valid email');
+            return;
+        }
+        if(!/^(?=.*\d).{6,}$/.test(userDetails.password)){
+            alert('Please enter a password with atleast 8 digits including uppercase, lowercase, a number, and special character.');
+            return;
+        }
 
-        navigation.navigate('EditUserDetails', {
-            title:'Enter your full name', 
-            field:'fullName',
-            onContinue: () => {
-                navigation.push('EditUserDetails', {
-                    title: 'Enter your job title',
-                    field: 'jobTitle',
-                    onContinue: () => {
-                        navigation.push('EditUserDetails', {
-                            title:'Upload a profile picture',
-                            field:'avatar',
-                            customComponent: <UserAvatar/>
-                        })
-                    }
-                })
+        checkCredentials(userDetails.username, userDetails.email)
+        .then(res => {
+            switch(res.status){
+                case 200:
+                    userFunctions.updateUserInfo(userDetails);
+                    navigation.navigate('EditUserDetails', {
+                        id:1,
+                    })
+                    break;
+                case 403:
+                    alert('Account with username or email already exists')
+                    break;
+                default:
+                    alert('Something went wrong. Please try again later.')
+                    break;
+            
             }
         })
+
     }
 
     return(
         <ImageBackground 
         style={{flex:1}}
-        source={{uri:'https://cdn.pixabay.com/photo/2018/12/18/22/29/background-3883181_960_720.jpg'}}>
+        source={{uri:'https://cdn.pixabay.com/photo/2014/06/16/23/39/black-370118_960_720.png'}}>
         <KeyboardAvoidingView 
             style={styles.container}       
             behavior={Platform.OS === "ios" ? "padding" : "height"}>
@@ -52,10 +65,10 @@ const Register = ({navigation}) => {
             alignItems='center'>
                 <Input 
                 color
-                value={userDetails.userName}
+                value={userDetails.username}
                 onChangeText={e => setUserDetails({
                     ...userDetails,
-                    userName:e
+                    username:e
                 })}
                 size='lg'
                 color='white'
@@ -112,11 +125,12 @@ const Register = ({navigation}) => {
                 InputRightElement={
                 <Icon
                     color="white"
-                    size={4}
+                    size={5}
                     mr='2'
                     as={<Ionicons onPress={() => setIsPasswordShown(!isPasswordShown)} name={isPasswordShown ? 'eye-outline' : 'eye'} />}
                 />
                 }/>
+
                 <Button 
                 width={'90%'} 
                 onPress={createAccount}

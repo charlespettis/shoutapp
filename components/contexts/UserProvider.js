@@ -1,4 +1,6 @@
 import React from 'react';
+import {createAccount, login,verify} from '../../api/user';
+import storage from '../../storage';
 
 export const UserContext = React.createContext();
 
@@ -15,12 +17,14 @@ const UserProvider = props => {
             }
         },
         {
-            userName: '',
+            username: '',
             email: '',
             password: '',
             fullName: '',
             jobTitle: '',
-            avatar: ''
+            avatar: '',
+            admin: 0,
+            isLoggedIn:false
         }
     )
 
@@ -28,13 +32,43 @@ const UserProvider = props => {
         () => ({
             updateUserInfo: data => {
                 dispatch({type: "UPDATE", data: data});
+            },
+            createAccount: () => {
+                createAccount(state)
+                .then(data => {
+                    data['data']['isLoggedIn'] = true;
+                    storage.setToken(data['token'])
+                    .then(()=> {
+                        dispatch({type: "UPDATE", data: data['data']})
+                    })
+                })
+            },
+            login: encodedCredentials => {
+                login(encodedCredentials)
+                .then(data => {
+                    data['data']['isLoggedIn'] = true;
+                    storage.setToken(data['token'])
+                    .then(()=> {
+                        dispatch({type: "UPDATE", data: data['data']})
+                    })
+                })
+            },
+            logOut: () => {
+                storage.removeToken();
+                dispatch({type:"UPDATE", data: { isLoggedIn: false }})
             }
         })
     );
     
     React.useEffect(()=>{
-        console.log(state);
-    },[state])
+        verify()
+        .then(data => {
+            if(data){
+                data.isLoggedIn = true;
+                dispatch({type:"UPDATE", data: data})
+            }
+        })
+    },[])
     
     return(
         <UserContext.Provider value={{userFunctions: userFunctions, userState: state}}>

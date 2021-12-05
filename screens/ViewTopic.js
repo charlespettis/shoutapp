@@ -44,14 +44,8 @@ const ViewTopic = ({navigation, route}) => {
 
     return(
         <SafeAreaView style={{flex:1,backgroundColor:'black'}}>
-            
-            <TouchableIcon
-            color="white"
-            size={32}
-            name="chevron-back"
-            onPress={()=>navigation.goBack()}
-            style={{marginLeft:5,marginTop:10,marginBottom:10}}
-            />
+            <Header onAdd={toggleRecorder} isRecorderShown={isRecorderShown} goBack={()=>{navigation.goBack()}}/>
+
             <FlatList
              stickyHeaderIndices={[0]}
              ListHeaderComponent={getTopic()}
@@ -69,22 +63,32 @@ const ViewTopic = ({navigation, route}) => {
             />
             }
 
-            {
-            (!isRecording) &&
-            <Fab
-            icon={<Icon color='white' as={<Ionicons name={isRecorderShown ? 'close' : 'add'}/>}/> }
-            size='md'
-            bottom={isRecorderShown ? 90 : 35}
-            onPress={toggleRecorder}
-            />
-            }
-
         </SafeAreaView>
     )
 
 }
 
 export default ViewTopic;
+
+const Header = props => {
+    return(
+        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginRight:5,marginLeft:5,marginTop:10}}>
+            <TouchableIcon
+            color="white"
+            size={32}
+            name="chevron-back"
+            onPress={()=>props.goBack()}
+            />
+            <TouchableIcon
+            color="white"
+            size={32}
+            name={props.isRecorderShown ? "remove-outline": "add"}
+            onPress={()=>props.onAdd()}
+            />
+
+        </View>
+    )
+}
 
 const POSTS_DATA = [
     {

@@ -144,7 +144,7 @@ const Recorder = props => {
     }
     React.useEffect(()=>{
         return async () => {
-            await recording.stopAndUnloadAsync();
+            if(recording) await recording.stopAndUnloadAsync();
         }
     },[recording])
 

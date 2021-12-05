@@ -3,18 +3,25 @@ import { StyleSheet, KeyboardAvoidingView, View} from 'react-native';
 import {Input, Box, Button, Text, Stack} from 'native-base';
 import {Ionicons} from '@expo/vector-icons';
 import {UserContext} from '../components/contexts/UserProvider';
+import UserAvatar from '../components/common/UserAvatar';
 
 const EditUserDetails = ({navigation, route}) => {
     const {userFunctions, userState} = useContext(UserContext)
     const [inputValue, setInputValue] = React.useState(null);
+    const id = route.params.id;
 
     const submit = () => {
-        userFunctions.updateUserInfo(
-            {
-                [route.params.field]: inputValue
-            }
-        )
-        route.params.onContinue();
+        if(flow[id].onContinue){
+            userFunctions.updateUserInfo(
+                {
+                    [flow[id]['field']]: inputValue
+                }
+            )
+            flow[id].onContinue(navigation);
+        } else {
+            userFunctions.createAccount();
+        }
+        
     }
 
     return(
@@ -41,15 +48,16 @@ const EditUserDetails = ({navigation, route}) => {
                 fontSize='lg'
                 mb='5'
             >
-                {route.params.title}
+                {flow[id]['title']}
             </Text>
             {
 
-            !route.params.customComponent ? 
+            !flow[id]['editAvatar'] ? 
             <Input
                 variant='underlined'
-                placeholder="Full name"
+                placeholder={flow[id]['example']}
                 autoFocus
+                selectionColor='lightblue'
                 size='lg'
                 value={inputValue}
                 onChangeText= {e => setInputValue(e)}
@@ -58,7 +66,7 @@ const EditUserDetails = ({navigation, route}) => {
                 width="90%"
             />
             :
-            route.params.customComponent
+            <UserAvatar/> 
             
             }
             <Button 
@@ -69,12 +77,15 @@ const EditUserDetails = ({navigation, route}) => {
             >
                 Continue
             </Button>
+            {
+            flow[id]['isSkippable'] &&
             <Button
             width='90%'
             mt='5'
             variant='ghost'>
                 Skip
             </Button> 
+            }
             </Stack>
             </KeyboardAvoidingView>
     )
@@ -83,11 +94,30 @@ const EditUserDetails = ({navigation, route}) => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#1D201F',
+      backgroundColor: '#171717',
       alignItems: 'center',
       justifyContent: 'center',
     },
 });  
 
-
+const flow = {
+    1 : {
+        title: 'Enter your full name',
+        field:'fullName',
+        example: 'Kilgore Trout',
+        onContinue: navigation => navigation.navigate('EditUserDetails', { id: 2 })
+    },
+    2: {
+        title: 'Enter your professional title',
+        field:'jobTitle',
+        example: 'Journalist, Barista, Programmer',
+        onContinue: navigation => navigation.navigate('EditUserDetails', { id: 3 })
+    },
+    3: {
+        title: 'Add a profile picture',
+        field: 'avatar',
+        isSkippable: true,
+        editAvatar: true
+    }
+}
 export default EditUserDetails;

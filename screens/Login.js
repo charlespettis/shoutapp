@@ -1,19 +1,21 @@
 import React from 'react';
 import {KeyboardAvoidingView, StyleSheet} from 'react-native';
-import {Text, Button, Input, Stack, Icon, Divider} from 'native-base';
+import { Button, Input, Stack, Icon } from 'native-base';
 import Logo from '../components/common/Logo';
 import {Ionicons} from '@expo/vector-icons';
+import {UserContext} from '../components/contexts/UserProvider';
 
 const Login = ({navigation}) => {
+    const {userFunctions, userState}  = React.useContext(UserContext);
     const [isPasswordShown, setIsPasswordShown] = React.useState(true);
     const [userDetails, setUserDetails] = React.useState({
-        userName: '',
+        username: '',
         email: '',
         password: ''
     })
 
-    const login = () => {
-        navigation.navigate('Main')
+    const submit = () => {
+        userFunctions.login(`${userDetails.username || userDetails.email}:${userDetails.password}`)
     }
 
     return(
@@ -34,10 +36,10 @@ const Login = ({navigation}) => {
             alignItems='center'>
                 <Input 
                 color
-                value={userDetails.userName}
+                value={userDetails.username}
                 onChangeText={e => setUserDetails({
                     ...userDetails,
-                    userName:e
+                    username:e
                 })}
                 size='lg'
                 color='white'
@@ -75,14 +77,14 @@ const Login = ({navigation}) => {
                 InputRightElement={
                 <Icon
                     color="white"
-                    size={4}
+                    size={5}
                     mr='2'
                     as={<Ionicons onPress={() => setIsPasswordShown(!isPasswordShown)} name={isPasswordShown ? 'eye-outline' : 'eye'} />}
                 />
                 }/>
                 <Button 
                 width={'90%'} 
-                onPress={login}
+                onPress={submit}
                 variant='outline'>
                     Login
                 </Button>
@@ -94,7 +96,7 @@ const Login = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#1D201F',
+      backgroundColor: '#171717',
       alignItems: 'center',
       justifyContent: 'center',
     },

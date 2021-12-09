@@ -6,6 +6,7 @@ import Profile from '../screens/Profile';
 import Search from '../screens/Search';
 import SuggestTopic from '../screens/SuggestTopic';
 import Notifications from '../screens/Notifications';
+import ProfileNavigator from './Profile';
 
 const Tab = createBottomTabNavigator()
 
@@ -33,7 +34,7 @@ const MainTabNavigator = () => {
             />
             <Tab.Screen 
             name="Profile" 
-            component={Profile} 
+            component={ProfileNavigator} 
             options={{tabBarIcon: ({color,size}) => <Ionicons name="person-outline" color={color} size={size}/>}}            
             />
         </Tab.Navigator>

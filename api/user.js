@@ -69,3 +69,12 @@ export const verify = () => {
         }
     })
 }
+
+export const editUserDetails = data => {
+    return storage.getToken()
+    .then(token => {
+        if(token){
+            
+        }
+    })
+}

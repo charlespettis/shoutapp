@@ -33,6 +33,7 @@ const RootNavigator = () => {
             />
             </>
             }
+            
           </Stack.Navigator>
       </NavigationContainer>
 

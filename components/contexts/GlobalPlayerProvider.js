@@ -8,7 +8,7 @@ const GlobalPlayerProvider = props => {
                 {
                     props.children
                 }
-                <View style={{position:'absolute',width:'0%',alignSelf:'center',height:60,top:'89s%',backgroundColor:'#1C1C1E', borderRadius:3}}/>
+                <View style={{position:'absolute',width:'0%',alignSelf:'center',height:60,top:'89%',backgroundColor:'#1C1C1E', borderRadius:3}}/>
             </>            
     )
 }

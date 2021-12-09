@@ -1,3 +1,6 @@
+
+export const env = 'http://192.168.1.147:3000/';
+
 export const Base64 = {
 
     // private property

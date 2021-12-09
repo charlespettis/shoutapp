@@ -66,7 +66,13 @@ const EditUserDetails = ({navigation, route}) => {
                 width="90%"
             />
             :
-            <UserAvatar/> 
+            <UserAvatar
+            onPickImage = {e => {
+                userFunctions.updateUserInfo({
+                    avatar: e
+                })
+            }}
+            /> 
             
             }
             <Button 
@@ -117,6 +123,12 @@ const flow = {
         title: 'Add a profile picture',
         field: 'avatar',
         isSkippable: true,
+        editAvatar: true
+    },
+    4: {
+        title: "Edit your profile picture",
+        field: 'avatar',
+        isSkippable: false,
         editAvatar: true
     }
 }

@@ -37,6 +37,7 @@ const UserProvider = props => {
                 createAccount(state)
                 .then(data => {
                     data['data']['isLoggedIn'] = true;
+                    data['data']['avatar'] = `http://192.168.1.147:3000/${data['data']['avatar']}`
                     storage.setToken(data['token'])
                     .then(()=> {
                         dispatch({type: "UPDATE", data: data['data']})
@@ -47,6 +48,8 @@ const UserProvider = props => {
                 login(encodedCredentials)
                 .then(data => {
                     data['data']['isLoggedIn'] = true;
+                    data['data']['avatar'] = `http://192.168.1.147:3000/${data['data']['avatar']}`
+
                     storage.setToken(data['token'])
                     .then(()=> {
                         dispatch({type: "UPDATE", data: data['data']})
@@ -55,7 +58,16 @@ const UserProvider = props => {
             },
             logOut: () => {
                 storage.removeToken();
-                dispatch({type:"UPDATE", data: { isLoggedIn: false }})
+                dispatch({type:"UPDATE", data: {
+                    username: '',
+                    email: '',
+                    password: '',
+                    fullName: '',
+                    jobTitle: '',
+                    avatar: '',
+                    admin: 0,
+                    isLoggedIn:false
+                }})
             }
         })
     );
@@ -69,7 +81,7 @@ const UserProvider = props => {
             }
         })
     },[])
-    
+
     return(
         <UserContext.Provider value={{userFunctions: userFunctions, userState: state}}>
             <>

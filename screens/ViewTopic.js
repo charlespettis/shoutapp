@@ -1,12 +1,10 @@
 import React from 'react';
 import {SafeAreaView, FlatList,View, Text} from 'react-native';
-import {Fab, Icon, Switch} from 'native-base';
 import TouchableIcon from '../components/common/TouchableIcon';
 import Topic from '../components/topic';
 import {DUMMY_DATA} from '../data';
 import Post from '../components/post';
 import Recorder from '../components/recorder';
-import {Ionicons} from '@expo/vector-icons';
 import EmptyListComponent from '../components/common/EmptyListComponent';
 
 const ViewTopic = ({navigation, route}) => {

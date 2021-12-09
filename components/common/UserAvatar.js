@@ -3,6 +3,7 @@ import { TouchableOpacity, Image} from 'react-native';
 import DefaultAvatar from '../../assets/images/defaultAvatar.png';
 import * as ImagePicker from 'expo-image-picker';
 import {UserContext} from '../contexts/UserProvider';
+import {env} from '../../misc';
 
 const UserAvatar = props => {
     const [image, setImage] = React.useState(null)
@@ -29,10 +30,7 @@ const UserAvatar = props => {
     
         if (!result.cancelled) {
           setImage(result.uri);
-          console.log(result);
-          userFunctions.updateUserInfo({
-              avatar: result.uri
-          })
+          if(props.onPickImage) props.onPickImage(result.uri); 
         }
     };
 
@@ -45,7 +43,7 @@ const UserAvatar = props => {
             <Image
 
                 style={{height:100,width:100,borderRadius:100}}
-                source={image ? {uri:image} : DefaultAvatar}
+                source={userState.avatar ? {uri: userState.avatar} : image ? image : DefaultAvatar}
             />
             </TouchableOpacity>
         </>

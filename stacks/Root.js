@@ -5,6 +5,7 @@ import ViewTopic from '../screens/ViewTopic';
 import MainTabNavigator from '../stacks/Main';
 import LandingStack from '../stacks/Landing';
 import {UserContext} from '../components/contexts/UserProvider';
+import TopicsProvider from '../components/contexts/TopicsProvider';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,7 +14,8 @@ const RootNavigator = () => {
   const {userFunctions, userState}  = React.useContext(UserContext);
   
   return(
-        <NavigationContainer>
+    <TopicsProvider>
+      <NavigationContainer>
           <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName="Landing">
             {
             !userState.isLoggedIn ? 
@@ -36,7 +38,7 @@ const RootNavigator = () => {
             
           </Stack.Navigator>
       </NavigationContainer>
-
+    </TopicsProvider>
     )
 }
 

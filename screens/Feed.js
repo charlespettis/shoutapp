@@ -3,7 +3,6 @@ import {View, FlatList, RefreshControl} from 'react-native';
 import Topic from '../components/topic';
 import EmptyListComponent from '../components/common/EmptyListComponent';
 import {getTopics, getTopicsByCategory} from '../api/topic';
-import {env, timeSince} from '../misc';
 import {TopicsContext} from '../components/contexts/TopicsProvider';
 
 const Feed = ({navigation, route}) => {
@@ -17,18 +16,17 @@ const Feed = ({navigation, route}) => {
         id={item.id}
         category={item.category}
         title={item.title}
-        imageUri={{uri: `${env}${item.image}`}}
-        timestamp={timeSince(new Date(item.createdAt))}
+        imageUri={item.image}
+        timestamp={item.createdAt}
         navigation={navigation}
         />
     );
 
     const handleRefresh = () => {
-        handleGetTopics(20);
+        handleGetTopics(10);
     }
 
     const handleOnEndReached = () => {
-        console.log('rree');
         handleGetTopics(count + 10);
         setCount(prevState => prevState + 10)
     }
@@ -57,8 +55,9 @@ const Feed = ({navigation, route}) => {
     return(
         <View style={{flex:1,backgroundColor:'black'}}>
             <FlatList
-                data={route.name === 'Latest' ? topics.topics : topics.topics.filter(e => e.category === route.name)}
+                data={ topics.topics && topics.topics }
                 renderItem={renderItem}
+                extraData={topics.topics}
                 keyExtractor={item => item.id}
                 refreshing={isRefreshing}
                 onRefresh={handleRefresh}

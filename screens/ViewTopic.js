@@ -1,27 +1,32 @@
 import React from 'react';
-import {SafeAreaView, FlatList,View, Text} from 'react-native';
+import {SafeAreaView, FlatList,View} from 'react-native';
 import TouchableIcon from '../components/common/TouchableIcon';
 import Topic from '../components/topic';
-import {DUMMY_DATA} from '../data';
 import Post from '../components/post';
 import Recorder from '../components/recorder';
 import EmptyListComponent from '../components/common/EmptyListComponent';
+import {TopicsContext} from '../components/contexts/TopicsProvider';
 
 const ViewTopic = ({navigation, route}) => {
     const [isRecorderShown, setIsRecorderShown] = React.useState(false);
     const [isRecording, setIsRecording] = React.useState(false);
-    
+    const {topics, topicsFunctions} = React.useContext(TopicsContext);
+
     const getTopic = () => {
-        const index = DUMMY_DATA.findIndex(e => e.id === route.params.id);
-        return(
-            <Topic
-            id={DUMMY_DATA[index]['id']}
-            category={DUMMY_DATA[index]['category']}
-            title={DUMMY_DATA[index]['title']}
-            imageUri={DUMMY_DATA[index]['imageUri']}
-            timestamp={DUMMY_DATA[index]['timestamp']}
-            />
-        )
+        const index = topics.topics.findIndex(e => e.id === route.params.id);
+        if(index > -1){
+            return(
+                <View style={{paddingBottom:10,backgroundColor:'black'}}>
+                <Topic
+                id={topics.topics[index]['id']}
+                category={topics.topics[index]['category']}
+                title={topics.topics[index]['title']}
+                imageUri={topics.topics[index]['image']}
+                timestamp={topics.topics[index]['createdAt']}
+                />
+                </View>
+            )
+        }
     }
 
     const renderItem = ({item}) => (
@@ -70,7 +75,7 @@ export default ViewTopic;
 
 const Header = props => {
     return(
-        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginRight:5,marginLeft:5,marginTop:10}}>
+        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginRight:5,marginLeft:5,marginTop:10,marginBottom:10}}>
             <TouchableIcon
             color="white"
             size={32}

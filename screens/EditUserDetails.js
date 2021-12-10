@@ -70,7 +70,6 @@ const EditUserDetails = ({navigation, route}) => {
             :
             <UserAvatar
             onPickImage = {e => {
-                console.log(e);
                 setImage(e);
                 userFunctions.updateUserInfo({
                     avatar: e

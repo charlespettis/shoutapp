@@ -21,7 +21,6 @@ export const createAccount = data => {
         body: formData
     })
     .then(res => {
-        console.log(res.status);
         if(res.status === 200){
             return res.json();
         } else {
@@ -56,6 +55,7 @@ export const verify = () => {
     return storage.getToken()
     .then(token => {
         if(token){
+            storage.token = token;
             return fetch(`${proxy}/verify`, {
                 method: "GET",
                 headers:{
@@ -64,7 +64,6 @@ export const verify = () => {
             })
             .then(res => {
                 if(res.status === 200){
-                    storage.token = token;
                     return res.json();
                 }
             })
@@ -95,7 +94,6 @@ export const editAvatar = data => {
 }
 
 export const editUserDetails = data => {
-    console.log(data);
     return fetch(`${proxy}/editUserDetails`, {
         method: "PATCH",
         body: JSON.stringify(data),

@@ -54,7 +54,6 @@ const Recorder = props => {
                 setBarValues(prevState => [ newValue, ...prevState] );
                 setDurationMillis(e.durationMillis);
                 if( barValues.length > (screenWidth / 5) ){
-                    console.log('heehee');
                     setBarValues(prevState => {
                         const newData = prevState.slice(0,prevState.length - 1);
                         return newData

@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Pressable, Text, Image, StyleSheet} from 'react-native';
+import {env, timeSince} from '../../misc';
 
 const Topic = props => {
 
@@ -28,11 +29,11 @@ const Topic = props => {
             <View style={{marginLeft:15,flexDirection:'column',flex:3}}>
                 <View style={{flexDirection:'row',alignItems:'flex-end',marginBottom:5}}>
                     <Text style={{color:getColor()}}>{props.category}</Text>
-                    <Text style={styles.timestamp}>{props.timestamp}</Text>
+                    <Text style={styles.timestamp}>{timeSince(new Date(props.timestamp))}</Text>
                 </View>
                 <Text style={{color:'white'}}>{props.title}</Text>
             </View>
-            <Image source={props.imageUri} resizeMode='cover' style={{height:'100%',flex:1}}/>
+            <Image source={{uri: `${env}${props.imageUri}`}} resizeMode='cover' style={{height:'100%',flex:1}}/>
         </View>
         </Pressable>
     )

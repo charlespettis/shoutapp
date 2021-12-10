@@ -1,5 +1,6 @@
 import React from 'react';
 import {getTopics} from '../../api/topic';
+import storage from '../../storage';
 
 export const TopicsContext = React.createContext();
 
@@ -29,10 +30,11 @@ const TopicsProvider = props => {
     )
 
     React.useEffect(()=>{
-        getTopics(20)
-        .then(topics => {
-            dispatch({type: "UPDATE", data: topics})
-        })
+            getTopics(10)
+            .then(topics => {
+                console.log('ree', topics);
+                dispatch({type: "UPDATE", data: topics})
+            })
     },[])
 
     return(

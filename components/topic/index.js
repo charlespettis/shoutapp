@@ -24,15 +24,15 @@ const Topic = props => {
 
     return(
         <Pressable key={props.id} onPress={goToTopic} >
-        <View style={{minHeight:150,flexDirection:'row',justifyContent:'space-between',backgroundColor:'black',width:'100%',padding:10,marginBottom:1,borderBottomWidth:1,borderBottomColor:'rgba(68, 75, 73, .5)'}}>
-            <View style={{paddingRight:15,flexDirection:'column',flex:3}}>
+        <View style={{minHeight:100,flexDirection:'row-reverse',justifyContent:'space-between',backgroundColor:'black',width:'100%',padding:10}}>
+            <View style={{marginLeft:15,flexDirection:'column',flex:3}}>
                 <View style={{flexDirection:'row',alignItems:'flex-end',marginBottom:5}}>
                     <Text style={{color:getColor()}}>{props.category}</Text>
                     <Text style={styles.timestamp}>{props.timestamp}</Text>
                 </View>
                 <Text style={{color:'white'}}>{props.title}</Text>
             </View>
-            <Image source={props.imageUri} resizeMode='contain' style={{height:'100%',flex:1}}/>
+            <Image source={props.imageUri} resizeMode='cover' style={{height:'100%',flex:1}}/>
         </View>
         </Pressable>
     )

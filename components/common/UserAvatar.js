@@ -2,12 +2,8 @@ import React from 'react';
 import { TouchableOpacity, Image} from 'react-native';
 import DefaultAvatar from '../../assets/images/defaultAvatar.png';
 import * as ImagePicker from 'expo-image-picker';
-import {UserContext} from '../contexts/UserProvider';
-import {env} from '../../misc';
 
 const UserAvatar = props => {
-    const [image, setImage] = React.useState(null)
-    const {userFunctions, userState} = React.useContext(UserContext)
 
     React.useEffect(() => {
         (async () => {
@@ -29,7 +25,6 @@ const UserAvatar = props => {
         });
     
         if (!result.cancelled) {
-          setImage(result.uri);
           if(props.onPickImage) props.onPickImage(result.uri); 
         }
     };
@@ -41,9 +36,8 @@ const UserAvatar = props => {
             onPress={pickImage}
             >
             <Image
-
                 style={{height:100,width:100,borderRadius:100}}
-                source={userState.avatar ? {uri: userState.avatar} : image ? image : DefaultAvatar}
+                source={props.source ? props.source : DefaultAvatar}
             />
             </TouchableOpacity>
         </>

@@ -3,6 +3,7 @@ import {SafeAreaView,ScrollView, View, Text, StyleSheet, TouchableOpacity} from 
 import {List, ListItem} from '../components/list';
 import {UserContext} from '../components/contexts/UserProvider';
 import UserAvatar from '../components/common/UserAvatar';
+import {env} from '../misc';
 
 const Profile = ({navigation, route}) => {
 
@@ -13,16 +14,19 @@ const Profile = ({navigation, route}) => {
             <ScrollView style={{flex:1,width:'100%',marginTop:20}} contentContainerStyle={{alignItems:'center',paddingBottom:20}}>
 
                 <UserAvatar
-                onPickImage = {() => alert('ree')}
+                onPickImage = {e => userFunctions.editAvatar({avatar: e})}
+                source = { userState.avatar && {uri: env + userState.avatar} }
                 />
 
                 <Text style={{color:'white',fontSize:24,marginTop:20}}>{userState.fullName}</Text>
-            
-                <TouchableOpacity>
-                    <Text style={styles.text}>{userState.jobTitle}</Text>
+
+                <TouchableOpacity onPress={() => navigation.navigate('EditUserDetails', {id:'profile-jobTitle'})}>
+                    <Text style={[styles.text, !userState.jobTitle  && {color:'lightblue',opacity:.9}]}>
+                    {userState.jobTitle ? userState.jobTitle : 'Add your professional title'}
+                    </Text>
                 </TouchableOpacity>
             
-                <TouchableOpacity onPress={() => navigation.navigate('EditUserDetails', {id:1})}>
+                <TouchableOpacity onPress={() => navigation.navigate('EditUserDetails', {id:'profile-company'})}>
                     <Text style={[styles.text, !userState.company  && {color:'lightblue',opacity:.9}]}>
                     {userState.company ? userState.company : 'Add your company'}
                     </Text>
@@ -30,7 +34,7 @@ const Profile = ({navigation, route}) => {
 
                 <View style={{alignItems:'flex-start',width:'90%',marginTop:20}}>
                     <Text style={{color:'white',opacity:.5}}>ABOUT ME</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('EditUserDetails', {id:'profile-bio'})}>
                         <Text style={[styles.text, !userState.bio && {color:'lightblue',opacity:.9}]}>{userState.bio ? userState.bio : 'Add a bio'}</Text>
                     </TouchableOpacity>
                 </View>
@@ -48,6 +52,17 @@ const Profile = ({navigation, route}) => {
                     <ListItem onPress={()=>alert('hi')} icon="document-outline" title="Terms of Service"/>
                     <ListItem onPress={()=>alert('hi')} icon="help-outline" title="Help Center"/>
                 </List>
+
+                {
+                userState.admin &&
+
+                <List title="Admin">
+                    <ListItem onPress={()=>alert('hi')} icon="list-outline" title="View Suggested Topics"/>
+                    <ListItem onPress={()=>alert('hi')} icon="flag-outline" title="View Flagged Posts"/>
+                </List>
+
+                }
+
             </ScrollView>
 
         </SafeAreaView>

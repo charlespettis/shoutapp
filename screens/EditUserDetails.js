@@ -8,6 +8,8 @@ import UserAvatar from '../components/common/UserAvatar';
 const EditUserDetails = ({navigation, route}) => {
     const {userFunctions, userState} = useContext(UserContext)
     const [inputValue, setInputValue] = React.useState(null);
+    const [image, setImage] = React.useState(null);
+
     const id = route.params.id;
 
     const submit = () => {
@@ -17,7 +19,7 @@ const EditUserDetails = ({navigation, route}) => {
                     [flow[id]['field']]: inputValue
                 }
             )
-            flow[id].onContinue(navigation);
+            flow[id].onContinue({navigation: navigation, userFunctions: userFunctions, inputValue: inputValue});
         } else {
             userFunctions.createAccount();
         }
@@ -68,10 +70,13 @@ const EditUserDetails = ({navigation, route}) => {
             :
             <UserAvatar
             onPickImage = {e => {
+                console.log(e);
+                setImage(e);
                 userFunctions.updateUserInfo({
                     avatar: e
                 })
             }}
+            source = { image && {uri: image} }
             /> 
             
             }
@@ -111,13 +116,13 @@ const flow = {
         title: 'Enter your full name',
         field:'fullName',
         example: 'Kilgore Trout',
-        onContinue: navigation => navigation.navigate('EditUserDetails', { id: 2 })
+        onContinue: ({navigation}) => navigation.navigate('EditUserDetails', { id: 2 })
     },
     2: {
         title: 'Enter your professional title',
         field:'jobTitle',
         example: 'Journalist, Barista, Programmer',
-        onContinue: navigation => navigation.navigate('EditUserDetails', { id: 3 })
+        onContinue: ({navigation}) => navigation.navigate('EditUserDetails', { id: 3 })
     },
     3: {
         title: 'Add a profile picture',
@@ -130,6 +135,35 @@ const flow = {
         field: 'avatar',
         isSkippable: false,
         editAvatar: true
+    },
+    'profile-company': {
+        title: "Edit your company",
+        field: 'company',
+        example: 'Microsoft',
+        onContinue: ({userFunctions, navigation, inputValue}) => {
+            userFunctions.editUserDetails({'company': inputValue});
+            navigation.goBack();
+        }
+    },
+    'profile-jobTitle': {
+        title: "Edit your job title",
+        field: 'jobTitle',
+        example: 'Barista',
+        onContinue: ({userFunctions, navigation, inputValue}) => {
+            userFunctions.editUserDetails({'jobTitle': inputValue});
+            navigation.goBack();
+        }
+    },
+    'profile-bio': {
+        title: "Edit your bio",
+        field: 'bio',
+        example: '',
+        onContinue: ({userFunctions, navigation, inputValue}) => {
+            userFunctions.editUserDetails({'bio': inputValue});
+            navigation.goBack();
+        }
     }
+
+
 }
 export default EditUserDetails;

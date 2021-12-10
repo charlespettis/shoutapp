@@ -1,5 +1,5 @@
 import React from 'react';
-import {createAccount, login,verify} from '../../api/user';
+import {createAccount, login,verify, editAvatar, editUserDetails} from '../../api/user';
 import storage from '../../storage';
 
 export const UserContext = React.createContext();
@@ -37,7 +37,6 @@ const UserProvider = props => {
                 createAccount(state)
                 .then(data => {
                     data['data']['isLoggedIn'] = true;
-                    data['data']['avatar'] = `http://192.168.1.147:3000/${data['data']['avatar']}`
                     storage.setToken(data['token'])
                     .then(()=> {
                         dispatch({type: "UPDATE", data: data['data']})
@@ -48,12 +47,22 @@ const UserProvider = props => {
                 login(encodedCredentials)
                 .then(data => {
                     data['data']['isLoggedIn'] = true;
-                    data['data']['avatar'] = `http://192.168.1.147:3000/${data['data']['avatar']}`
-
                     storage.setToken(data['token'])
                     .then(()=> {
                         dispatch({type: "UPDATE", data: data['data']})
                     })
+                })
+            },
+            editAvatar: data => {
+                editAvatar(data)
+                .then(res => {
+                    dispatch({type: "UPDATE", data: res})
+                })
+            },
+            editUserDetails: data => {
+                editUserDetails(data)
+                .then(res => {
+                    dispatch({type: "UPDATE", data: res})
                 })
             },
             logOut: () => {

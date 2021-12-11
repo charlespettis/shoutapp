@@ -66,6 +66,8 @@ const EditUserDetails = ({navigation, route}) => {
                 autoCapitalize='words'
                 color='white'
                 width="90%"
+                multiline
+                maxHeight={100}
             />
             :
             <UserAvatar

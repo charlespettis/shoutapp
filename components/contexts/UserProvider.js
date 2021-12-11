@@ -6,6 +6,19 @@ export const UserContext = React.createContext();
 
 const UserProvider = props => {
 
+    const initialState = {
+        username: '',
+        email: '',
+        password: '',
+        company: '',
+        fullName: '',
+        jobTitle: '',
+        avatar: '',
+        admin: 0,
+        isLoggedIn:false
+
+    }
+
     const [state, dispatch] = React.useReducer(
         (prevState, action) => {
             switch(action.type){
@@ -16,16 +29,7 @@ const UserProvider = props => {
                     }
             }
         },
-        {
-            username: '',
-            email: '',
-            password: '',
-            fullName: '',
-            jobTitle: '',
-            avatar: '',
-            admin: 0,
-            isLoggedIn:false
-        }
+        initialState
     )
 
     const userFunctions = React.useMemo(
@@ -67,16 +71,7 @@ const UserProvider = props => {
             },
             logOut: () => {
                 storage.removeToken();
-                dispatch({type:"UPDATE", data: {
-                    username: '',
-                    email: '',
-                    password: '',
-                    fullName: '',
-                    jobTitle: '',
-                    avatar: '',
-                    admin: 0,
-                    isLoggedIn:false
-                }})
+                dispatch({type:"UPDATE", data: initialState})
             }
         })
     );

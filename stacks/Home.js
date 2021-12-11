@@ -6,6 +6,7 @@ import Feed from '../screens/Feed';
 const Tab = createMaterialTopTabNavigator();
 
 const Home = () => {
+
     return(
     <SafeAreaView style={{flex:1,backgroundColor:'#2A2A2C'}}>
             <Tab.Navigator initialRouteName="Latest" screenOptions={{ tabBarInactiveTintColor:'white',tabBarActiveTintColor:'white', tabBarStyle:{backgroundColor:'#2A2A2C'}, tabBarScrollEnabled:true}}>

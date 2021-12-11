@@ -6,7 +6,7 @@ import UserAvatar from '../components/common/UserAvatar';
 import {Ionicons} from '@expo/vector-icons';
 import {suggestTopic} from '../api/topic';
 
-const SuggestTopic = () => {
+const SuggestTopic = ({navigation, route}) => {
     const [category, setCategory] = React.useState('Tech');
     const [title, setTitle] = React.useState('');
     const [image, setImage] = React.useState();
@@ -37,9 +37,9 @@ const SuggestTopic = () => {
         {
         !isSubmitted ? 
         <SafeAreaView style={{backgroundColor:'black',flex:1}}>        
-            <View style={{width:'90%',alignSelf:'center',alignItems:'flex-start',justifyContent:'space-evenly',flex:1}}>    
+            <View style={{width:'90%',alignSelf:'center',alignItems:'flex-start',justifyContent:'space-evenly',marginBottom: 60,flex:1}}>    
                 <Text style={{color:'white',fontSize:22,}}>Suggest A Topic</Text>
-                <UserAvatar onPickImage = {e => setImage(e)} source={image && {uri: image}} style={{width:'30%', alignSelf:'center',}}/>
+                <UserAvatar onPickImage = {e => setImage(e)} source={image && {uri: image}} style={{width:'30%', alignSelf:'center',}} imageStyle={{borderRadius:3}} />
                 <View style={{width:'100%'}}>
                 <Input value={title} onChangeText={e => setTitle(e)} selectionColor='lightblue' style={{marginBottom:0}} maxLength={200} placeholder='Title' multiline size='lg' blurOnSubmit={true} placeholderTextColor='white' color='white' w='100%' alignSelf='center' />
                 <Text style={{alignSelf:'flex-end',color:'white'}}>{200 - title.length}</Text>
@@ -53,8 +53,8 @@ const SuggestTopic = () => {
                 </Picker>
 
                 <TouchableOpacity onPress={submit} style={{flexDirection:'row',alignItems:'center',alignSelf:'flex-end'}}>
-                    <Text style={{fontSize:18, color:'cyan'}}>Submit</Text>
-                    <Ionicons name='chevron-forward' size={32} color='cyan' />
+                    <Text style={{fontSize:18, color:'lightblue'}}>Submit</Text>
+                    <Ionicons name='chevron-forward' size={32} color='lightblue' />
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

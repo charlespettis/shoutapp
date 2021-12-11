@@ -6,14 +6,15 @@ import TouchableIcon from '../common/TouchableIcon';
 import {Ionicons} from '@expo/vector-icons';
 
 const Post = props => {
+    const e = Math.floor(Math.random() * 5);
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, e === 1 && {backgroundColor:'rgba(173,216,230,.2)'}]}>
 
                 <View style={{flexDirection:'row',alignItems:'center'}}>
                 <Image source={Skiier} style={styles.avatar} resizeMode='cover'/>
                     <View style={{marginLeft:15,justifyContent:'space-between'}}>
-                        <Text style={{color:'white',fontSize:16,marginBottom:5}}>{props.fullName}</Text>
-                        <Text style={{color:'white',marginBottom:5,fontWeight:'200'}}>@itsanikabitch</Text>
+                        <Text style={{color:e === 1 ? 'lightblue' : 'white',fontSize:16,marginBottom:5}}>{props.fullName}</Text>
+                        <Text style={{color:e === 1 ? 'lightblue' : 'white',marginBottom:5,fontWeight:'200'}}>@itsanikabitch</Text>
                     </View>
                 </View>
                 <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'space-between',
-        margin:10
+        padding:10
         
     },
     avatar: {

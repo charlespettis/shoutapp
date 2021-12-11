@@ -13,16 +13,16 @@ const ViewTopic = ({navigation, route}) => {
     const {topics, topicsFunctions} = React.useContext(TopicsContext);
 
     const getTopic = () => {
-        const index = topics.topics.findIndex(e => e.id === route.params.id);
+        const index = topics.findIndex(e => e.id === route.params.id);
         if(index > -1){
             return(
                 <View style={{paddingBottom:10,backgroundColor:'black'}}>
                 <Topic
-                id={topics.topics[index]['id']}
-                category={topics.topics[index]['category']}
-                title={topics.topics[index]['title']}
-                imageUri={topics.topics[index]['image']}
-                timestamp={topics.topics[index]['createdAt']}
+                id={topics[index]['id']}
+                category={topics[index]['category']}
+                title={topics[index]['title']}
+                imageUri={topics[index]['image']}
+                timestamp={topics[index]['createdAt']}
                 />
                 </View>
             )

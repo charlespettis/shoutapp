@@ -36,7 +36,7 @@ const UserAvatar = props => {
             onPress={pickImage}
             >
             <Image
-                style={{height:100,width:100,borderRadius:100}}
+                style={[{height:100,width:100,borderRadius:100}, props.imageStyle]}
                 source={props.source ? props.source : DefaultAvatar}
             />
             </TouchableOpacity>

@@ -2,14 +2,13 @@ import React from 'react';
 import {View, FlatList, RefreshControl} from 'react-native';
 import Topic from '../components/topic';
 import EmptyListComponent from '../components/common/EmptyListComponent';
-import {getTopics, getTopicsByCategory} from '../api/topic';
 import {TopicsContext} from '../components/contexts/TopicsProvider';
 
 const Feed = ({navigation, route}) => {
 
     const [isRefreshing, setIsRefreshing] = React.useState(false);
     const {topics, topicsFunctions} = React.useContext(TopicsContext);
-    const [count, setCount] = React.useState(20);
+    const [count, setCount] = React.useState(10);
 
     const renderItem = ({ item }) => (
         <Topic
@@ -22,50 +21,46 @@ const Feed = ({navigation, route}) => {
         />
     );
 
-    const handleRefresh = () => {
-        handleGetTopics(10);
-    }
-
-    const handleOnEndReached = () => {
-        handleGetTopics(count + 10);
-        setCount(prevState => prevState + 10)
-    }
-
-    const handleGetTopics = (count) => {
+    const handleGetAllTopics = async () => {
         setIsRefreshing(true)
         if(route.name === "Latest"){
-            getTopics(count)
-            .then(data => {
-                if(data){
-                    topicsFunctions.update(data)
-                }
-            })
+            await topicsFunctions.getAll();
         }
         else {
-        getTopicsByCategory(route.name, count)
-        .then(data => {
-            if(data){
-                topicsFunctions.update(data);
-            }
-        })
+            await topicsFunctions.getAllByCategory(route.name)
         }
         setIsRefreshing(false);
     }
 
+    const handleGetMoreTopics = () => {
+        if(route.name === "Latest"){
+            topicsFunctions.getMore(count + 10);
+        }
+        else {
+            topicsFunctions.getAllByCategory(route.name, count + 10)
+        }
+        setCount(prevState => prevState + 10)
+    }
+
+    React.useEffect(()=>{
+        if(route.name === 'Latest'){
+            topicsFunctions.getAll();
+        }
+    },[])
+
     return(
         <View style={{flex:1,backgroundColor:'black'}}>
             <FlatList
-                data={ topics.topics && topics.topics }
+                data={ route.name === 'Latest' ? topics : topics.filter(e => e.category === route.name) }
                 renderItem={renderItem}
-                extraData={topics.topics}
                 keyExtractor={item => item.id}
                 refreshing={isRefreshing}
-                onRefresh={handleRefresh}
+                onRefresh={handleGetAllTopics}
                 onEndReachedThreshold={0.5}
                 style={{padding:2}}
                 onEndReached={({ distanceFromEnd }) => {
                     if(distanceFromEnd >= 0) {
-                        handleOnEndReached();
+                        handleGetMoreTopics();
                     }
                 }}
                 indicatorStyle={'white'}                       
@@ -73,7 +68,7 @@ const Feed = ({navigation, route}) => {
                 refreshControl={
                     <RefreshControl
                     refreshing={isRefreshing}
-                    onRefresh={handleRefresh}
+                    onRefresh={handleGetAllTopics}
                     tintColor="#fff"
                  />
                 }

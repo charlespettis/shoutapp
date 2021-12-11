@@ -140,7 +140,13 @@ const Recorder = props => {
 
     const resetRecording = () => {
         setRecordingPath(null);
+        if(props.onReset) props.onReset();
     }
+
+    const submit = () => {
+        props.onSubmit(recordingPath)
+    }
+
     React.useEffect(()=>{
         return async () => {
             if(recording) await recording.stopAndUnloadAsync();
@@ -184,6 +190,7 @@ const Recorder = props => {
                         name='checkmark'
                         color='lightgreen'
                         size={24}
+                        onPress={submit}
                     />
                 }
                 recording={recordingPath}

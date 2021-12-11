@@ -1,9 +1,7 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
-import Skiier from '../../assets/images/skiing.jpg';
-import Player from '../player';
-import TouchableIcon from '../common/TouchableIcon';
 import {Ionicons} from '@expo/vector-icons';
+import {env} from '../../misc';
 
 const Post = props => {
     const e = Math.floor(Math.random() * 5);
@@ -11,10 +9,10 @@ const Post = props => {
         <View style={[styles.container, e === 1 && {backgroundColor:'rgba(173,216,230,.2)'}]}>
 
                 <View style={{flexDirection:'row',alignItems:'center'}}>
-                <Image source={Skiier} style={styles.avatar} resizeMode='cover'/>
+                <Image source={{uri: `${env}${props.avatar}`}} style={styles.avatar} resizeMode='cover'/>
                     <View style={{marginLeft:15,justifyContent:'space-between'}}>
                         <Text style={{color:e === 1 ? 'lightblue' : 'white',fontSize:16,marginBottom:5}}>{props.fullName}</Text>
-                        <Text style={{color:e === 1 ? 'lightblue' : 'white',marginBottom:5,fontWeight:'200'}}>@itsanikabitch</Text>
+                        <Text style={{color:e === 1 ? 'lightblue' : 'white',marginBottom:5,fontWeight:'200'}}>@{props.username}</Text>
                     </View>
                 </View>
                 <View style={{flexDirection:'row',alignItems:'center'}}>

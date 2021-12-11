@@ -5,20 +5,23 @@ import UserProvider from './components/contexts/UserProvider';
 import GlobalPlayerProvider from './components/contexts/GlobalPlayerProvider';
 import RootNavigator from './stacks/Root';
 import TopicsProvider from './components/contexts/TopicsProvider';
+import PostsProvider from './components/contexts/PostsProvider';
 const App = () => {
 
   LogBox.ignoreAllLogs();
   
   return (
     <UserProvider>
-      <TopicsProvider>
-      <StatusBar barStyle='light-content' />
-      <GlobalPlayerProvider>
-        <NativeBaseProvider>
-          <RootNavigator />
-        </NativeBaseProvider>
-      </GlobalPlayerProvider>
-      </TopicsProvider>
+      <PostsProvider>
+        <TopicsProvider>
+        <StatusBar barStyle='light-content' />
+          <GlobalPlayerProvider>
+            <NativeBaseProvider>
+              <RootNavigator />
+            </NativeBaseProvider>
+          </GlobalPlayerProvider>
+        </TopicsProvider>
+      </PostsProvider>
     </UserProvider>
   );
 }

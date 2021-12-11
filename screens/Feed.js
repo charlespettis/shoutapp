@@ -8,7 +8,7 @@ const Feed = ({navigation, route}) => {
 
     const [isRefreshing, setIsRefreshing] = React.useState(false);
     const {topics, topicsFunctions} = React.useContext(TopicsContext);
-    const [count, setCount] = React.useState(10);
+    const [count, setCount] = React.useState(0);
 
     const renderItem = ({ item }) => (
         <Topic
@@ -37,15 +37,16 @@ const Feed = ({navigation, route}) => {
             topicsFunctions.getMore(count + 10);
         }
         else {
-            topicsFunctions.getAllByCategory(route.name, count + 10)
+            topicsFunctions.getMoreByCategory(route.name, count + 10)
         }
         setCount(prevState => prevState + 10)
     }
 
     React.useEffect(()=>{
         if(route.name === 'Latest'){
-            topicsFunctions.getAll();
-        }
+            topicsFunctions.getAll()
+            console.log('ree');
+        } 
     },[])
 
     return(

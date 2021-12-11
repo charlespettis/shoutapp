@@ -1,7 +1,7 @@
-import {Base64} from '../misc';
+import {Base64, env} from '../misc';
 import storage from '../storage';
 
-const proxy = `http://192.168.1.147:3000/user`;
+const proxy = `${env}user`;
 
 export const checkCredentials = (username, email) => {
     return fetch(`${proxy}/checkCredentials/${username}/${email}`)

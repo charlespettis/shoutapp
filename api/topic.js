@@ -1,6 +1,7 @@
 import storage from '../storage';
+import {env} from '../misc';
 
-const proxy = `http://192.168.1.147:3000/topic`;
+const proxy = `${env}topic`;
 
 export const suggestTopic = data => {
     const formData = new FormData();
@@ -17,8 +18,8 @@ export const suggestTopic = data => {
     })
 }
 
-export const getTopics = count => {
-    return fetch(`${proxy}/getTopics/${count}`,
+export const getTopics = (offset,count) => {
+    return fetch(`${proxy}/getTopics/${offset}/${count}`,
     {
         headers: {
             'Authorization': `Token ${storage.token}`
@@ -31,8 +32,8 @@ export const getTopics = count => {
     })
 }
 
-export const getTopicsByCategory = (category, count) => {
-    return fetch (`${proxy}/getTopicsByCategory/${category}/${count}`,{
+export const getTopicsByCategory = (category, offset, count) => {
+    return fetch (`${proxy}/getTopicsByCategory/${category}/${offset}/${count}`,{
         headers: {
             'Authorization': `Token ${storage.token}`
         }

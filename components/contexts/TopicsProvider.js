@@ -35,21 +35,27 @@ const TopicsProvider = props => {
     const topicsFunctions = React.useMemo(
         () => ({
             getAll: () => {
-                getTopics(10)
+                getTopics(0,20)
                 .then(data => {
                     dispatch({type: "GETNEWEST", data: data})
                 })
             },
             getAllByCategory: category => {
-                getTopicsByCategory(category, 10)
+                getTopicsByCategory(category, 0, 10)
                 .then(data => {
                     dispatch({type: "GETNEWEST", data: data})
                 })
             },
-            getMore: count => {
-                getTopics(count)
+            getMore: offset => {
+                getTopics(offset, 10)
                 .then(data => {
                     dispatch({type:"GETMORE", data: data})
+                })
+            },
+            getMoreByCategory: (category, offset) => {
+                getTopicsByCategory(category, offset, 10)
+                .then(data => {
+                    dispatch({type: "GETMORE", data: data});
                 })
             }
         })

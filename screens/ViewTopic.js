@@ -6,11 +6,14 @@ import Post from '../components/post';
 import Recorder from '../components/recorder';
 import EmptyListComponent from '../components/common/EmptyListComponent';
 import {TopicsContext} from '../components/contexts/TopicsProvider';
+import { createPost } from '../api/post';
+import { PostsContext } from '../components/contexts/PostsProvider';
 
 const ViewTopic = ({navigation, route}) => {
     const [isRecorderShown, setIsRecorderShown] = React.useState(false);
     const [isRecording, setIsRecording] = React.useState(false);
     const {topics, topicsFunctions} = React.useContext(TopicsContext);
+    const {posts, postFunctions} = React.useContext(PostsContext);
 
     const getTopic = () => {
         const index = topics.findIndex(e => e.id === route.params.id);
@@ -29,13 +32,16 @@ const ViewTopic = ({navigation, route}) => {
         }
     }
 
-    const renderItem = ({item}) => (
+    const renderItem = ({item}) => {
+        console.log(item)
+        return(
         <Post
-            fullName = {item.fullName}
-            jobTitle = {item.jobTitle}
-            company = {item.company}
-        />
-    )
+            fullName = {item['User'].fullName}
+            username = {item['User'].username}
+            avatar = {item['User'].avatar}
+            recording = {item.recording}
+        />)
+    }
 
     const toggleRecorder = () => {
         if(isRecorderShown){
@@ -45,6 +51,15 @@ const ViewTopic = ({navigation, route}) => {
         }
     }
 
+    const submit = async recording => {
+        await postFunctions.createPost({recording: recording, topicId: route.params.id})
+        setIsRecorderShown(false)
+    }
+
+    React.useEffect(()=>{
+        postFunctions.getPostsByTopic({id: route.params.id, count: 10})
+    },[])
+
     return(
         <SafeAreaView style={{flex:1,backgroundColor:'black'}}>
             <Header onAdd={toggleRecorder} isRecorderShown={isRecorderShown} goBack={()=>{navigation.goBack()}}/>
@@ -52,7 +67,7 @@ const ViewTopic = ({navigation, route}) => {
             <FlatList
              stickyHeaderIndices={[0]}
              ListHeaderComponent={getTopic()}
-             data={POSTS_DATA}
+             data={posts}
              renderItem={renderItem}
              ListEmptyComponent={<EmptyListComponent style={{paddingTop:'25%'}}/>}
             />
@@ -60,6 +75,8 @@ const ViewTopic = ({navigation, route}) => {
             {
             isRecorderShown && 
             <Recorder
+            onSubmit={e=> submit(e)}
+            onReset = { toggleRecorder }
             onRecordingStart={() => setIsRecording(true)}
             onRecordingStop={() => setIsRecording(false)}
             style={{paddingLeft:20,paddingRight:20,paddingTop:20}}

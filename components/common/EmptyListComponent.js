@@ -7,7 +7,7 @@ const Empty = props => {
         <View style={[{flex:1,justifyContent:'center',height:'100%',alignItems:'center'}, {...props.style}]}>
             <View style={{alignItems:'center',width:'75%'}}>
                 <Ionicons name='sad-outline' color='white' size={32}/>
-                <Text style={{textAlign:'center',color:'white',marginTop:25}}>There's nothing here! Click the plus button at the bottom to add a post.</Text>
+                <Text style={{textAlign:'center',color:'white',marginTop:25}}>There's nothing here! Click the plus button to start the conversation.</Text>
             </View>
         </View>
     )

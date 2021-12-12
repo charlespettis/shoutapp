@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Image, Text, FlatList, StyleSheet,SafeAreaView,TouchableOpacity} from 'react-native';
-import Snake from '../assets/images/snake.jpg';
 
 
 const Notifications = () => {
@@ -21,12 +20,12 @@ const Notifications = () => {
                 <TouchableOpacity>
                 <Text style={{color:'white',fontSize:14}}>Clear All</Text>
                 </TouchableOpacity>
-                </View>
+                </View>{/*
                 <FlatList
                     data={data}
                     renderItem={renderItem}
                     style={{height:'100%'}}
-                />
+                />*/}
             </View>
         </SafeAreaView>
     )
@@ -80,23 +79,5 @@ const styles = StyleSheet.create({
         marginLeft:10
     }
 })
-
-const data = [
-    {
-     avatar: Snake,
-     acknowledged: false,
-     message: "Someone liked your post!"
-    },
-    {
-    avatar: Snake,
-    acknowledged: false,
-    message: "Someone liked your post!"
-    },
-    {
-    avatar: Snake,
-    acknowledged: true,
-    message: "Someone liked your post!"
-    }
-]
 
 export default Notifications;

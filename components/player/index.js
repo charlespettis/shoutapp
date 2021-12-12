@@ -81,7 +81,7 @@ const Player = props => {
 
             </View>
             <ProgressBar
-            progress={sound && `${progress}%`}
+            progress={sound && progress}
             />
 
         </View>

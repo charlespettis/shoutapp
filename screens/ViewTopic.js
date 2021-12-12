@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, FlatList,View} from 'react-native';
+import {SafeAreaView, FlatList,View, ActivityIndicator} from 'react-native';
 import TouchableIcon from '../components/common/TouchableIcon';
 import Topic from '../components/topic';
 import Post from '../components/post';
@@ -8,13 +8,16 @@ import EmptyListComponent from '../components/common/EmptyListComponent';
 import {TopicsContext} from '../components/contexts/TopicsProvider';
 import { createPost } from '../api/post';
 import { PostsContext } from '../components/contexts/PostsProvider';
+import { GlobalPlayerContext } from '../components/contexts/GlobalPlayerProvider';
 
 const ViewTopic = ({navigation, route}) => {
     const [isRecorderShown, setIsRecorderShown] = React.useState(false);
     const [isRecording, setIsRecording] = React.useState(false);
     const {topics, topicsFunctions} = React.useContext(TopicsContext);
     const {posts, postFunctions} = React.useContext(PostsContext);
-
+    const {player, playerFunctions} = React.useContext(GlobalPlayerContext);
+    const [isLoading, setIsLoading] = React.useState(true);
+    console.log(posts);
     const getTopic = () => {
         const index = topics.findIndex(e => e.id === route.params.id);
         if(index > -1){
@@ -33,12 +36,12 @@ const ViewTopic = ({navigation, route}) => {
     }
 
     const renderItem = ({item}) => {
-        console.log(item)
         return(
         <Post
-            fullName = {item['User'].fullName}
-            username = {item['User'].username}
-            avatar = {item['User'].avatar}
+            id = {item.id || 1}
+            fullName = {item.fullName || item["User"].fullName}
+            username = {item.username || item["User"].username}
+            avatar = {item.avatar || item["User"].avatar}
             recording = {item.recording}
         />)
     }
@@ -47,6 +50,7 @@ const ViewTopic = ({navigation, route}) => {
         if(isRecorderShown){
             setIsRecorderShown(false);
         } else {
+            playerFunctions.stop();
             setIsRecorderShown(true);
         }
     }
@@ -57,21 +61,40 @@ const ViewTopic = ({navigation, route}) => {
     }
 
     React.useEffect(()=>{
-        postFunctions.getPostsByTopic({id: route.params.id, count: 10})
+        (
+            async function(){
+                await postFunctions.getPostsByTopic({id: route.params.id, count: 10})
+            }
+        )();
+        setIsLoading(false);
     },[])
+
+    React.useEffect(()=>{
+        const mount = navigation.addListener('focus', () => {
+            playerFunctions.lower();
+        })
+        const unMount = navigation.addListener('blur', () => {
+            playerFunctions.raise();
+        })
+        return () => {
+            mount,
+            unMount
+        } 
+    },[navigation])
 
     return(
         <SafeAreaView style={{flex:1,backgroundColor:'black'}}>
             <Header onAdd={toggleRecorder} isRecorderShown={isRecorderShown} goBack={()=>{navigation.goBack()}}/>
-
+            {
+            isLoading ? <ActivityIndicator size='small' /> :
             <FlatList
              stickyHeaderIndices={[0]}
              ListHeaderComponent={getTopic()}
              data={posts}
              renderItem={renderItem}
-             ListEmptyComponent={<EmptyListComponent style={{paddingTop:'25%'}}/>}
+             ListEmptyComponent={ <EmptyListComponent style={{paddingTop:'25%'}}/>}
             />
-            
+            }
             {
             isRecorderShown && 
             <Recorder

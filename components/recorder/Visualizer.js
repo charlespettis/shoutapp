@@ -2,7 +2,6 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
 const Visualizer = props => {
-
     return(
     <View style={styles.barContainer}>
     {

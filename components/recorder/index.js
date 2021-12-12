@@ -17,9 +17,15 @@ const Recorder = props => {
     const [isRecording, setIsRecording] = React.useState(false);
     const [recording, setRecording] = React.useState();
     const [recordingPath, setRecordingPath] = React.useState();
-    const [barValues, setBarValues] = React.useState([]);
+    const [barValues, _setBarValues] = React.useState([]);
     const [soundEffect, setSoundEffect] = React.useState();
     const [durationMillis, setDurationMillis] = React.useState();
+
+    const barValuesRef = React.useRef(barValues)
+    const setBarValues = data => {
+        barValuesRef.current = data;
+        _setBarValues(data)
+    }
 
     const screenWidth = Dimensions.get('screen').width;
 
@@ -46,19 +52,42 @@ const Recorder = props => {
         
             }); 
             const { recording } = await Audio.Recording.createAsync(
-                Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
+                {
+                    isMeteringEnabled:true,
+                    ios: {
+                        extension: '.wav',
+                        audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_HIGH,
+                        sampleRate: 44100,
+                        numberOfChannels: 2,
+                        bitRate: 128000,
+                    },
+                    android: {
+                        extension: '.wav',
+                        outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_DEFAULT,
+                        audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_DEFAULT,
+    
+                    }
+    
+                }
             );
             recording.setProgressUpdateInterval(50)
+            const startTime = new Date();
             recording.setOnRecordingStatusUpdate(e => {
                 const newValue = interpolateMeterValue(e.metering)
-                setBarValues(prevState => [ newValue, ...prevState] );
                 setDurationMillis(e.durationMillis);
-                if( barValues.length > (screenWidth / 5) ){
-                    setBarValues(prevState => {
+                
+                setBarValues(prevState => {
+                    endTime = new Date();
+                    var timeDiff = endTime - startTime; 
+                    console.log(timeDiff);
+                    if( timeDiff >= 5000  ){
                         const newData = prevState.slice(0,prevState.length - 1);
-                        return newData
-                    })
-                }
+                        const response = [newValue, ...newData]
+                        return response
+                    } else {
+                        return [ newValue, ...prevState]
+                    }
+                })                
     
             })
             setRecording(recording);
@@ -66,7 +95,6 @@ const Recorder = props => {
         },350)
 
     }
-
     const stopRecording = async () => {
         if(props.onRecordingStop) props.onRecordingStop();
         setRecording(undefined);
@@ -120,13 +148,13 @@ const Recorder = props => {
                 require('../../assets/sounds/beep_down.wav')
             );
             setSoundEffect(sound);
-            return sound.playAsync();    
+            return soundEffect.playAsync();    
         } else {
             const { sound } = await Audio.Sound.createAsync(
                 require('../../assets/sounds/beep_up.wav')
             );
             setSoundEffect(sound);
-            return sound.playAsync();    
+            return soundEffect.playAsync();    
         }
     }
 
@@ -149,9 +177,10 @@ const Recorder = props => {
 
     React.useEffect(()=>{
         return async () => {
-            if(recording) await recording.stopAndUnloadAsync();
+            soundEffect && soundEffect.unloadAsync();
         }
-    },[recording])
+    },[soundEffect])
+
 
     return(
         <Animated.View style={[styles.container, {height:containerHeight}, {...props.style}]}>

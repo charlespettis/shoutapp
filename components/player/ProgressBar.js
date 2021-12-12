@@ -4,7 +4,7 @@ import {View, StyleSheet} from 'react-native';
 
 const ProgressBar = props => {
     return(
-        <View style={[{width: props.progress}, styles.container]}/>
+        <View style={[{width: `${props.progress}%`}, styles.container]}/>
     )
 }
 

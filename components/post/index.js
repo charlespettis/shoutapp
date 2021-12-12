@@ -1,26 +1,34 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet,TouchableWithoutFeedback} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
-import {env} from '../../misc';
+import {env,timeSince} from '../../misc';
+import {GlobalPlayerContext} from '../contexts/GlobalPlayerProvider';
 
 const Post = props => {
-    const e = Math.floor(Math.random() * 5);
+    const {player, playerFunctions} = React.useContext(GlobalPlayerContext);
+    const play = () => {
+        playerFunctions.play(props)
+    }
     return(
-        <View style={[styles.container, e === 1 && {backgroundColor:'rgba(173,216,230,.2)'}]}>
-
+        <TouchableWithoutFeedback onPress={play}>
+            <View style={[styles.container, player.id === props.id && {backgroundColor:'rgba(173,216,230,.2)'}]}>
                 <View style={{flexDirection:'row',alignItems:'center'}}>
                 <Image source={{uri: `${env}${props.avatar}`}} style={styles.avatar} resizeMode='cover'/>
                     <View style={{marginLeft:15,justifyContent:'space-between'}}>
-                        <Text style={{color:e === 1 ? 'lightblue' : 'white',fontSize:16,marginBottom:5}}>{props.fullName}</Text>
-                        <Text style={{color:e === 1 ? 'lightblue' : 'white',marginBottom:5,fontWeight:'200'}}>@{props.username}</Text>
+                        <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Text style={{color:player.id === props.id ? 'lightblue' : 'white',fontSize:16,marginBottom:5,fontWeight:'300'}}>{props.fullName} </Text>
+                        <Text style={{color:'white', color:'white',opacity:.7,fontSize:10, marginLeft:5}}>{timeSince(props.createdAt)}</Text>
+                        </View>
+                        <Text style={{color:player.id === props.id ? 'lightblue' : 'white',marginBottom:5,fontWeight:'200'}}>@{props.username}</Text>
                     </View>
                 </View>
                 <View style={{flexDirection:'row',alignItems:'center'}}>
-                    <Ionicons name='heart-outline' color='rgba(255,255,255,.7)' size={22} style={{marginRight:15}}/>
+                    <Ionicons onPress={()=>alert('flaflaflunkie')} name='heart-outline' color='rgba(255,255,255,.7)' size={22} style={{marginRight:15}}/>
                     <Ionicons name='person-outline' color='rgba(255,255,255,.7)' size={22} style={{marginRight:15}}/>
                     <Ionicons name='flag-outline' color='rgba(255,255,255,.7)' size={22}/>
                 </View>
-        </View>
+            </View>
+        </TouchableWithoutFeedback>
     )
 }
 

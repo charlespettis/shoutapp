@@ -2,32 +2,29 @@
 export const env = 'http://192.168.1.149:3000/';
 
 export const timeSince = date => {
-
-        var seconds = Math.floor((new Date() - date) / 1000);
+        const newDate = new Date(date);
+        var seconds = Math.floor((new Date() - newDate) / 1000);
       
         var interval = seconds / 31536000;
       
         if (interval > 1) {
-          return Math.floor(interval) + " years ago";
+          return Math.floor(interval) + "yrs";
         }
         interval = seconds / 2592000;
         if (interval > 1) {
-          return Math.floor(interval) + " months ago";
+          return Math.floor(interval) + "m";
         }
         interval = seconds / 86400;
         if (interval > 1) {
-          return Math.floor(interval) + " days ago";
+          return Math.floor(interval) + "d";
         }
         interval = seconds / 3600;
         if (interval > 1) {
-          return Math.floor(interval) + " hours ago";
+          return Math.floor(interval) + "h";
         }
-        interval = seconds / 60;
-        if (interval > 1) {
-          return Math.floor(interval) + " minutes ago";
-        }
-        return Math.floor(seconds) + " seconds ago";
-      
+
+        return "Just now";
+              
 }
 
 export const Base64 = {

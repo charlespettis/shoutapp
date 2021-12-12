@@ -29,7 +29,7 @@ const Topic = props => {
             <View style={{marginLeft:15,flexDirection:'column',flex:3}}>
                 <View style={{flexDirection:'row',alignItems:'flex-end',marginBottom:5}}>
                     <Text style={{color:getColor()}}>{props.category}</Text>
-                    <Text style={styles.timestamp}>{timeSince(new Date(props.timestamp))}</Text>
+                    <Text style={styles.timestamp}>{timeSince(props.timestamp)}</Text>
                 </View>
                 <Text style={{color:'white'}}>{props.title}</Text>
             </View>

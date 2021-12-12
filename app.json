@@ -7,5 +7,12 @@
       "**/*"
     ]
   },
-  "name": "shout"
+  "name": "shout",
+  "ios": {
+    "infoPlist":{
+      "UIBackgroundModes": [
+        "audio"
+      ]
+    }
+  }
 }

@@ -49,3 +49,20 @@ export const like = ({id}) => {
         return res.status;
     })
 }
+
+export const flag = ({id}) => {
+    return fetch(`${proxy}/flag`, {
+        method: "POST",
+        body: JSON.stringify({
+            postId: id
+        }),
+        headers: {
+            'Authorization': `Token ${storage.token}`,
+            'Content-Type': 'application/json',
+            'Accept': '*/*'
+        }
+    })
+    .then(res => {
+        return res.status;
+    })
+}

@@ -1,23 +1,20 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet,TouchableWithoutFeedback} from 'react-native';
+import {View, Text, Image, StyleSheet,TouchableWithoutFeedback, Alert} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {env,timeSince} from '../../misc';
 import {GlobalPlayerContext} from '../contexts/GlobalPlayerProvider';
 import { UserContext } from '../contexts/UserProvider';
-
-import {like} from '../../api/post';
-
+import {like, flag} from '../../api/post';
+import { useNavigation } from '@react-navigation/native';
 const Post = props => {
     const {player, playerFunctions} = React.useContext(GlobalPlayerContext);
     const {userState, userFunctions} = React.useContext(UserContext);
-
     const [isLiked, setIsLiked] = React.useState(false);
-
+    const navigation = useNavigation();
     const play = () => {
         playerFunctions.play(props)
     }
     React.useEffect(()=>{
-        console.log(props);
         const index = props.likes.findIndex(e => e.UserId === userState.id);
         if(index > -1){
             setIsLiked(true);
@@ -33,6 +30,27 @@ const Post = props => {
         })
     }
     
+    const handleFlag = () => {
+        Alert.alert(
+            'Report as Inappropriate',
+            "Are you sure you'd like to report this post as hateful, abusive, or spam content?",
+            [
+                {
+                    text: "Cancel",
+                    style:'cancel'
+                },
+                {
+                    text: "Confirm",
+                    onPress: ()=> flag({id: props.id}),
+                    style: 'default'
+                }
+            ]
+        )
+    }
+
+    const handleViewProfile = () => {
+        navigation.navigate('ViewUserProfile', {id: props.userId})
+    }
 
     return(
         <TouchableWithoutFeedback onPress={play}>
@@ -49,8 +67,8 @@ const Post = props => {
                 </View>
                 <View style={{flexDirection:'row',alignItems:'center'}}>
                     <Ionicons onPress={handleLike} name={isLiked ? 'heart' : 'heart-outline'} color={isLiked ? 'red' : 'rgba(255,255,255,.7)'} size={22} style={{marginRight:15}}/>
-                    <Ionicons name='person-outline' color='rgba(255,255,255,.7)' size={22} style={{marginRight:15}}/>
-                    <Ionicons name='flag-outline' color='rgba(255,255,255,.7)' size={22}/>
+                    <Ionicons onPress={handleViewProfile} name='person-outline' color='rgba(255,255,255,.7)' size={22} style={{marginRight:15}}/>
+                    <Ionicons onPress={handleFlag} name='flag-outline' color='rgba(255,255,255,.7)' size={22}/>
                 </View>
             </View>
         </TouchableWithoutFeedback>

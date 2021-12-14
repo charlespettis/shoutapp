@@ -17,7 +17,7 @@ const Profile = ({navigation, route}) => {
 
     return(
         <SafeAreaView style={{flex:1, backgroundColor:'black',alignItems:'center'}}>
-            <ScrollView style={{flex:1,width:'100%',marginTop:20}} contentContainerStyle={{alignItems:'center',paddingBottom:20}}>
+            <ScrollView style={{flex:1,width:'100%',marginTop:20,}} contentContainerStyle={{alignItems:'center',paddingBottom:80}}>
 
                 <UserAvatar
                 onPickImage = {e => userFunctions.editAvatar({avatar: e})}
@@ -63,7 +63,7 @@ const Profile = ({navigation, route}) => {
                 userState.admin &&
 
                 <List title="Admin">
-                    <ListItem onPress={()=>alert('hi')} icon="list-outline" title="View Suggested Topics"/>
+                    <ListItem onPress={()=>navigation.navigate('ViewSuggestedTopics')} icon="list-outline" title="View Suggested Topics"/>
                     <ListItem onPress={()=>alert('hi')} icon="flag-outline" title="View Flagged Posts"/>
                 </List>
 

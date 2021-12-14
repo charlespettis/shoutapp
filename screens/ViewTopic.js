@@ -35,6 +35,7 @@ const ViewTopic = ({navigation, route}) => {
     }
 
     const renderItem = ({item}) => {
+        console.log(item);
         return(
         <Post
             id = {item.id}
@@ -43,6 +44,8 @@ const ViewTopic = ({navigation, route}) => {
             avatar = {item["User"].avatar}
             recording = {item.recording}
             likes={item.Likes}
+            navigation={navigation}
+            userId={item["User"].id}
         />)
     }
 

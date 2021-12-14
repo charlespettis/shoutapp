@@ -30,7 +30,17 @@ const PostsProvider = props => {
                 createPost(data)
                 .then(res => {
                     if(res){
-                        dispatch({type:"ADD", data: res })
+                        const obj = {
+                            "User": {
+                                fullName: userState.fullName,
+                                avatar: userState.avatar,
+                                username: userState.username
+                            },
+                            Likes: [],
+                            ...res
+                        }
+                        
+                        dispatch({type:"ADD", data: obj })
                     }
                 })
             },

@@ -5,6 +5,8 @@ import ViewTopic from '../screens/ViewTopic';
 import MainTabNavigator from '../stacks/Main';
 import LandingStack from '../stacks/Landing';
 import {UserContext} from '../components/contexts/UserProvider';
+import ViewUserProfile from '../screens/ViewUserProfile';
+import GlobalPlayerProvider from '../components/contexts/GlobalPlayerProvider';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +16,7 @@ const RootNavigator = () => {
   
   return(
       <NavigationContainer>
+        <GlobalPlayerProvider>
           <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName="Landing">
             {
             !userState.isLoggedIn ? 
@@ -31,10 +34,15 @@ const RootNavigator = () => {
             name="Topic"
             component={ViewTopic}
             />
+            <Stack.Screen
+            name="ViewUserProfile"
+            component={ViewUserProfile}
+            />
             </>
             }
             
           </Stack.Navigator>
+          </GlobalPlayerProvider>
       </NavigationContainer>
     )
 }

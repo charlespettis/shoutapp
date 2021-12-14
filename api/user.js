@@ -111,3 +111,14 @@ export const editUserDetails = data => {
         }
     })
 }
+
+export const getUserDetails = id => {
+    return fetch(`${proxy}/getUserDetails/${id}`,{
+        headers: {'Authorization': `Token ${storage.token}`}
+    })
+    .then(res => {
+        if(res.status = 200){
+            return res.json();
+        }
+    })
+}

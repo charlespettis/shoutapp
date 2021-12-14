@@ -25,7 +25,7 @@ const Topic = props => {
 
     return(
         <Pressable key={props.id} onPress={goToTopic} >
-        <View style={{minHeight:100,flexDirection:'row-reverse',justifyContent:'space-between',backgroundColor:'black',width:'100%',padding:10}}>
+        <View style={{minHeight:100,flexDirection:'row-reverse',justifyContent:'space-between',backgroundColor:'black',flex:1,padding:10}}>
             <View style={{marginLeft:15,flexDirection:'column',flex:3}}>
                 <View style={{flexDirection:'row',alignItems:'flex-end',marginBottom:5}}>
                     <Text style={{color:getColor()}}>{props.category}</Text>

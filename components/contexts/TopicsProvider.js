@@ -11,12 +11,7 @@ const TopicsProvider = props => {
         (prevState, action) => {
             switch(action.type){
                 case "GETNEWEST": {
-                    let data = [...prevState];
-                    action.data.map(e => {
-                        const ind = data.findIndex(ee => ee.id === e.id);
-                        if(ind === -1) data = [e, ...data];
-                    })
-                    return data
+                    return action.data
                 }
                 case "GETMORE": {
                     let data = [...prevState];
@@ -35,8 +30,9 @@ const TopicsProvider = props => {
     const topicsFunctions = React.useMemo(
         () => ({
             getAll: () => {
-                getTopics(0,20)
+                getTopics(0,10)
                 .then(data => {
+                    console.log(data);
                     dispatch({type: "GETNEWEST", data: data})
                 })
             },

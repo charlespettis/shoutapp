@@ -211,6 +211,7 @@ const Recorder = props => {
                         name="trash-outline"
                         color="#FF4747"
                         size={24}
+                        style={{marginLeft:15}}
                     />
                 }
                 rightIcon={
@@ -219,6 +220,8 @@ const Recorder = props => {
                         color='lightgreen'
                         size={24}
                         onPress={submit}
+                        style={{marginRight:15}}
+
                     />
                 }
                 recording={recordingPath}

@@ -48,6 +48,8 @@ const Feed = ({navigation, route}) => {
         } 
     },[])
 
+
+    
     return(
         <View style={{flex:1,backgroundColor:'black'}}>
             <FlatList

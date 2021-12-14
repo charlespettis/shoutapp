@@ -1,14 +1,19 @@
 import React from 'react';
-import {View, Image, Text, Dimensions, StyleSheet,Pressable} from 'react-native';
+import {View, Image, Text, Dimensions, StyleSheet, Pressable,TouchableWithoutFeedback} from 'react-native';
 import {env} from '../../misc';
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import {Audio} from 'expo-av';
 import ProgressBar from '../player/ProgressBar';
 import Post from '../post';
+import { PostsContext } from './PostsProvider';
 
 export const GlobalPlayerContext = React.createContext();
 
 const GlobalPlayerProvider = props => {
+
+    const {posts, postsFunctions} = React.useContext(PostsContext);
+
+
     const initialState = {
         id: '',
         avatar: '',
@@ -18,7 +23,8 @@ const GlobalPlayerProvider = props => {
         isShown: false,
         isRaised: false,
         isPlaying:false,
-        likes: []
+        likes: [],
+        queue: []
     };
 
     const [state, dispatch] = React.useReducer(
@@ -29,7 +35,8 @@ const GlobalPlayerProvider = props => {
                         ...prevState,
                         ...action.data,
                         isShown: true,
-                        isPlaying:true
+                        isPlaying:true,
+                        queue: posts
                     }
                 case "PAUSE":
                     return {
@@ -118,7 +125,6 @@ const GlobalPlayerProvider = props => {
         }
     },[sound])
     
-
     return(
             <GlobalPlayerContext.Provider value={{player: state, playerFunctions: playerFunctions}}>
                 {
@@ -126,15 +132,16 @@ const GlobalPlayerProvider = props => {
                 }
                 {
                 state.isShown &&
-                <View pointerEvents='box-none' style={{position:'absolute', height:'100%', width:'100%',paddingBottom:(state.isRaised ? .08 : .02) * height, justifyContent:'flex-end'}}>
-                    <View style={[{ width:'90%',alignSelf:'center',backgroundColor:'#2A2A2C', borderRadius:2}, styles.shadow]}> 
+                <View pointerEvents='box-none' style={{position:'absolute', height:'100%', width:'100%',paddingBottom:isExpanded ? 0 : (state.isRaised ? .08 : .02) * height, justifyContent:'flex-end'}}>
+                    <View style={[{ width:'90%',alignSelf:'center',backgroundColor:'#2A2A2C', borderRadius:5}, styles.shadow, isExpanded && {width:'100%',padding:5,}]}> 
                         <Pressable onPress={()=>setIsExpanded(true)}>
                             { 
                             isExpanded ?
                             <View style={{borderRadius:5}}> 
                             <Ionicons onPress={()=>setIsExpanded(false)} name='chevron-down' size={24} color='white' style={{marginLeft:10,marginTop:10}}/>
+                            <TouchableWithoutFeedback onPress={()=>setIsExpanded(false)}>
                             <Post focused id={state.id} fullName={state.fullName} avatar={state.avatar} username={state.username} likes={state.likes}/>
-                            
+                            </TouchableWithoutFeedback>
                             <View style={{flexDirection:'row',alignItems:'center', alignSelf:'center',justifyContent:'space-between',width: '100%',paddingLeft:10,paddingRight:10,marginBottom:10}}>
                                 <Ionicons name='play-back' size={22} color='white' />
                                 <MaterialCommunityIcons name='rewind-10' size={22} color='white' />

@@ -2,10 +2,8 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './Home';
 import {Ionicons} from '@expo/vector-icons';
-import Profile from '../screens/Profile';
 import Search from '../screens/Search';
 import SuggestTopic from '../screens/SuggestTopic';
-import Notifications from '../screens/Notifications';
 import ProfileNavigator from './Profile';
 
 const Tab = createBottomTabNavigator()
@@ -26,11 +24,6 @@ const MainTabNavigator = () => {
             name="Explore" 
             component={SuggestTopic} 
             options={{tabBarIcon: ({color,size}) => <Ionicons name="add-outline" color={color} size={size}/>}}
-            />
-            <Tab.Screen
-            name="Notifications"
-            component={Notifications}
-            options={{tabBarIcon: ({color,size}) => <Ionicons name="notifications-outline" color={color} size={size}/>}}            
             />
             <Tab.Screen 
             name="Profile" 

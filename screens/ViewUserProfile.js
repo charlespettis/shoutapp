@@ -31,11 +31,11 @@ const ViewUserProfile = ({navigation, route}) => {
     return(
         <SafeAreaView style={{flex:1, backgroundColor:'black',alignItems:'center'}}>
             <Ionicons onPress={()=>navigation.goBack()} name='chevron-back' size={26} color='white' style={{alignSelf:'flex-start',margin:20}} />
-            <Image style={{height:100,width:100,borderRadius:100,marginTop:10}} source={{uri: `${env}${userData.avatar}`}}/>
-            <Text style={{color:'white',fontSize:22,marginTop:10}}>{userData.fullName}</Text>
-            <Text style={{color:'lightblue',fontSize:14,marginTop:10}}>@{userData.username}</Text>
-            <Text style={{color:'white',fontSize:14,marginTop:10}}>{`${userData.jobTitle} at ${userData.company}`}</Text>
-            <Text style={{color:'white',fontSize:14,marginTop:10,alignSelf:'flex-start',margin:20}}>{userData.bio}</Text>
+            <Image style={{height:100,width:100,borderRadius:100,marginBottom:10}} source={{uri: `${env}${userData.avatar}`}}/>
+            <Text style={{color:'white',fontSize:22,marginTop:5}}>{userData.fullName}</Text>
+            <Text style={{color:'lightblue',fontSize:14,marginTop:5}}>@{userData.username}</Text>
+            <Text style={{color:'white',fontSize:14,marginTop:5}}>{`${userData.jobTitle} at ${userData.company}`}</Text>
+            <Text style={{color:'white',fontSize:14,alignSelf:'flex-start',margin:20}}>{userData.bio}</Text>
         </SafeAreaView>
     )
 }

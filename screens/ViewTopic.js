@@ -35,7 +35,6 @@ const ViewTopic = ({navigation, route}) => {
     }
 
     const renderItem = ({item}) => {
-        console.log(item);
         return(
         <Post
             id = {item.id}
@@ -118,16 +117,16 @@ export default ViewTopic;
 
 const Header = props => {
     return(
-        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginRight:5,marginLeft:5,marginTop:10,marginBottom:10}}>
+        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',margin:10}}>
             <TouchableIcon
             color="white"
-            size={32}
+            size={26}
             name="chevron-back"
             onPress={()=>props.goBack()}
             />
             <TouchableIcon
             color="white"
-            size={32}
+            size={26}
             name={props.isRecorderShown ? "remove-outline": "add"}
             onPress={()=>props.onAdd()}
             />
@@ -135,47 +134,3 @@ const Header = props => {
         </View>
     )
 }
-
-const POSTS_DATA = [
-    {
-        fullName: 'Anika Ledouchey',
-        jobTitle:'Software Developer',
-        company: 'Shout, LLC.'
-    },
-    {
-        fullName: 'Anika Ledouchey',
-        jobTitle:'Software Developer',
-        company: 'Shout, LLC.'
-    },
-    {
-        fullName: 'Anika Ledouchey',
-        jobTitle:'Software Developer',
-        company: 'Shout, LLC.'
-    },
-    {
-        fullName: 'Anika Ledouchey',
-        jobTitle:'Software Developer',
-        company: 'Shout, LLC.'
-    },
-    {
-        fullName: 'Anika Ledouchey',
-        jobTitle:'Software Developer',
-        company: 'Shout, LLC.'
-    },
-    {
-        fullName: 'Anika Ledouchey',
-        jobTitle:'Software Developer',
-        company: 'Shout, LLC.'
-    },
-    {
-        fullName: 'Anika Ledouchey',
-        jobTitle:'Software Developer',
-        company: 'Shout, LLC.'
-    },
-    {
-        fullName: 'Anika Ledouchey',
-        jobTitle:'Software Developer',
-        company: 'Shout, LLC.'
-    },
-
-]

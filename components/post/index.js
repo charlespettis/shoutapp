@@ -6,14 +6,17 @@ import {GlobalPlayerContext} from '../contexts/GlobalPlayerProvider';
 import { UserContext } from '../contexts/UserProvider';
 import {like, flag} from '../../api/post';
 import { useNavigation } from '@react-navigation/native';
+
 const Post = props => {
     const {player, playerFunctions} = React.useContext(GlobalPlayerContext);
     const {userState, userFunctions} = React.useContext(UserContext);
     const [isLiked, setIsLiked] = React.useState(false);
     const navigation = useNavigation();
+
     const play = () => {
         playerFunctions.play(props)
     }
+    
     React.useEffect(()=>{
         const index = props.likes.findIndex(e => e.UserId === userState.id);
         if(index > -1){
@@ -59,10 +62,10 @@ const Post = props => {
                 <Image source={{uri: `${env}${props.avatar}`}} style={styles.avatar} resizeMode='cover'/>
                     <View style={{marginLeft:15,justifyContent:'space-between'}}>
                         <View style={{flexDirection:'row',alignItems:'center'}}>
-                        <Text style={{color:player.id === props.id ? 'lightblue' : 'white',fontSize:16,marginBottom:5,fontWeight:'300'}}>{props.fullName} </Text>
+                        <Text style={{color:player.id === props.id && !props.focused ? 'lightblue' : 'white',fontSize:16,marginBottom:5,fontWeight:'300'}}>{props.fullName} </Text>
                         <Text style={{color:'white', color:'white',opacity:.7,fontSize:10, marginLeft:5}}>{timeSince(props.createdAt)}</Text>
                         </View>
-                        <Text style={{color:player.id === props.id ? 'lightblue' : 'white',marginBottom:5,fontWeight:'200'}}>@{props.username}</Text>
+                        <Text style={{color:'lightblue',marginBottom:5,fontWeight:'200'}}>@{props.username}</Text>
                     </View>
                 </View>
                 <View style={{flexDirection:'row',alignItems:'center'}}>

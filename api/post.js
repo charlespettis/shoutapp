@@ -16,7 +16,9 @@ export const createPost = ({recording, topicId}) => {
         }
     })
     .then(res => {
-        return res;
+        if(res.status === 200){
+            return res.json();
+        }
     })
 }
 
@@ -28,5 +30,22 @@ export const getPostsByTopic = ({id, count}) => {
     })
     .then(res => {
         return res.json();
+    })
+}
+
+export const like = ({id}) => {
+    return fetch(`${proxy}/like`, {
+        method:"POST",
+        body: JSON.stringify({
+            postId: id
+        }),
+        headers: {
+            'Authorization' : `Token ${storage.token}`,
+            'Content-Type': 'application/json',
+            'Accept': '*/*'
+        }
+    })
+    .then(res => {
+        return res.status;
     })
 }

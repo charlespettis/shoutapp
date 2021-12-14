@@ -4,10 +4,16 @@ import {List, ListItem} from '../components/list';
 import {UserContext} from '../components/contexts/UserProvider';
 import UserAvatar from '../components/common/UserAvatar';
 import {env} from '../misc';
-
+import { GlobalPlayerContext } from '../components/contexts/GlobalPlayerProvider';
 const Profile = ({navigation, route}) => {
 
     const { userFunctions, userState } = React.useContext(UserContext);
+    const {player, playerFunctions} = React.useContext(GlobalPlayerContext);
+
+    const logOut = () => {
+        playerFunctions.stop();
+        userFunctions.logOut()
+    }
 
     return(
         <SafeAreaView style={{flex:1, backgroundColor:'black',alignItems:'center'}}>
@@ -43,7 +49,7 @@ const Profile = ({navigation, route}) => {
                     <ListItem onPress={()=>alert('hi')} icon="star" title="Liked Posts"/>
                     <ListItem onPress={()=>alert('hi')} icon="chatbubble" title="Recent Posts"/>
                     <ListItem onPress={()=>alert('hi')} icon="lock-closed-outline" title="Reset Password"/>
-                    <ListItem onPress={()=>userFunctions.logOut()} icon="arrow-back" title="Log Out"/>
+                    <ListItem onPress={logOut} icon="arrow-back" title="Log Out"/>
                 </List>
 
                 <List title="Support">

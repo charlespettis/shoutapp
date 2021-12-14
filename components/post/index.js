@@ -3,15 +3,40 @@ import {View, Text, Image, StyleSheet,TouchableWithoutFeedback} from 'react-nati
 import {Ionicons} from '@expo/vector-icons';
 import {env,timeSince} from '../../misc';
 import {GlobalPlayerContext} from '../contexts/GlobalPlayerProvider';
+import { UserContext } from '../contexts/UserProvider';
+
+import {like} from '../../api/post';
 
 const Post = props => {
     const {player, playerFunctions} = React.useContext(GlobalPlayerContext);
+    const {userState, userFunctions} = React.useContext(UserContext);
+
+    const [isLiked, setIsLiked] = React.useState(false);
+
     const play = () => {
         playerFunctions.play(props)
     }
+    React.useEffect(()=>{
+        console.log(props);
+        const index = props.likes.findIndex(e => e.UserId === userState.id);
+        if(index > -1){
+            setIsLiked(true);
+        }
+    },[])
+
+    const handleLike = () => {
+        like({id: props.id})
+        .then(status => {
+            if(status === 200){
+                setIsLiked(!isLiked);
+            }
+        })
+    }
+    
+
     return(
         <TouchableWithoutFeedback onPress={play}>
-            <View style={[styles.container, player.id === props.id && {backgroundColor:'rgba(173,216,230,.2)'}]}>
+            <View style={[styles.container, player.id === props.id && !props.focused && {backgroundColor:'rgba(173,216,230,.2)'}]}>
                 <View style={{flexDirection:'row',alignItems:'center'}}>
                 <Image source={{uri: `${env}${props.avatar}`}} style={styles.avatar} resizeMode='cover'/>
                     <View style={{marginLeft:15,justifyContent:'space-between'}}>
@@ -23,7 +48,7 @@ const Post = props => {
                     </View>
                 </View>
                 <View style={{flexDirection:'row',alignItems:'center'}}>
-                    <Ionicons onPress={()=>alert('flaflaflunkie')} name='heart-outline' color='rgba(255,255,255,.7)' size={22} style={{marginRight:15}}/>
+                    <Ionicons onPress={handleLike} name={isLiked ? 'heart' : 'heart-outline'} color={isLiked ? 'red' : 'rgba(255,255,255,.7)'} size={22} style={{marginRight:15}}/>
                     <Ionicons name='person-outline' color='rgba(255,255,255,.7)' size={22} style={{marginRight:15}}/>
                     <Ionicons name='flag-outline' color='rgba(255,255,255,.7)' size={22}/>
                 </View>

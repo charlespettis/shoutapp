@@ -17,7 +17,6 @@ const ViewTopic = ({navigation, route}) => {
     const {posts, postFunctions} = React.useContext(PostsContext);
     const {player, playerFunctions} = React.useContext(GlobalPlayerContext);
     const [isLoading, setIsLoading] = React.useState(true);
-    console.log(posts);
     const getTopic = () => {
         const index = topics.findIndex(e => e.id === route.params.id);
         if(index > -1){
@@ -38,11 +37,12 @@ const ViewTopic = ({navigation, route}) => {
     const renderItem = ({item}) => {
         return(
         <Post
-            id = {item.id || 1}
-            fullName = {item.fullName || item["User"].fullName}
-            username = {item.username || item["User"].username}
-            avatar = {item.avatar || item["User"].avatar}
+            id = {item.id}
+            fullName = {item["User"].fullName}
+            username = {item["User"].username}
+            avatar = {item["User"].avatar}
             recording = {item.recording}
+            likes={item.Likes}
         />)
     }
 
@@ -102,7 +102,7 @@ const ViewTopic = ({navigation, route}) => {
             onReset = { toggleRecorder }
             onRecordingStart={() => setIsRecording(true)}
             onRecordingStop={() => setIsRecording(false)}
-            style={{paddingLeft:20,paddingRight:20,paddingTop:20}}
+            style={{paddingTop:20}}
             />
             }
 

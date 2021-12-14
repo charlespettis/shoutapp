@@ -1,9 +1,10 @@
 import React from 'react';
-import {View, Image, Text, Dimensions, StyleSheet} from 'react-native';
+import {View, Image, Text, Dimensions, StyleSheet,Pressable} from 'react-native';
 import {env} from '../../misc';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import {Audio} from 'expo-av';
 import ProgressBar from '../player/ProgressBar';
+import Post from '../post';
 
 export const GlobalPlayerContext = React.createContext();
 
@@ -16,7 +17,8 @@ const GlobalPlayerProvider = props => {
         recording: '',
         isShown: false,
         isRaised: false,
-        isPlaying:false
+        isPlaying:false,
+        likes: []
     };
 
     const [state, dispatch] = React.useReducer(
@@ -75,6 +77,8 @@ const GlobalPlayerProvider = props => {
     )
     
     const [sound, setSound] = React.useState();
+    const [progress, setProgress] = React.useState(0);
+    const [isExpanded, setIsExpanded] = React.useState(false);
 
     const height = Dimensions.get('window').height;
 
@@ -88,8 +92,14 @@ const GlobalPlayerProvider = props => {
         );
         setSound(sound);
         await sound.playAsync();
-
-        setIsPlaying(true);
+        sound.setOnPlaybackStatusUpdate(async (status) => {
+            setProgress((status.positionMillis / status.durationMillis) * 100);
+            if(status.didJustFinish){
+                await sound.pauseAsync();
+                await sound.setPositionAsync(0);
+                dispatch({type:"PAUSE"})
+            }
+        });
     }
 
     const pause = async () => {
@@ -115,28 +125,42 @@ const GlobalPlayerProvider = props => {
                     props.children
                 }
                 {
-                state.isShown && 
-                <View style={[{flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:10,paddingRight:15,position:'absolute',width:'90%',alignSelf:'center',height:60,top:(state.isRaised ? .82 : .88) * height,backgroundColor:'#2A2A2C', borderRadius:3}, styles.shadow]}>
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
-                        <View >
-                        <Image source={{uri: `${env}${state.avatar}`}} style={{width:42,height:42}}/>
-                        </View>
-                        <View style={{marginLeft:10}}>
-                            <Text style={{color:'white'}}>
-                                {state.fullName}
-                            </Text>
-                            <Text style={{color:'white',fontWeight:'200'}}>
-                                @{state.username}
-                            </Text>
-                        </View>
-                    </View>
-                    <Ionicons name={state.isPlaying ? 'pause' : 'play'} size={26} color='white' onPress={state.isPlaying ? pause : resume}/>
-                </View>
+                state.isShown &&
+                <View pointerEvents='box-none' style={{position:'absolute', height:'100%', width:'100%',paddingBottom:(state.isRaised ? .08 : .02) * height, justifyContent:'flex-end'}}>
+                    <View style={[{ width:'90%',alignSelf:'center',backgroundColor:'#2A2A2C', borderRadius:2}, styles.shadow]}> 
+                        <Pressable onPress={()=>setIsExpanded(true)}>
+                            { 
+                            isExpanded ?
+                            <View style={{borderRadius:5}}> 
+                            <Ionicons onPress={()=>setIsExpanded(false)} name='chevron-down' size={24} color='white' style={{marginLeft:10,marginTop:10}}/>
+                            <Post focused id={state.id} fullName={state.fullName} avatar={state.avatar} username={state.username} likes={state.likes}/>
+                            
+                            <View style={{flexDirection:'row',alignItems:'center', alignSelf:'center',justifyContent:'space-between',width: '100%',paddingLeft:10,paddingRight:10,marginBottom:10}}>
+                                <Ionicons name='play-back' size={22} color='white' />
+                                <MaterialCommunityIcons name='rewind-10' size={22} color='white' />
 
+                                <Ionicons name={state.isPlaying ? 'pause' : 'play'} size={32} color='white' onPress={state.isPlaying ? pause : resume}/>
+                                
+                                <MaterialCommunityIcons name='fast-forward-10' size={22} color='white' />
+                                <Ionicons name='play-forward' size={22} color='white' />
+
+                            </View>
+                            
+                            </View>
+                            :
+                            <MinPlayer state={state} pause={pause} resume={resume} />
+                            
+                            }
+                            <ProgressBar progress={progress}/>
+                        </Pressable>
+                    </View>
+                </View>
                 }
             </GlobalPlayerContext.Provider>            
     )
 }
+
+
 const styles = StyleSheet.create({
     shadow: {
         elevation:10,
@@ -147,3 +171,26 @@ const styles = StyleSheet.create({
     }
 })
 export default GlobalPlayerProvider;
+
+
+const MinPlayer = ({state, pause, resume}) => {
+    return(
+        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',height:60,paddingLeft:10,paddingRight:10}}>
+        <View style={{flexDirection:'row',alignItems:'center'}}>
+            <View >
+            <Image source={{uri: `${env}${state.avatar}`}} style={{width:42,height:42}}/>
+            </View>
+            <View style={{marginLeft:10}}>
+                <Text style={{color:'white'}}>
+                    {state.fullName}
+                </Text>
+                <Text style={{color:'white',fontWeight:'200'}}>
+                    @{state.username}
+                </Text>
+            </View>
+        </View>
+        <Ionicons name={state.isPlaying ? 'pause' : 'play'} size={26} color='white' onPress={state.isPlaying ? pause : resume}/>
+    </View>
+
+    )
+}

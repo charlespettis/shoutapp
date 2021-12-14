@@ -29,8 +29,8 @@ const PostsProvider = props => {
             createPost: data => {
                 createPost(data)
                 .then(res => {
-                    if(res.status === 200) {
-                        dispatch({type:"ADD", data: {recording: data.recording, avatar: userState.avatar, fullName: userState.fullName, username: userState.username} })
+                    if(res){
+                        dispatch({type:"ADD", data: res })
                     }
                 })
             },

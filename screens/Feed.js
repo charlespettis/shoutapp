@@ -45,7 +45,6 @@ const Feed = ({navigation, route}) => {
     React.useEffect(()=>{
         if(route.name === 'Latest'){
             topicsFunctions.getAll()
-            console.log('ree');
         } 
     },[])
 

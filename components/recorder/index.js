@@ -70,7 +70,7 @@ const Recorder = props => {
     
                 }
             );
-            recording.setProgressUpdateInterval(50)
+            recording.setProgressUpdateInterval(40)
             const startTime = new Date();
             recording.setOnRecordingStatusUpdate(e => {
                 const newValue = interpolateMeterValue(e.metering)
@@ -79,7 +79,6 @@ const Recorder = props => {
                 setBarValues(prevState => {
                     endTime = new Date();
                     var timeDiff = endTime - startTime; 
-                    console.log(timeDiff);
                     if( timeDiff >= 5000  ){
                         const newData = prevState.slice(0,prevState.length - 1);
                         const response = [newValue, ...newData]

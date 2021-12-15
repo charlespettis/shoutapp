@@ -122,3 +122,38 @@ export const getUserDetails = id => {
         }
     })
 }
+
+export const resetPassword = ({currentPassword, newPassword}) => {
+    return fetch(`${proxy}/resetPassword`, {
+        method: "PATCH",
+        body: JSON.stringify({
+            currentPassword: currentPassword,
+            newPassword: newPassword
+        }),
+        headers: {
+            'Authorization': `Token ${storage.token}`,
+            'Content-Type': 'application/json',
+            'Accept': '*/*'
+        }
+    })
+    .then(res => {
+        return res.status;
+    })
+}
+
+export const sendFeedback = ({feedback}) => {
+    return fetch(`${proxy}/sendFeedback`, {
+        method: "POST",
+        body: JSON.stringify({
+            feedback: feedback
+        }),
+        headers: {
+            'Authorization': `Token ${storage.token}`,
+            'Content-Type': 'application/json',
+            'Accept': '*/*'
+        }
+    })
+    .then(res => {
+        return res;
+    })
+}

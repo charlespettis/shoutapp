@@ -6,10 +6,12 @@ import {GlobalPlayerContext} from '../contexts/GlobalPlayerProvider';
 import { UserContext } from '../contexts/UserProvider';
 import {like, flag} from '../../api/post';
 import { useNavigation } from '@react-navigation/native';
+import { PostsContext } from '../contexts/PostsProvider';
 
 const Post = props => {
     const {player, playerFunctions} = React.useContext(GlobalPlayerContext);
     const {userState, userFunctions} = React.useContext(UserContext);
+    const {posts, postFunctions} = React.useContext(PostsContext);
     const [isLiked, setIsLiked] = React.useState(false);
     const navigation = useNavigation();
 
@@ -50,9 +52,26 @@ const Post = props => {
             ]
         )
     }
-
     const handleViewProfile = () => {
         navigation.navigate('ViewUserProfile', {id: props.userId})
+    }
+
+    const handleDelete = () => {
+        Alert.alert(
+            'Report as Inappropriate',
+            "Are you sure you'd like to permanently delete this post?",
+            [
+                {
+                    text: "Cancel",
+                    style:'cancel'
+                },
+                {
+                    text: "Confirm",
+                    onPress: ()=> postFunctions.deletePost({id: props.id}),
+                    style: 'default'
+                }
+            ]
+        )
     }
 
     return(
@@ -71,7 +90,7 @@ const Post = props => {
                 <View style={{flexDirection:'row',alignItems:'center'}}>
                     <Ionicons onPress={handleLike} name={isLiked ? 'heart' : 'heart-outline'} color={isLiked ? 'red' : 'rgba(255,255,255,.7)'} size={22} style={{marginRight:15}}/>
                     <Ionicons onPress={handleViewProfile} name='person-outline' color='rgba(255,255,255,.7)' size={22} style={{marginRight:15}}/>
-                    <Ionicons onPress={handleFlag} name='flag-outline' color='rgba(255,255,255,.7)' size={22}/>
+                    <Ionicons onPress={props.userId === userState.id || userState.admin ? handleDelete : handleFlag} name={ (props.userId === userState.id || userState.admin) ? 'trash-outline' : 'flag-outline'  } color='rgba(255,255,255,.7)' size={22}/>
                 </View>
             </View>
         </TouchableWithoutFeedback>

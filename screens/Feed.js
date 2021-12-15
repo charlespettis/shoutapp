@@ -59,7 +59,6 @@ const Feed = ({navigation, route}) => {
                 refreshing={isRefreshing}
                 onRefresh={handleGetAllTopics}
                 onEndReachedThreshold={0.5}
-                style={{padding:2}}
                 onEndReached={({ distanceFromEnd }) => {
                     if(distanceFromEnd >= 0) {
                         handleGetMoreTopics();

@@ -124,6 +124,10 @@ const GlobalPlayerProvider = props => {
             sound && sound.unloadAsync();
         }
     },[sound])
+
+    React.useEffect(()=>{
+        console.log(state);
+    },[state])
     
     return(
             <GlobalPlayerContext.Provider value={{player: state, playerFunctions: playerFunctions}}>
@@ -133,14 +137,25 @@ const GlobalPlayerProvider = props => {
                 {
                 state.isShown &&
                 <View pointerEvents='box-none' style={{position:'absolute', height:'100%', width:'100%',paddingBottom:isExpanded ? 0 : (state.isRaised ? .08 : .02) * height, justifyContent:'flex-end'}}>
-                    <View style={[{ width:'90%',alignSelf:'center',backgroundColor:'#2A2A2C', borderRadius:5}, styles.shadow, isExpanded && {width:'100%',padding:5,}]}> 
+                    <View style={[{ width:'95%',alignSelf:'center',backgroundColor:'#2A2A2C', borderRadius:5}, styles.shadow, isExpanded && {width:'100%',padding:5,}]}> 
                         <Pressable onPress={()=>setIsExpanded(true)}>
                             { 
                             isExpanded ?
                             <View style={{borderRadius:5}}> 
                             <Ionicons onPress={()=>setIsExpanded(false)} name='chevron-down' size={24} color='white' style={{marginLeft:10,marginTop:10}}/>
                             <TouchableWithoutFeedback onPress={()=>setIsExpanded(false)}>
-                            <Post focused id={state.id} fullName={state.fullName} avatar={state.avatar} username={state.username} likes={state.likes}/>
+                            <Post 
+                            focused 
+                            id={state.id} 
+                            fullName={state.fullName} 
+                            avatar={state.avatar} 
+                            username={state.username} 
+                            likes={state.likes}
+                            timestamp={state.createdAt}
+                            userId={state.userId}
+                
+                            
+                            />
                             </TouchableWithoutFeedback>
                             <View style={{flexDirection:'row',alignItems:'center', alignSelf:'center',justifyContent:'space-between',width: '100%',paddingLeft:10,paddingRight:10,marginBottom:10}}>
                                 <Ionicons name='play-back' size={22} color='white' />
@@ -185,18 +200,18 @@ const MinPlayer = ({state, pause, resume}) => {
         <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',height:60,paddingLeft:10,paddingRight:10}}>
         <View style={{flexDirection:'row',alignItems:'center'}}>
             <View >
-            <Image source={{uri: `${env}${state.avatar}`}} style={{width:42,height:42}}/>
+            <Image source={{uri: `${env}${state.avatar}`}} style={{width:42,height:42, borderRadius:3}}/>
             </View>
             <View style={{marginLeft:10}}>
                 <Text style={{color:'white'}}>
                     {state.fullName}
                 </Text>
-                <Text style={{color:'white',fontWeight:'200'}}>
+                <Text style={{color:'lightblue',fontWeight:'200'}}>
                     @{state.username}
                 </Text>
             </View>
         </View>
-        <Ionicons name={state.isPlaying ? 'pause' : 'play'} size={26} color='white' onPress={state.isPlaying ? pause : resume}/>
+        <Ionicons name={state.isPlaying ? 'pause' : 'play'} size={26} color='white' onPress={state.isPlaying ? pause : resume} style={{marginRight:5}}/>
     </View>
 
     )

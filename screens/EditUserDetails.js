@@ -13,17 +13,22 @@ const EditUserDetails = ({navigation, route}) => {
     const id = route.params.id;
 
     const submit = () => {
-        if(flow[id].onContinue){
-            userFunctions.updateUserInfo(
-                {
-                    [flow[id]['field']]: inputValue
-                }
-            )
-            flow[id].onContinue({navigation: navigation, userFunctions: userFunctions, inputValue: inputValue});
+        if(!flow[id].isSkippable && ( !inputValue)){
+            alert('Please fill out the field completely.')
+            return;
         } else {
-            userFunctions.createAccount();
+            if(flow[id].onContinue){
+                userFunctions.updateUserInfo(
+                    {
+                        [flow[id]['field']]: inputValue
+                    }
+                )
+                setInputValue(null);
+                flow[id].onContinue({navigation: navigation, userFunctions: userFunctions, inputValue: inputValue});
+            } else {
+                userFunctions.createAccount();
+            }
         }
-        
     }
 
     return(
@@ -63,10 +68,10 @@ const EditUserDetails = ({navigation, route}) => {
                 size='lg'
                 value={inputValue}
                 onChangeText= {e => setInputValue(e)}
-                autoCapitalize='words'
+                autoCapitalize={flow[id]['multiline'] ? 'sentences' : 'words'}
                 color='white'
                 width="90%"
-                multiline
+                multiline={flow[id]['multiline']}
                 maxHeight={100}
             />
             :
@@ -82,7 +87,7 @@ const EditUserDetails = ({navigation, route}) => {
             
             }
             <Button 
-                variant='outline'
+                variant='ghost'
                 width='90%'
                 mt='5'
                 onPress={submit}
@@ -94,6 +99,14 @@ const EditUserDetails = ({navigation, route}) => {
             <Button
             width='90%'
             mt='5'
+            onPress={() => {
+                setInputValue(null);
+                if(flow[id].onContinue){
+                    flow[id].onContinue({navigation: navigation, userFunctions: userFunctions, inputValue: inputValue});
+                } else {
+                    userFunctions.createAccount()
+                }
+            }}
             variant='ghost'>
                 Skip
             </Button> 
@@ -106,7 +119,7 @@ const EditUserDetails = ({navigation, route}) => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#171717',
+      backgroundColor: 'black',
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -123,6 +136,7 @@ const flow = {
         title: 'Enter your professional title',
         field:'jobTitle',
         example: 'Journalist, Barista, Programmer',
+        isSkippable: true,
         onContinue: ({navigation}) => navigation.navigate('EditUserDetails', { id: 3 })
     },
     3: {
@@ -140,7 +154,7 @@ const flow = {
     'profile-company': {
         title: "Edit your company",
         field: 'company',
-        example: 'Microsoft',
+        example: 'The Popcorn Factory',
         onContinue: ({userFunctions, navigation, inputValue}) => {
             userFunctions.editUserDetails({'company': inputValue});
             navigation.goBack();
@@ -158,6 +172,7 @@ const flow = {
     'profile-bio': {
         title: "Edit your bio",
         field: 'bio',
+        multiline: true,
         example: '',
         onContinue: ({userFunctions, navigation, inputValue}) => {
             userFunctions.editUserDetails({'bio': inputValue});

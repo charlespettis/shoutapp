@@ -1,5 +1,5 @@
 import React from 'react';
-import {KeyboardAvoidingView, StyleSheet} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, Platform} from 'react-native';
 import { Button, Input, Stack, Icon } from 'native-base';
 import Logo from '../components/common/Logo';
 import {Ionicons} from '@expo/vector-icons';
@@ -36,6 +36,7 @@ const Login = ({navigation}) => {
             alignItems='center'>
                 <Input 
                 color
+                selectionColor={'lightblue'}
                 value={userDetails.username}
                 onChangeText={e => setUserDetails({
                     ...userDetails,
@@ -47,6 +48,7 @@ const Login = ({navigation}) => {
                 w={{base:'90%', md:'25%'}}
                 placeholder="Email or Username"
                 autoCapitalize={'none'}
+                variant={'underlined'}
                 InputLeftElement={
                 <Icon
                     color="white"
@@ -63,8 +65,10 @@ const Login = ({navigation}) => {
                     ...userDetails,
                     password:e
                 })}
+                variant={'underlined'}
                 w={{base:'90%', md:'25%'}}
                 placeholder="Password"
+                selectionColor={'lightblue'}
                 secureTextEntry={isPasswordShown}
                 InputLeftElement={
                 <Icon
@@ -85,7 +89,7 @@ const Login = ({navigation}) => {
                 <Button 
                 width={'90%'} 
                 onPress={submit}
-                variant='outline'>
+                variant='ghost'>
                     Login
                 </Button>
             </Stack>
@@ -96,7 +100,7 @@ const Login = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#171717',
+      backgroundColor: 'black',
       alignItems: 'center',
       justifyContent: 'center',
     },

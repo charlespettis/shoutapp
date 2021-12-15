@@ -1,5 +1,5 @@
 import React from 'react';
-import {createPost, getPostsByTopic} from '../../api/post';
+import {createPost, getPostsByTopic, deletePost} from '../../api/post';
 import { UserContext } from './UserProvider';
 
 export const PostsContext = React.createContext();
@@ -34,7 +34,8 @@ const PostsProvider = props => {
                             "User": {
                                 fullName: userState.fullName,
                                 avatar: userState.avatar,
-                                username: userState.username
+                                username: userState.username,
+                                id: userState.id
                             },
                             Likes: [],
                             ...res
@@ -48,6 +49,18 @@ const PostsProvider = props => {
                 getPostsByTopic(data)
                 .then(posts => {
                     dispatch({type: "GET", data: posts})
+                })
+            },
+            deletePost: ({id}) => {
+                deletePost({id:id})
+                .then(res => {
+                    if(res.status === 200){
+                        console.log('ree');
+                        const result = [...state]
+                        const index = result.findIndex(e => e.id === id)
+                        if(index > -1) result.splice(index,1);
+                        dispatch({type:"GET", data: result})
+                    }
                 })
             }
         })

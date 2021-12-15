@@ -66,3 +66,20 @@ export const flag = ({id}) => {
         return res.status;
     })
 }
+
+export const deletePost = ({id}) => {
+    return fetch(`${proxy}/delete`, {
+        method: "DELETE",
+        body: JSON.stringify({
+            postId: id
+        }),
+        headers: {
+            'Authorization': `Token ${storage.token}`,
+            'Content-Type': 'application/json',
+            'Accept': '*/*'
+        }
+    })
+    .then(res => {
+        return res;
+    })
+}

@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "shout",
-    "slug": "shout",
+    "name": "Topic",
+    "slug": "Topic",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
     ]
   },
-  "name": "shout",
+  "name": "Topic",
   "ios": {
     "infoPlist":{
       "UIBackgroundModes": [

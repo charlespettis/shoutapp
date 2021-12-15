@@ -32,7 +32,6 @@ const TopicsProvider = props => {
             getAll: () => {
                 getTopics(0,10)
                 .then(data => {
-                    console.log(data);
                     dispatch({type: "GETNEWEST", data: data})
                 })
             },

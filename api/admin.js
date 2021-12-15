@@ -32,3 +32,16 @@ export const approveTopic = ({id}) => {
         return res.status;
     })
 }
+
+export const getFlags = () => {
+    return fetch(`${proxy}/getFlags`,{
+        headers: {
+            'Authorization': `Token ${storage.token}`
+        }
+    })
+    .then(res => {
+        if(res.status === 200){
+            return res.json();
+        }
+    })
+}

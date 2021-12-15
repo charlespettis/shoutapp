@@ -7,8 +7,6 @@ import TopicsProvider from './components/contexts/TopicsProvider';
 import PostsProvider from './components/contexts/PostsProvider';
 const App = () => {
 
-  LogBox.ignoreAllLogs();
-  
   return (
     <UserProvider>
       <PostsProvider>

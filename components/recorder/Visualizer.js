@@ -9,7 +9,8 @@ const Visualizer = props => {
             if(e){ 
             return(
                 <Bar
-                    keyExtractor={e + i} 
+
+                    id={e + i} 
                     height={e}
                 />
             )}
@@ -24,7 +25,7 @@ const Visualizer = props => {
 const Bar = props => {
     return(
         <View
-            key={props.keyExtractor}
+            key={props.id}
             style={[{height: props.height}, styles.bar]}
         />
     )

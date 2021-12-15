@@ -3,6 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Profile from '../screens/Profile';
 import EditUserDetails from '../screens/EditUserDetails';
 import ViewSuggestedTopics from '../screens/ViewSuggestedTopics';
+import ResetPassword from '../screens/ResetPassword';
+import ReportProblem from '../screens/ReportProblem';
+import ViewFlags from '../screens/ViewFlags';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +19,10 @@ const ProfileNavigator = () => {
             />
           <Stack.Screen name="EditUserDetails" component={EditUserDetails} />
           <Stack.Screen name="ViewSuggestedTopics" component={ViewSuggestedTopics} />
+          <Stack.Screen name="ResetPassword" component={ResetPassword} />
+          <Stack.Screen name="ReportProblem" component={ReportProblem} />
+          <Stack.Screen name="ViewFlags" component={ViewFlags} />
+
         </Stack.Navigator>
     )
 }

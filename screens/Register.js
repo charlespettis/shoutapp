@@ -26,7 +26,7 @@ const Register = ({navigation}) => {
             return;
         }
         if(!/^(?=.*\d).{6,}$/.test(userDetails.password)){
-            alert('Please enter a password with atleast 8 digits including uppercase, lowercase, a number, and special character.');
+            alert('Please enter a password with atleast 6 characters and one uppercase character, lowercase character and number.');
             return;
         }
 
@@ -65,6 +65,7 @@ const Register = ({navigation}) => {
             alignItems='center'>
                 <Input 
                 color
+                variant={'underlined'}
                 value={userDetails.username}
                 onChangeText={e => setUserDetails({
                     ...userDetails,
@@ -72,6 +73,7 @@ const Register = ({navigation}) => {
                 })}
                 size='lg'
                 color='white'
+                selectionColor={'lightblue'}
                 w={{base:'90%', md:'25%'}}
                 placeholder="Username"
                 autoCapitalize={'none'}
@@ -91,6 +93,8 @@ const Register = ({navigation}) => {
                     ...userDetails,
                     email:e
                 })}
+                selectionColor={'lightblue'}
+                variant={'underlined'}
                 w={{base:'90%', md:'25%'}}
                 placeholder="Email"
                 autoCapitalize={'none'}
@@ -105,7 +109,9 @@ const Register = ({navigation}) => {
                 }/>
                 <Input 
                 size='lg'
+                selectionColor={'lightblue'}
                 color='white'
+                variant={'underlined'}
                 value={userDetails.password}
                 onChangeText={e => setUserDetails({
                     ...userDetails,
@@ -113,6 +119,7 @@ const Register = ({navigation}) => {
                 })}
                 w={{base:'90%', md:'25%'}}
                 placeholder="Password"
+                autoCapitalize='words'
                 secureTextEntry={isPasswordShown}
                 InputLeftElement={
                 <Icon
@@ -134,7 +141,7 @@ const Register = ({navigation}) => {
                 <Button 
                 width={'90%'} 
                 onPress={createAccount}
-                variant='outline'>
+                variant='ghost'>
                     Create a new account
                 </Button>
                 <Divider my="2" opacity={.1}/>

@@ -147,13 +147,13 @@ const Recorder = props => {
                 require('../../assets/sounds/beep_down.wav')
             );
             setSoundEffect(sound);
-            return soundEffect.playAsync();    
+            return sound.playAsync();    
         } else {
             const { sound } = await Audio.Sound.createAsync(
                 require('../../assets/sounds/beep_up.wav')
             );
             setSoundEffect(sound);
-            return soundEffect.playAsync();    
+            return sound.playAsync();    
         }
     }
 
@@ -211,7 +211,7 @@ const Recorder = props => {
                         name="trash-outline"
                         color="#FF4747"
                         size={24}
-                        style={{marginLeft:15}}
+                        style={{marginLeft:25}}
                     />
                 }
                 rightIcon={
@@ -220,7 +220,7 @@ const Recorder = props => {
                         color='lightgreen'
                         size={24}
                         onPress={submit}
-                        style={{marginRight:15}}
+                        style={{marginRight:25}}
 
                     />
                 }

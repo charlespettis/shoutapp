@@ -48,12 +48,12 @@ const Profile = ({navigation, route}) => {
                 <List title="Account">
                     <ListItem onPress={()=>alert('hi')} icon="star" title="Liked Posts"/>
                     <ListItem onPress={()=>alert('hi')} icon="chatbubble" title="Recent Posts"/>
-                    <ListItem onPress={()=>alert('hi')} icon="lock-closed-outline" title="Reset Password"/>
+                    <ListItem onPress={()=>navigation.navigate('ResetPassword')} icon="lock-closed-outline" title="Reset Password"/>
                     <ListItem onPress={logOut} icon="arrow-back" title="Log Out"/>
                 </List>
 
                 <List title="Support">
-                    <ListItem onPress={()=>alert('hi')} icon="alert" title="Report A Problem"/>
+                    <ListItem onPress={()=>navigation.navigate('ReportProblem')} icon="alert" title="Report A Problem"/>
                     <ListItem onPress={()=>alert('hi')} icon="reader-outline" title="Privacy Policy"/>
                     <ListItem onPress={()=>alert('hi')} icon="document-outline" title="Terms of Service"/>
                     <ListItem onPress={()=>alert('hi')} icon="help-outline" title="Help Center"/>
@@ -64,7 +64,7 @@ const Profile = ({navigation, route}) => {
 
                 <List title="Admin">
                     <ListItem onPress={()=>navigation.navigate('ViewSuggestedTopics')} icon="list-outline" title="View Suggested Topics"/>
-                    <ListItem onPress={()=>alert('hi')} icon="flag-outline" title="View Flagged Posts"/>
+                    <ListItem onPress={()=>navigation.navigate('ViewFlags')} icon="flag-outline" title="View Flagged Posts"/>
                 </List>
 
                 }

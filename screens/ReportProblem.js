@@ -33,7 +33,7 @@ const ReportProblem = ({navigation,route}) => {
 
     return(
     <SafeAreaView style={{flex:1,backgroundColor:'black'}}>
-        <View style={{margin:20,height:'50%',justifyContent:'space-evenly'}}>
+        <View style={{height:'60%',margin:20,justifyContent:'space-evenly'}}>
         <Ionicons name='chevron-back' size={22} onPress={()=>navigation.goBack()} color={'white'}/>
         <Text style={{fontSize:22,color:'white'}}>Report An Issue</Text>
         <Text style={{color:'white',lineHeight:22,fontWeight:'300',marginTop:10}}>We're sorry you're having an issue and thank you for bringing it to our attention.  Please describe in detail the issue you're facing and someone on our team will look into addressing it as soon as possible.</Text>

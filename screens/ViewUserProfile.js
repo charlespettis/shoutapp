@@ -50,6 +50,7 @@ const ViewUserProfile = ({navigation, route}) => {
                 likes={item.likes ? item.likes : []}
                 navigation={navigation}
                 userId={userData.id}
+                createdAt={item.createdAt}
             />
 
             </View>

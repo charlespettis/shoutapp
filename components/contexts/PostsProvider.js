@@ -55,7 +55,6 @@ const PostsProvider = props => {
                 deletePost({id:id})
                 .then(res => {
                     if(res.status === 200){
-                        console.log('ree');
                         const result = [...state]
                         const index = result.findIndex(e => e.id === id)
                         if(index > -1) result.splice(index,1);

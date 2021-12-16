@@ -43,16 +43,16 @@ const ResetPassword = ({navigation, route}) => {
     }
 
     return(
-        <KeyboardAvoidingView style={{flex:1,backgroundColor:'black',justifyContent:'center'}}>
+        <SafeAreaView style={{flex:1,backgroundColor:'black'}}>
             <View style={{height:'50%' ,width:'90%',alignSelf:'center',justifyContent:'space-evenly'}}>
                 <Ionicons name='chevron-back' size={22} color={'white'} onPress={()=>navigation.goBack()}/>
                 <Text style={{color:'white',fontSize:22}}>Reset Password</Text>
-                <Input size='lg' color={'white'} selectionColor={'lightblue'} variant='underlined' placeholder='Current Password' onChangeText={e => setUserObj({...userObj, currentPassword: e })}/>
+                <Input autoFocus size='lg' color={'white'} selectionColor={'lightblue'} variant='underlined' placeholder='Current Password' onChangeText={e => setUserObj({...userObj, currentPassword: e })}/>
                 <Input size='lg' color={'white'} selectionColor={'lightblue'} variant='underlined' placeholder='New Password' onChangeText={e => setUserObj({...userObj, newPassword: e })}/>
                 <Input size={'lg'} color={'white'} selectionColor={'lightblue'} variant='underlined' placeholder='Re-enter New Password' onChangeText={e => setUserObj({...userObj, reEnterNewPassword: e })}/>
                 <Button onPress={submit} selectionColor={'lightblue'} variant='ghost' alignSelf={'flex-end'} w={'25%'}>Submit</Button>
             </View>
-        </KeyboardAvoidingView>
+        </SafeAreaView>
     )
 }
 

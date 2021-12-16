@@ -56,7 +56,7 @@ const Player = props => {
     },[sound])
 
     return(
-        <View style={{flexDirection:'column', alignItems:'center',width:'100%',justifyContent:'flex-start',flex:1}}>
+        <View style={{flexDirection:'column', alignItems:'center',width:'100%',justifyContent:'space-between',flex:1,height:'50%'}}>
             <View style={{flexDirection:'row',alignItems:'center', justifyContent:'space-between',width:'100%'}}>
 
                 {

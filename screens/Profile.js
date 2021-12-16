@@ -46,7 +46,7 @@ const Profile = ({navigation, route}) => {
                 </View>
 
                 <List title="Account">
-                    <ListItem onPress={()=>alert('hi')} icon="star" title="Liked Posts"/>
+                    <ListItem onPress={()=>navigation.navigate('ViewLikes')} icon="star" title="Liked Posts"/>
                     <ListItem onPress={()=>alert('hi')} icon="chatbubble" title="Recent Posts"/>
                     <ListItem onPress={()=>navigation.navigate('ResetPassword')} icon="lock-closed-outline" title="Reset Password"/>
                     <ListItem onPress={logOut} icon="arrow-back" title="Log Out"/>

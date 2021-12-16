@@ -38,7 +38,12 @@ const TopicsProvider = props => {
             getAllByCategory: category => {
                 getTopicsByCategory(category, 0, 10)
                 .then(data => {
-                    dispatch({type: "GETNEWEST", data: data})
+                    const result = [...state].filter(e => e.category !== category);
+                    result.push(...data);
+                    result.sort((a,b) => {
+                        return new Date(b.createdAt) - new Date(a.createdAt);
+                    })
+                    dispatch({type: "GETNEWEST", data: result})
                 })
             },
             getMore: offset => {

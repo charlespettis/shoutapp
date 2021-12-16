@@ -38,6 +38,11 @@ const GlobalPlayerProvider = props => {
                         isPlaying:true,
                         queue: posts
                     }
+                case "SKIP":
+                    return {
+                        ...prevState,
+                        ...action.data
+                    }
                 case "PAUSE":
                     return {
                         ...prevState,
@@ -71,6 +76,15 @@ const GlobalPlayerProvider = props => {
                 play(data.recording);
                 dispatch({type: "PLAY", data: data})
             },
+            skip: () => {
+                const index = state.queue.findIndex(e => e.id === state.id);
+                if(index > -1 && index !== state.queue.length - 1){
+                    dispatch({type:"SKIP", data: state.queue[index + 1]})
+                    play(state.queue[index + 1].recording);
+                } else {
+                    dispatch({type:"PAUSE"})
+                }
+            },
             stop: () => {
                 dispatch({type:"STOP"})
             },
@@ -86,7 +100,7 @@ const GlobalPlayerProvider = props => {
     const [sound, setSound] = React.useState();
     const [progress, setProgress] = React.useState(0);
     const [isExpanded, setIsExpanded] = React.useState(false);
-
+    const [position, setPosition] = React.useState(0);
     const height = Dimensions.get('window').height;
 
     const play = async recording => {
@@ -100,11 +114,10 @@ const GlobalPlayerProvider = props => {
         setSound(sound);
         await sound.playAsync();
         sound.setOnPlaybackStatusUpdate(async (status) => {
+            setPosition(status.positionMillis)
             setProgress((status.positionMillis / status.durationMillis) * 100);
             if(status.didJustFinish){
-                await sound.pauseAsync();
-                await sound.setPositionAsync(0);
-                dispatch({type:"PAUSE"})
+                playerFunctions.skip();
             }
         });
     }
@@ -119,15 +132,32 @@ const GlobalPlayerProvider = props => {
         dispatch({type:"RESUME"})
     }
 
+    const forward10 = async () => {
+        await sound.setPositionAsync(position + 10000);
+    }
+
+    const backward10 = async () => {
+        await sound.setPositionAsync(position - 10000);
+    }
+
+    const goBack = async () => {
+        const index = state.queue.findIndex(e => e.id === state.id);
+
+        if(index > 0){
+            playerFunctions.play(state.queue[index - 1]);
+        } else {
+            await sound.pauseAsync()
+            await sound.setPositionAsync(0);
+            dispatch({type:"PAUSE"})
+        }
+    }
+
     React.useEffect(()=>{
         return async () => {
             sound && sound.unloadAsync();
         }
     },[sound])
 
-    React.useEffect(()=>{
-        console.log(state);
-    },[state])
     
     return(
             <GlobalPlayerContext.Provider value={{player: state, playerFunctions: playerFunctions}}>
@@ -151,20 +181,20 @@ const GlobalPlayerProvider = props => {
                             avatar={state.avatar} 
                             username={state.username} 
                             likes={state.likes}
-                            timestamp={state.createdAt}
+                            createdAt={state.createdAt}
                             userId={state.userId}
                 
                             
                             />
                             </TouchableWithoutFeedback>
                             <View style={{flexDirection:'row',alignItems:'center', alignSelf:'center',justifyContent:'space-between',width: '100%',paddingLeft:10,paddingRight:10,marginBottom:10}}>
-                                <Ionicons name='play-back' size={22} color='white' />
-                                <MaterialCommunityIcons name='rewind-10' size={22} color='white' />
+                                <Ionicons name='play-back' onPress={goBack} size={22} color='white' />
+                                <MaterialCommunityIcons onPress={backward10} name='rewind-10' size={22} color='white' />
 
                                 <Ionicons name={state.isPlaying ? 'pause' : 'play'} size={32} color='white' onPress={state.isPlaying ? pause : resume}/>
                                 
-                                <MaterialCommunityIcons name='fast-forward-10' size={22} color='white' />
-                                <Ionicons name='play-forward' size={22} color='white' />
+                                <MaterialCommunityIcons onPress={forward10} name='fast-forward-10' size={22} color='white' />
+                                <Ionicons name='play-forward' size={22} onPress={playerFunctions.skip} color='white' />
 
                             </View>
                             

@@ -35,7 +35,6 @@ export const createAccount = data => {
 
 export const login = data => {
     const encoded = Base64.encode(data);
-
     return fetch(`${proxy}/login`, {
         method:"GET",
         headers: {
@@ -43,6 +42,8 @@ export const login = data => {
         }
     })
     .then(res => {
+        alert('ree')
+
         if(res.status === 200){
             return res.json();
         } else {
@@ -155,5 +156,18 @@ export const sendFeedback = ({feedback}) => {
     })
     .then(res => {
         return res;
+    })
+}
+
+export const getLikes = () => {
+    return fetch(`${proxy}/getLikes`, {
+        headers: {
+            'Authorization': `Token ${storage.token}`
+        }
+    })
+    .then(res => {
+        if(res.status === 200){
+            return res.json();
+        }
     })
 }

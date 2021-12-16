@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { StyleSheet, KeyboardAvoidingView, View} from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, View, Platform} from 'react-native';
 import {Input, Box, Button, Text, Stack} from 'native-base';
 import {Ionicons} from '@expo/vector-icons';
 import {UserContext} from '../components/contexts/UserProvider';
@@ -32,6 +32,7 @@ const EditUserDetails = ({navigation, route}) => {
     }
 
     return(
+        <View style={{flex:1,backgroundColor:'black'}}>
     <KeyboardAvoidingView style={styles.container} 
         behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
@@ -108,11 +109,12 @@ const EditUserDetails = ({navigation, route}) => {
                 }
             }}
             variant='ghost'>
-                Skip
+                Skip for now
             </Button> 
             }
             </Stack>
             </KeyboardAvoidingView>
+            </View>
     )
 }
 

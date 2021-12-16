@@ -11,7 +11,6 @@ const ViewFlags = ({navigation}) => {
     React.useEffect(()=> {
         getFlags()
         .then(data => {
-            console.log(data);
             setData(data)            
         })
     }, [])
@@ -25,6 +24,7 @@ const ViewFlags = ({navigation}) => {
             id={item["Post"]['id']}
             username={item["Post"]["User"]["username"]}
             recording={item["Post"]["recording"]}
+            createdAt={item["Post"].createdAt}
             />
         )
     }

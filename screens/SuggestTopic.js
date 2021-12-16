@@ -52,10 +52,8 @@ const SuggestTopic = ({navigation, route}) => {
                     <Picker.Item label="Sports" value="Sports" />
                 </Picker>
 
-                <TouchableOpacity onPress={submit} style={{flexDirection:'row',alignItems:'center',alignSelf:'flex-end'}}>
-                    <Text style={{fontSize:18, color:'lightblue'}}>Submit</Text>
-                    <Ionicons name='chevron-forward' size={32} color='lightblue' />
-                </TouchableOpacity>
+                <Button onPress={submit} variant={'ghost'} size={'lg'} alignSelf={'flex-end'}>Submit</Button>
+
             </View>
         </SafeAreaView>
         :

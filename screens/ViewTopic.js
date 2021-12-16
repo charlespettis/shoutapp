@@ -44,7 +44,7 @@ const ViewTopic = ({navigation, route}) => {
             recording = {item.recording}
             likes={item.Likes}
             navigation={navigation}
-            timestamp={item.createdAt}
+            createdAt={item.createdAt}
             userId={item["User"].id}
         />)
     }

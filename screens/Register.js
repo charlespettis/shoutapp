@@ -17,7 +17,7 @@ const Register = ({navigation}) => {
 
     const createAccount = () => {
 
-        if(userDetails.username.length < 4){
+        if(userDetails.username.length < 3){
             alert('Please enter a valid username atleast 4 characters long');
             return;
         }

@@ -33,7 +33,7 @@ const Topic = props => {
                 </View>
                 <Text style={{color:'white'}}>{props.title}</Text>
             </View>
-            <Image source={{uri: `${env}${props.imageUri}`}} resizeMode='cover' style={{height:'100%',flex:1}}/>
+            <Image source={{uri: `${props.imageUri}`}} resizeMode='cover' style={{height:'100%',flex:1}}/>
         </View>
         </Pressable>
     )

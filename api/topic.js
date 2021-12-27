@@ -1,11 +1,14 @@
 import storage from '../storage';
 import {env} from '../misc';
+import {Platform} from 'react-native';
 
 const proxy = `${env}topic`;
 
 export const suggestTopic = data => {
     const formData = new FormData();
-    formData.append('image', {type: 'image/jpeg/jpg/png', uri: data.image, name:'image'});
+    const newImageUri = Platform.OS === "android" ? "file:///" + data.image.split("file:/").join("") : data.image;
+
+    formData.append('image', {type: 'image/*', uri: newImageUri, name:'image'});
     formData.append('title', data.title);
     formData.append('category', data.category);
 

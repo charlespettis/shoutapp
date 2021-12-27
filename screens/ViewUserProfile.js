@@ -52,7 +52,6 @@ const ViewUserProfile = ({navigation, route}) => {
                 userId={userData.id}
                 createdAt={item.createdAt}
             />
-
             </View>
         )
     }
@@ -68,7 +67,7 @@ const ViewUserProfile = ({navigation, route}) => {
                 contentContainerStyle={{paddingBottom:80}}
                 ListHeaderComponent={
                     <View style={{alignItems:'center'}}>
-                        <Image style={{height:100,width:100,borderRadius:100}} source={{uri: `${env}${userData.avatar}`}}/>
+                        <Image style={{height:100,width:100,borderRadius:100}} source={{uri: `${userData.avatar}`}}/>
                         <Text style={{color:'white',fontSize:22,marginTop:5}}>{userData.fullName}</Text>
                         <Text style={{color:'lightblue',fontSize:14,marginTop:5}}>@{userData.username}</Text>
                         <Text style={{color:'white',fontSize:14,marginTop:5}}>{userData.jobTitle} {userData.company && `at ${userData.company}`}</Text>

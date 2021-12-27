@@ -1,5 +1,6 @@
 import {Base64, env} from '../misc';
 import storage from '../storage';
+import { Platform } from 'react-native';
 
 const proxy = `${env}user`;
 
@@ -9,7 +10,8 @@ export const checkCredentials = (username, email) => {
 
 export const createAccount = data => {
     const formData = new FormData();
-    if(data.avatar) formData.append('avatar', {type: 'image/jpeg/jpg/png', uri: data.avatar, name:'avatar'});
+    const newImageUri = Platform.OS === "android" ? "file:///" + data.avatar.split("file:/").join("") : data.avatar;
+    if(data.avatar) formData.append('avatar', {type: 'image/*', uri: newImageUri, name:'avatar'});
     formData.append('username', data.username);
     formData.append('email', data.email);
     formData.append('password', data.password);
@@ -18,6 +20,10 @@ export const createAccount = data => {
 
     return fetch(`${proxy}/createAccount`, {
         method: 'POST',
+        headers:{
+            'Content-Type': 'multipart/form-data',
+            'Accepts':'*/*'
+        },
         body: formData
     })
     .then(res => {
@@ -25,8 +31,9 @@ export const createAccount = data => {
             return res.json();
         } else {
             alert('Something went wrong. Please try again later.')
-            return;
+            return res.statusText();
         }
+        
     })
     .catch(err => {
         console.log(err);
@@ -42,8 +49,6 @@ export const login = data => {
         }
     })
     .then(res => {
-        alert('ree')
-
         if(res.status === 200){
             return res.json();
         } else {
@@ -76,13 +81,14 @@ export const verify = () => {
 
 export const editAvatar = data => {
     const formData = new FormData();
-    if(data.avatar) formData.append('avatar', {type: 'image/jpeg/jpg/png', uri: data.avatar, name:'avatar'});
-
+    const newImageUri = Platform.OS === "android" ? "file:///" + data.avatar.split("file:/").join("") : data.avatar;
+    if(data.avatar) formData.append('avatar', {type: 'image/*', uri: newImageUri, name:'avatar'});
     return fetch(`${proxy}/editAvatar`, {
         method: "PATCH",
         body: formData,
         headers: {
-            'Authorization': `Token ${storage.token}`
+            'Authorization': `Token ${storage.token}`,
+            'Content-Type': 'multipart/form-data',
         }
     })
     .then(res => {
@@ -91,6 +97,10 @@ export const editAvatar = data => {
         } else {
             return;
         }
+    })
+    .catch(err => {
+        console.error(err)
+        throw new Error(err);
     })
 }
 

@@ -7,6 +7,7 @@ import ResetPassword from '../screens/ResetPassword';
 import ReportProblem from '../screens/ReportProblem';
 import ViewFlags from '../screens/ViewFlags';
 import ViewLikes from '../screens/ViewLikes';
+import ViewRecentPosts from '../screens/ViewRecentPosts';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,7 +25,7 @@ const ProfileNavigator = () => {
           <Stack.Screen name="ReportProblem" component={ReportProblem} />
           <Stack.Screen name="ViewFlags" component={ViewFlags} />
           <Stack.Screen name="ViewLikes" component={ViewLikes} />
-
+          <Stack.Screen name="ViewRecentPosts" component={ViewRecentPosts} />
         </Stack.Navigator>
     )
 }

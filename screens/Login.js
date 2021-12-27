@@ -1,5 +1,5 @@
 import React from 'react';
-import {KeyboardAvoidingView, StyleSheet, Platform} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, Platform, Text} from 'react-native';
 import { Button, Input, Stack, Icon } from 'native-base';
 import Logo from '../components/common/Logo';
 import {Ionicons} from '@expo/vector-icons';
@@ -32,8 +32,9 @@ const Login = ({navigation}) => {
         <Logo style={{marginBottom:35}}/>
             <Stack 
             space={4}  
-            w='100%' 
+            w='90%' 
             alignItems='center'>
+                <Text style={{color:'white',alignSelf:'flex-start', fontSize:22,fontWeight:'100'}}>Log In</Text>
                 <Input 
                 color
                 selectionColor={'lightblue'}
@@ -45,7 +46,6 @@ const Login = ({navigation}) => {
                 size='lg'
                 color='white'
                 autoFocus
-                w={{base:'90%', md:'25%'}}
                 placeholder="Email or Username"
                 autoCapitalize={'none'}
                 variant={'underlined'}
@@ -66,7 +66,6 @@ const Login = ({navigation}) => {
                     password:e
                 })}
                 variant={'underlined'}
-                w={{base:'90%', md:'25%'}}
                 placeholder="Password"
                 selectionColor={'lightblue'}
                 secureTextEntry={isPasswordShown}
@@ -87,7 +86,7 @@ const Login = ({navigation}) => {
                 />
                 }/>
                 <Button 
-                width={'90%'} 
+                width={'100%'} 
                 onPress={submit}
                 variant='ghost'>
                     Login

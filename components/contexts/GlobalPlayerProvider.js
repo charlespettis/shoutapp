@@ -230,7 +230,7 @@ const MinPlayer = ({state, pause, resume}) => {
         <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',height:60,paddingLeft:10,paddingRight:10}}>
         <View style={{flexDirection:'row',alignItems:'center'}}>
             <View >
-            <Image source={{uri: `${env}${state.avatar}`}} style={{width:42,height:42, borderRadius:3}}/>
+            <Image source={{uri: `${state.avatar}`}} style={{width:42,height:42, borderRadius:3}}/>
             </View>
             <View style={{marginLeft:10}}>
                 <Text style={{color:'white'}}>

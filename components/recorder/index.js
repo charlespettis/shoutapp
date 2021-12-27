@@ -49,8 +49,7 @@ const Recorder = props => {
             await Audio.setAudioModeAsync({
             allowsRecordingIOS: true,
             playsInSilentModeIOS: true,
-        
-            }); 
+            });
             const { recording } = await Audio.Recording.createAsync(
                 {
                     isMeteringEnabled:true,
@@ -62,14 +61,17 @@ const Recorder = props => {
                         bitRate: 128000,
                     },
                     android: {
-                        extension: '.wav',
-                        outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_DEFAULT,
-                        audioEncoder: Audio.RECORDING_OPTION_ANDROID_AUDIO_ENCODER_DEFAULT,
-    
+                        extension:'.wav'
                     }
     
                 }
-            );
+            )
+            .catch(err => {
+                if(err) console.log(err);
+                throw new Error(err);
+            })
+            setRecording(recording);
+
             recording.setProgressUpdateInterval(40)
             const startTime = new Date();
             recording.setOnRecordingStatusUpdate(e => {
@@ -77,7 +79,7 @@ const Recorder = props => {
                 setDurationMillis(e.durationMillis);
                 
                 setBarValues(prevState => {
-                    endTime = new Date();
+                    const endTime = new Date();
                     var timeDiff = endTime - startTime; 
                     if( timeDiff >= 5000  ){
                         const newData = prevState.slice(0,prevState.length - 1);
@@ -89,7 +91,6 @@ const Recorder = props => {
                 })                
     
             })
-            setRecording(recording);
     
         },350)
 
@@ -98,10 +99,12 @@ const Recorder = props => {
         if(props.onRecordingStop) props.onRecordingStop();
         setRecording(undefined);
         setBarValues([]);
+        
         playSoundEffect();
-        await recording.stopAndUnloadAsync();
-        const uri = recording.getURI();
-        setRecordingPath(uri);
+        await recording.stopAndUnloadAsync()
+        const uri = await recording.getURI()
+        setRecordingPath(uri)
+        
     }
 
     const animateStart = () => {
@@ -176,7 +179,7 @@ const Recorder = props => {
 
     React.useEffect(()=>{
         return async () => {
-            soundEffect && soundEffect.unloadAsync();
+            soundEffect && await soundEffect.unloadAsync();
         }
     },[soundEffect])
 

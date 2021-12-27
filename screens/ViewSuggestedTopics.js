@@ -5,7 +5,7 @@ import {getTopicsAwaitingApproval, approveTopic} from '../api/admin';
 import Topic from '../components/topic';
 import Empty from '../components/common/EmptyListComponent';
 
-const ViewSuggestedTopics = () => {
+const ViewSuggestedTopics = ({navigation, route}) => {
     const [data, setData] = React.useState([]);
 
     React.useEffect(()=>{
@@ -23,7 +23,7 @@ const ViewSuggestedTopics = () => {
 
     return(
         <SafeAreaView style={{flex:1, backgroundColor:'black'}}>
-            <Ionicons name='chevron-back' color='white' size={32} />
+            <Ionicons style={{margin:20}} onPress={()=>navigation.goBack()} name='chevron-back' color='white' size={22} />
             <FlatList
             data={data}
             renderItem={renderItem}

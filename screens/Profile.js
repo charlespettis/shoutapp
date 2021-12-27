@@ -21,7 +21,7 @@ const Profile = ({navigation, route}) => {
 
                 <UserAvatar
                 onPickImage = {e => userFunctions.editAvatar({avatar: e})}
-                source = { userState.avatar && {uri: env + userState.avatar} }
+                source = { userState.avatar && {uri: userState.avatar} }
                 />
 
                 <Text style={{color:'white',fontSize:24,marginTop:20}}>{userState.fullName}</Text>
@@ -47,7 +47,7 @@ const Profile = ({navigation, route}) => {
 
                 <List title="Account">
                     <ListItem onPress={()=>navigation.navigate('ViewLikes')} icon="star" title="Liked Posts"/>
-                    <ListItem onPress={()=>alert('hi')} icon="chatbubble" title="Recent Posts"/>
+                    <ListItem onPress={()=>navigation.navigate('ViewRecentPosts')} icon="chatbubble" title="Recent Posts"/>
                     <ListItem onPress={()=>navigation.navigate('ResetPassword')} icon="lock-closed-outline" title="Reset Password"/>
                     <ListItem onPress={logOut} icon="arrow-back" title="Log Out"/>
                 </List>

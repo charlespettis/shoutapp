@@ -50,7 +50,6 @@ const UserProvider = props => {
             login: encodedCredentials => {
                 login(encodedCredentials)
                 .then(data => {
-                    console.log(data);
                     data['data']['isLoggedIn'] = true;
                     storage.setToken(data['token'])
                     .then(()=> {

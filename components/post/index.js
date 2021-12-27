@@ -78,7 +78,7 @@ const Post = props => {
         <TouchableWithoutFeedback onPress={play}>
             <View style={[styles.container, player.id === props.id && !props.focused && {backgroundColor:'rgba(173,216,230,.2)'}]}>
                 <View style={{flexDirection:'row',alignItems:'center'}}>
-                <Image source={{uri: `${env}${props.avatar}`}} style={styles.avatar} resizeMode='cover'/>
+                <Image source={{uri: `${props.avatar}`}} style={styles.avatar} resizeMode='cover'/>
                     <View style={{marginLeft:15,justifyContent:'space-between'}}>
                         <View style={{flexDirection:'row',alignItems:'center'}}>
                         <Text style={{color:player.id === props.id && !props.focused ? 'lightblue' : 'white',fontSize:16,marginBottom:5,fontWeight:'300'}}>{props.fullName} </Text>

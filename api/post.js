@@ -83,3 +83,16 @@ export const deletePost = ({id}) => {
         return res;
     })
 }
+
+export const getPostsByUserId = ({id, count}) => {
+    return fetch(`${proxy}/getPostsByUserId/${id}/${count}`, {
+        headers: {
+            'Authorization': `Token ${storage.token}`
+        }
+    })
+    .then(res => {
+        if(res.status === 200){
+            return res.json();
+        }
+    })
+}

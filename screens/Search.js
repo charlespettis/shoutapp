@@ -43,7 +43,7 @@ const Search = ({navigation, route}) => {
             return(
                 <TouchableOpacity onPress={()=>navigation.navigate('ViewUserProfile', {id: data.id})}>
                 <View style={{flexDirection:'row',alignItems:'center',margin:10}}>
-                    <Image source={{uri: `${env}${data.avatar}`}} style={{height:70,width:70,borderRadius:100}}/>
+                    <Image source={{uri: `${data.avatar}`}} style={{height:70,width:70,borderRadius:100}}/>
                     <View style={{marginLeft:10}}>
                         <Text style={{marginBottom:5, color:'white',fontSize:16,fontWeight:'300'}}>
                             {data.fullName}                       

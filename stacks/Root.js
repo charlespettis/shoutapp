@@ -8,6 +8,7 @@ import {UserContext} from '../components/contexts/UserProvider';
 import ViewUserProfile from '../screens/ViewUserProfile';
 import GlobalPlayerProvider from '../components/contexts/GlobalPlayerProvider';
 import PrivacyPolicy from '../screens/PrivacyPolicy';
+import TermsAndConditions from '../screens/TermsAndConditions';
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +45,10 @@ const RootNavigator = () => {
             <Stack.Screen
             name='PrivacyPolicy'
             component={PrivacyPolicy}
+            />
+            <Stack.Screen
+            name="TermsAndConditions"
+            component={TermsAndConditions}
             />
           </Stack.Navigator>
           </GlobalPlayerProvider>

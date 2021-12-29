@@ -55,7 +55,7 @@ const Profile = ({navigation, route}) => {
                 <List title="Support">
                     <ListItem onPress={()=>navigation.navigate('ReportProblem')} icon="alert" title="Report A Problem"/>
                     <ListItem onPress={()=>navigation.navigate('PrivacyPolicy')} icon="reader-outline" title="Privacy Policy"/>
-                    <ListItem onPress={()=>alert('hi')} icon="document-outline" title="Terms of Service"/>
+                    <ListItem onPress={()=>navigation.navigate('TermsAndConditions')} icon="document-outline" title="Terms of Service"/>
                     <ListItem onPress={()=>alert('hi')} icon="help-outline" title="Help Center"/>
                 </List>
 

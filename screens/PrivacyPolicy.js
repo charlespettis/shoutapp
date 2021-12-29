@@ -26,12 +26,12 @@ const PrivacyPolicy = ({navigation, route}) => {
         <View style={{padding:10,flex:1, backgroundColor:'black'}}>
             <ScrollView style={{flex:1}}>
             <View style={{flex:1,paddingBottom:100}}>
-            <Ionicons name='chevron-back' size={22} style={{margin:20}} color={'white'}  onPress={()=> navigation.goBack()}/>
+            <Ionicons name='chevron-back' size={22} style={{marginLeft:0,marginTop:20,marginBottom:20}} color={'white'}  onPress={()=> navigation.goBack()}/>
             <Text style={{color:'white',fontSize:22,marginBottom:10}}>
                 PRIVACY NOTICE
             </Text>
             <Text style={{color:'white'}}>
-                Last updated December 29, 2021
+                Last updated December 14, 2021
             </Text>
             <Text style={{color:'white',marginTop:10,marginBottom:10}}>
                 Thank you for choosing to be part of our community at Topic ("Topic," "we," "us," or "our"). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this privacy notice or our practices with regard to your personal information,

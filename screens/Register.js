@@ -63,7 +63,7 @@ const Register = ({navigation}) => {
             space={4}  
             w='100%' 
             alignItems='center'>
-                <Text fontWeight={'100'} width={'90%'} color={'white'} fontSize={24} alignSelf={'center'}>Welcome to Topic</Text>
+                <Text fontWeight={'100'} width={'90%'} color={'white'} fontSize={24} alignSelf={'center'}>Sign Up for Topic</Text>
                 <Input 
                 color
                 variant={'underlined'}
@@ -138,6 +138,9 @@ const Register = ({navigation}) => {
                     as={<Ionicons onPress={() => setIsPasswordShown(!isPasswordShown)} name={isPasswordShown ? 'eye-outline' : 'eye'} />}
                 />
                 }/>
+                <Text style={{color:'white',opacity:.75,fontSize:10,width:'90%',alignSelf:'center'}}>
+                    By continuing, you agree to our Terms of Service and acknowledge that you have read our Privacy Policy.
+                </Text>
 
                 <Button 
                 width={'90%'} 

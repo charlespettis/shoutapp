@@ -1,6 +1,7 @@
 import React from 'react';
 import {createAccount, login,verify, editAvatar, editUserDetails} from '../../api/user';
 import storage from '../../storage';
+import SplashScreen from '../../screens/SplashScreen';
 
 export const UserContext = React.createContext();
 
@@ -76,6 +77,8 @@ const UserProvider = props => {
         })
     );
     
+    const [isLoading, setIsLoading] = React.useState(true);
+
     React.useEffect(()=>{
         verify()
         .then(data => {
@@ -83,6 +86,7 @@ const UserProvider = props => {
                 data.isLoggedIn = true;
                 dispatch({type:"UPDATE", data: data})
             }
+            setIsLoading(false);
         })
     },[])
 
@@ -90,6 +94,9 @@ const UserProvider = props => {
         <UserContext.Provider value={{userFunctions: userFunctions, userState: state}}>
             <>
                 {
+                    isLoading ?
+                    <SplashScreen/> 
+                    :
                     props.children
                 }
             </>            

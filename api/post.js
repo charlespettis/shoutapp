@@ -5,7 +5,7 @@ const proxy = `${env}post`;
 
 export const createPost = ({recording, topicId}) => {
     const formData = new FormData();
-    formData.append('recording', {type: 'audio/caf/mp3/wav', uri: recording, name: 'recording'});
+    formData.append('recording', {type: 'audio/wav', uri: recording, name: 'recording'});
     formData.append('topicId', topicId);
 
     return fetch(`${proxy}/createPost`, {
@@ -19,6 +19,10 @@ export const createPost = ({recording, topicId}) => {
         if(res.status === 200){
             return res.json();
         }
+    })
+    .catch(err => {
+        console.log(err);
+        throw new Error(err);
     })
 }
 

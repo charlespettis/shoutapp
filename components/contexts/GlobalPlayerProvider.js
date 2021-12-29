@@ -109,7 +109,7 @@ const GlobalPlayerProvider = props => {
             playsInSilentModeIOS: true
         })
         const {sound} = await Audio.Sound.createAsync(
-            {uri: `${env}${recording}`}
+            {uri: recording}
         );
         setSound(sound);
         await sound.playAsync();
@@ -183,11 +183,9 @@ const GlobalPlayerProvider = props => {
                             likes={state.likes}
                             createdAt={state.createdAt}
                             userId={state.userId}
-                
-                            
                             />
                             </TouchableWithoutFeedback>
-                            <View style={{flexDirection:'row',alignItems:'center', alignSelf:'center',justifyContent:'space-between',width: '100%',paddingLeft:10,paddingRight:10,marginBottom:10}}>
+                            <View style={{flexDirection:'row',alignItems:'center', alignSelf:'center',justifyContent:'space-between',width:'100%',paddingLeft:10,paddingRight:10,marginBottom:10}}>
                                 <Ionicons name='play-back' onPress={goBack} size={22} color='white' />
                                 <MaterialCommunityIcons onPress={backward10} name='rewind-10' size={22} color='white' />
 

@@ -50,20 +50,20 @@ const Recorder = props => {
             allowsRecordingIOS: true,
             playsInSilentModeIOS: true,
             });
+            const {ios, android} = Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY;
+
             const { recording } = await Audio.Recording.createAsync(
                 {
                     isMeteringEnabled:true,
                     ios: {
+                        ...ios,
                         extension: '.wav',
-                        audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_HIGH,
-                        sampleRate: 44100,
-                        numberOfChannels: 2,
-                        bitRate: 128000,
+                        outputFormat: Audio.RECORDING_OPTION_IOS_OUTPUT_FORMAT_LINEARPCM
                     },
                     android: {
-                        extension:'.wav'
+                        ...android,
+                        extension: '.wav',
                     }
-    
                 }
             )
             .catch(err => {
@@ -97,14 +97,13 @@ const Recorder = props => {
     }
     const stopRecording = async () => {
         if(props.onRecordingStop) props.onRecordingStop();
-        setRecording(undefined);
         setBarValues([]);
-        
         playSoundEffect();
         await recording.stopAndUnloadAsync()
         const uri = await recording.getURI()
         setRecordingPath(uri)
-        
+        setRecording(undefined);
+
     }
 
     const animateStart = () => {

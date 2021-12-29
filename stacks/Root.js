@@ -7,6 +7,7 @@ import LandingStack from '../stacks/Landing';
 import {UserContext} from '../components/contexts/UserProvider';
 import ViewUserProfile from '../screens/ViewUserProfile';
 import GlobalPlayerProvider from '../components/contexts/GlobalPlayerProvider';
+import PrivacyPolicy from '../screens/PrivacyPolicy';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,7 +41,10 @@ const RootNavigator = () => {
             />
             </>
             }
-            
+            <Stack.Screen
+            name='PrivacyPolicy'
+            component={PrivacyPolicy}
+            />
           </Stack.Navigator>
           </GlobalPlayerProvider>
       </NavigationContainer>

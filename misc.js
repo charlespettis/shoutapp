@@ -1,6 +1,6 @@
 
-export const env = 'http://192.168.1.174:3000/';
-//DEV: http://192.168.1.174:3000/
+export const env = 'http://192.168.1.100:3000/';
+//DEV: http://192.168.1.149:3000/
 //PROD: http://desolate-hamlet-10278.herokuapp.com/
 export const timeSince = date => {
         const newDate = new Date(date);

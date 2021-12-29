@@ -4,6 +4,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { getPostsByUserId } from '../api/post';
 import { UserContext } from '../components/contexts/UserProvider';
 import Empty from '../components/common/EmptyListComponent';
+import Topic from '../components/topic';
+import Post from '../components/post';
 
 const ViewRecentPosts = ({navigation, route}) => {
 

@@ -16,7 +16,9 @@ const Post = props => {
     const navigation = useNavigation();
 
     const play = () => {
-        playerFunctions.play(props)
+        if(!props.focused){
+            playerFunctions.play(props)
+        }    
     }
     
     React.useEffect(()=>{
@@ -58,7 +60,7 @@ const Post = props => {
 
     const handleDelete = () => {
         Alert.alert(
-            'Report as Inappropriate',
+            'Delete Post',
             "Are you sure you'd like to permanently delete this post?",
             [
                 {
@@ -88,7 +90,7 @@ const Post = props => {
                     </View>
                 </View>
                 <View style={{flexDirection:'row',alignItems:'center'}}>
-                    <Ionicons onPress={handleLike} name={isLiked ? 'heart' : 'heart-outline'} color={isLiked ? 'red' : 'rgba(255,255,255,.7)'} size={22} style={{marginRight:15}}/>
+                    <Ionicons onPress={handleLike} name={isLiked || props.liked ? 'heart' : 'heart-outline'} color={isLiked || props.liked ? 'red' : 'rgba(255,255,255,.7)'} size={22} style={{marginRight:15}}/>
                     <Ionicons onPress={handleViewProfile} name='person-outline' color='rgba(255,255,255,.7)' size={22} style={{marginRight:15}}/>
                     <Ionicons onPress={props.userId === userState.id || userState.admin ? handleDelete : handleFlag} name={ (props.userId === userState.id || userState.admin) ? 'trash-outline' : 'flag-outline'  } color='rgba(255,255,255,.7)' size={22}/>
                 </View>

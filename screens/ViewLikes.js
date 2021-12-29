@@ -5,10 +5,11 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import Empty from '../components/common/EmptyListComponent';
 import Topic from '../components/topic';
 import Post from '../components/post';
-
+import { UserContext } from '../components/contexts/UserProvider';
 const ViewLikes = ({navigation, route}) => {
 
     const [data, setData] = React.useState([]);
+    const {userState, userFunctions} = React.useContext(UserContext);
 
     React.useEffect(()=>{
         getLikes()
@@ -33,7 +34,8 @@ const ViewLikes = ({navigation, route}) => {
                     createdAt={item["Post"].createdAt}
                     username={item["Post"]["User"].username}
                     recording={item["Post"].recording}
-                    likes={[]}
+                    likes={[userState.id]}
+                    liked
                 />
             </View>
         )

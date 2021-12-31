@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, View, TouchableOpacity} from 'react-native';
+import {SafeAreaView, View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {Input, Button, Text} from 'native-base';
 import UserAvatar from '../components/common/UserAvatar';
@@ -11,16 +11,23 @@ const SuggestTopic = ({navigation, route}) => {
     const [title, setTitle] = React.useState('');
     const [image, setImage] = React.useState();
     const [isSubmitted, setIsSubmitted] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const submit = () => {
         if( !title || !image ) {
             alert('Please choose an image and enter a title')
         } else {
+            setIsLoading(true);
             suggestTopic({category: category, title: title, image: image})
             .then(res => {
+                setIsLoading(false);
                 if(res.status === 200){
                     setIsSubmitted(true);
+                } else {
+                    alert('Something went wrong. Please try again later.')
                 }
+
+
             })
         }
     }
@@ -52,9 +59,12 @@ const SuggestTopic = ({navigation, route}) => {
                     <Picker.Item label="Sports" value="Sports" />
                     <Picker.Item label="Finance" value="Finance"/>
                 </Picker>
-
+                {
+                !isLoading?
                 <Button onPress={submit} variant={'ghost'} size={'lg'} alignSelf={'flex-end'}>Submit</Button>
-
+                :
+                <ActivityIndicator style={{alignSelf:'flex-end',marginRight:20}} color={'lightblue'} size={22} />
+                }
             </View>
         </SafeAreaView>
         :

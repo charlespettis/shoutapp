@@ -34,7 +34,7 @@ const Login = ({navigation}) => {
             space={4}  
             w='90%' 
             alignItems='center'>
-                <Text style={{color:'white',alignSelf:'flex-start', fontSize:22,fontWeight:'100'}}>Log In</Text>
+                <Text style={{color:'white',alignSelf:'flex-start', fontSize:22,fontWeight:'300'}}>Log In</Text>
                 <Input 
                 color
                 selectionColor={'lightblue'}

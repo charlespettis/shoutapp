@@ -23,7 +23,10 @@ export const timeSince = date => {
         if (interval > 1) {
           return Math.floor(interval) + "h";
         }
-
+        interval = seconds / 60;
+        if(interval > 1){
+            return Math.floor(interval) + ' minutes ago';
+        }
         return "Just now";
               
 }

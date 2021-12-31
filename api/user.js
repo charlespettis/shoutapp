@@ -181,3 +181,16 @@ export const getLikes = () => {
         }
     })
 }
+
+export const deleteAccount = () => {
+    return fetch(`${proxy}/deleteAccount`, {
+        method:'DELETE',
+        headers: {
+            'Authorization': `Token ${storage.token}`
+        }
+    })
+    .then(res => {
+        console.log(res);
+        return res;
+    })
+}

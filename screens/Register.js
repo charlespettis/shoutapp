@@ -65,7 +65,7 @@ const Register = ({navigation}) => {
             space={4}  
             w='100%' 
             alignItems='center'>
-                <Text fontWeight={'100'} width={'90%'} color={'white'} fontSize={24} alignSelf={'center'}>Sign Up for Topic</Text>
+                <Text fontWeight={'300'} width={'90%'} color={'white'} fontSize={24} alignSelf={'center'}>Sign Up for Topic</Text>
                 <Input 
                 color
                 variant={'underlined'}

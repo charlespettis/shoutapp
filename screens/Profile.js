@@ -1,10 +1,12 @@
 import React from 'react';
-import {SafeAreaView,ScrollView, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {SafeAreaView,ScrollView, View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {List, ListItem} from '../components/list';
 import {UserContext} from '../components/contexts/UserProvider';
 import UserAvatar from '../components/common/UserAvatar';
 import {env} from '../misc';
 import { GlobalPlayerContext } from '../components/contexts/GlobalPlayerProvider';
+import {deleteAccount} from '../api/user';
+
 const Profile = ({navigation, route}) => {
 
     const { userFunctions, userState } = React.useContext(UserContext);
@@ -13,6 +15,35 @@ const Profile = ({navigation, route}) => {
     const logOut = () => {
         playerFunctions.stop();
         userFunctions.logOut()
+    }
+
+    const handleDelete = () => {
+        Alert.alert(
+            'Delete Account',
+            "Are you sure you'd like to permanently delete your account and all of its data?",
+            [
+                {
+                    text: "Cancel",
+                    style:'cancel'
+                },
+                {
+                    text: "Confirm",
+                    onPress: confirmDelete,
+                    style: 'default'
+                }
+            ]
+        )
+    }
+
+    const confirmDelete = () => {
+        deleteAccount()
+        .then(res => {
+            if(res.status === 200){
+                userFunctions.logOut();
+            } else{
+                alert('Something went wrong. Please try again later or contact support.')
+            }
+        })
     }
 
     return(
@@ -46,10 +77,12 @@ const Profile = ({navigation, route}) => {
                 </View>
 
                 <List title="Account">
-                    <ListItem onPress={()=>navigation.navigate('ViewLikes')} icon="star" title="Liked Posts"/>
-                    <ListItem onPress={()=>navigation.navigate('ViewRecentPosts')} icon="chatbubble" title="Recent Posts"/>
+                    <ListItem onPress={()=>navigation.navigate('ViewLikes')} icon="star-outline" title="Liked Posts"/>
+                    <ListItem onPress={()=>navigation.navigate('ViewRecentPosts')} icon="chatbubble-outline" title="Recent Posts"/>
                     <ListItem onPress={()=>navigation.navigate('ResetPassword')} icon="lock-closed-outline" title="Reset Password"/>
                     <ListItem onPress={logOut} icon="arrow-back" title="Log Out"/>
+                    <ListItem onPress={handleDelete} icon="close" title="Delete Account"/>
+
                 </List>
 
                 <List title="Support">

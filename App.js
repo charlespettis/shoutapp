@@ -10,16 +10,16 @@ const App = () => {
   LogBox.ignoreAllLogs();
   
   return (
-    <UserProvider>
-      <PostsProvider>
-        <TopicsProvider>
-        <StatusBar barStyle='light-content' />
-            <NativeBaseProvider>
-              <RootNavigator />
-            </NativeBaseProvider>
-        </TopicsProvider>
-      </PostsProvider>
-    </UserProvider>
+    <NativeBaseProvider>
+      <UserProvider>
+        <PostsProvider>
+          <TopicsProvider>
+          <StatusBar barStyle='light-content' />
+                <RootNavigator />
+          </TopicsProvider>
+        </PostsProvider>
+      </UserProvider>
+    </NativeBaseProvider>
   );
 }
 

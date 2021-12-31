@@ -4,21 +4,24 @@ import {Ionicons} from '@expo/vector-icons';
 import {search} from '../api/search';
 import { env } from '../misc';
 import Topic from '../components/topic';
-
+import { GlobalPlayerContext } from '../components/contexts/GlobalPlayerProvider';
 const Search = ({navigation, route}) => {
     const inputRef = React.useRef();
     const [searchQuery, setSearchQuery] = React.useState("");
     const [data, setData] = React.useState([]);
+    const {player, playerFunctions} = React.useContext(GlobalPlayerContext);
 
     const dismiss = () => {
         setSearchQuery("");
         setData([]);
         Keyboard.dismiss();
+        playerFunctions.raise();
     }
 
     React.useEffect(()=>{
         navigation.addListener('focus', () => {
             inputRef.current.focus();
+            playerFunctions.lower();
         })
     },[])
 
@@ -75,7 +78,7 @@ const Search = ({navigation, route}) => {
                 <View style={{flexDirection:'row', alignItems:'center',alignSelf:'center'}}>   
                     <View style={{backgroundColor:'#2r42424',width:'80%',height:30, alignSelf:'center',borderRadius:4,alignItems:'center',flexDirection:'row'}}>
                         <Ionicons name='search' color='white' size={18} style={{paddingLeft:10,paddingRight:10}} />
-                        <TextInput value={searchQuery} onChangeText={e => handleChangeText(e)} placeholder='Search' placeholderTextColor='white' ref={inputRef} autoFocus style={{color:'white',width:'100%'}}/>
+                        <TextInput onBlur={()=>playerFunctions.raise()} onFocus={()=>playerFunctions.lower()} onSubmitEditing={()=>playerFunctions.raise()} value={searchQuery} onChangeText={e => handleChangeText(e)} placeholder='Search' placeholderTextColor='white' ref={inputRef} autoFocus style={{color:'white',width:'100%'}}/>
                     </View>
                     <TouchableOpacity onPress={dismiss}>
                         <Text style={{color: 'white',marginLeft:10}}>Cancel</Text>

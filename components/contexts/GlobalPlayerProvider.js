@@ -41,7 +41,13 @@ const GlobalPlayerProvider = props => {
                 case "SKIP":
                     return {
                         ...prevState,
-                        ...action.data
+                        ...action.data,
+                        isPlaying:true
+                    }
+                case "RESUME":
+                    return{
+                        ...prevState,
+                        isPlaying:true
                     }
                 case "PAUSE":
                     return {
@@ -60,11 +66,6 @@ const GlobalPlayerProvider = props => {
                         ...prevState,
                         isRaised: false
                     }
-                case "RESUME":
-                    return{
-                        ...prevState,
-                        isPlaying:true
-                    }
             }
         },
         initialState
@@ -75,15 +76,6 @@ const GlobalPlayerProvider = props => {
             play: data => {
                 play(data.recording);
                 dispatch({type: "PLAY", data: data})
-            },
-            skip: () => {
-                const index = state.queue.findIndex(e => e.id === state.id);
-                if(index > -1 && index !== state.queue.length - 1){
-                    dispatch({type:"SKIP", data: state.queue[index + 1]})
-                    play(state.queue[index + 1].recording);
-                } else {
-                    dispatch({type:"PAUSE"})
-                }
             },
             stop: () => {
                 dispatch({type:"STOP"})
@@ -117,7 +109,7 @@ const GlobalPlayerProvider = props => {
             setPosition(status.positionMillis)
             setProgress((status.positionMillis / status.durationMillis) * 100);
             if(status.didJustFinish){
-                playerFunctions.skip();
+                skip();
             }
         });
     }
@@ -140,11 +132,38 @@ const GlobalPlayerProvider = props => {
         await sound.setPositionAsync(position - 10000);
     }
 
+    const skip = () => {
+        const index = state.queue.findIndex(e => e.id === state.id);
+        console.log(index);
+        if(index > -1 && index !== state.queue.length - 1){
+            const nextPost = state.queue[index+1];
+            play(nextPost.recording);
+            dispatch({type: 'SKIP', data : {
+                id: nextPost["id"],
+                avatar: nextPost["User"]["avatar"],
+                fullName: nextPost["User"]["fullName"],
+                jobTitle: nextPost["User"]["jobTitle"],
+                recording: nextPost["recording"],
+                likes:nextPost["Likes"] || []
+            }})
+        } 
+    };
+
     const goBack = async () => {
         const index = state.queue.findIndex(e => e.id === state.id);
 
         if(index > 0){
-            playerFunctions.play(state.queue[index - 1]);
+            const lastPost = state.queue[index - 1];
+            play(lastPost.recording);
+            dispatch({type: 'SKIP', data : {
+                id: lastPost["id"],
+                avatar: lastPost["User"]["avatar"],
+                fullName: lastPost["User"]["fullName"],
+                jobTitle: lastPost["User"]["jobTitle"],
+                recording: lastPost["recording"],
+                likes:lastPost["Likes"] || []
+            }})
+
         } else {
             await sound.pauseAsync()
             await sound.setPositionAsync(0);
@@ -172,17 +191,17 @@ const GlobalPlayerProvider = props => {
                             { 
                             isExpanded ?
                             <View style={{borderRadius:5}}> 
-                            <Ionicons onPress={()=>setIsExpanded(false)} name='chevron-down' size={24} color='white' style={{marginLeft:10,marginTop:10}}/>
+                            <Ionicons onPress={()=>setIsExpanded(false)} name='chevron-down' size={24} color='white' style={{marginLeft:10,marginTop:5,paddingBottom:5}}/>
                             <TouchableWithoutFeedback onPress={()=>setIsExpanded(false)}>
                             <Post 
                             focused 
                             id={state.id} 
                             fullName={state.fullName} 
                             avatar={state.avatar} 
-                            username={state.username} 
                             likes={state.likes}
                             createdAt={state.createdAt}
                             userId={state.userId}
+                            jobTitle={state.jobTitle}
                             />
                             </TouchableWithoutFeedback>
                             <View style={{flexDirection:'row',alignItems:'center', alignSelf:'center',justifyContent:'space-between',width:'100%',paddingLeft:10,paddingRight:10,marginBottom:10}}>
@@ -192,7 +211,7 @@ const GlobalPlayerProvider = props => {
                                 <Ionicons name={state.isPlaying ? 'pause' : 'play'} size={32} color='white' onPress={state.isPlaying ? pause : resume}/>
                                 
                                 <MaterialCommunityIcons onPress={forward10} name='fast-forward-10' size={22} color='white' />
-                                <Ionicons name='play-forward' size={22} onPress={playerFunctions.skip} color='white' />
+                                <Ionicons name='play-forward' size={22} onPress={skip} color='white' />
 
                             </View>
                             
@@ -234,8 +253,8 @@ const MinPlayer = ({state, pause, resume}) => {
                 <Text style={{color:'white'}}>
                     {state.fullName}
                 </Text>
-                <Text style={{color:'lightblue',fontWeight:'200'}}>
-                    @{state.username}
+                <Text style={{color:'white',fontWeight:'200'}}>
+                    {state.jobTitle}
                 </Text>
             </View>
         </View>

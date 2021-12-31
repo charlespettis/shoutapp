@@ -13,6 +13,8 @@
       "UIBackgroundModes": [
         "audio"
       ]
-    }
+    },
+    "bundleIdentifier": "com.Topicapps.Topic",
+    "buildNumber": "1.0.0"
   }
 }

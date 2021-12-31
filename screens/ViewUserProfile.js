@@ -31,6 +31,7 @@ const ViewUserProfile = ({navigation, route}) => {
     },[])
 
     const renderItem = ({item}) => {
+        console.log(item);
         return(
             <View style={{marginBottom:10}}>
             <Topic
@@ -44,7 +45,7 @@ const ViewUserProfile = ({navigation, route}) => {
             <Post 
                 id = {item.id}
                 fullName = {userData.fullName}
-                username = {userData.username}
+                jobTitle = {userData.jobTitle}
                 avatar = {userData.avatar}
                 recording = {item.recording}
                 likes={item.likes ? item.likes : []}

@@ -32,7 +32,7 @@ const ViewLikes = ({navigation, route}) => {
                     avatar={item["Post"]["User"].avatar}
                     fullName={item["Post"]["User"].fullName}
                     createdAt={item["Post"].createdAt}
-                    username={item["Post"]["User"].username}
+                    jobTitle={item["Post"]["User"].jobTitle}
                     recording={item["Post"].recording}
                     likes={[userState.id]}
                     liked
@@ -43,12 +43,14 @@ const ViewLikes = ({navigation, route}) => {
 
     return(
         <SafeAreaView style={{flex:1,backgroundColor:'black'}}>
+            <View style={{paddingBottom:100}}>
             <Ionicons name='chevron-back' size={22} style={{margin:20}} color={'white'} onPress={()=>navigation.goBack()}/>
             <FlatList
             data={data}
             renderItem={renderItem}
             ListEmptyComponent={<Empty/>}
             />
+            </View>
         </SafeAreaView>
     )
 }

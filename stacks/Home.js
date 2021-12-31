@@ -15,6 +15,8 @@ const Home = () => {
                 <Tab.Screen component={Feed} name="Science" />
                 <Tab.Screen component={Feed} name="Politics" />
                 <Tab.Screen component={Feed} name="Sports" />
+                <Tab.Screen component={Feed} name="Finance" />
+
             </Tab.Navigator>
     </SafeAreaView>
     )

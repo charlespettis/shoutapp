@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { StyleSheet, KeyboardAvoidingView, View, Platform} from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, View, Platform, ActivityIndicator} from 'react-native';
 import {Input, Box, Button, Text, Stack} from 'native-base';
 import {Ionicons} from '@expo/vector-icons';
 import {UserContext} from '../components/contexts/UserProvider';
@@ -9,11 +9,12 @@ const EditUserDetails = ({navigation, route}) => {
     const {userFunctions, userState} = useContext(UserContext)
     const [inputValue, setInputValue] = React.useState(null);
     const [image, setImage] = React.useState(null);
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const id = route.params.id;
 
     const submit = () => {
-        if(!flow[id].isSkippable && ( !inputValue)){
+        if(!flow[id].isSkippable && !inputValue && !flow[id].editAvatar){
             alert('Please fill out the field completely.')
             return;
         } else {
@@ -26,7 +27,8 @@ const EditUserDetails = ({navigation, route}) => {
                 setInputValue(null);
                 flow[id].onContinue({navigation: navigation, userFunctions: userFunctions, inputValue: inputValue});
             } else {
-                userFunctions.createAccount();
+                setIsLoading(true)
+                userFunctions.createAccount()
             }
         }
     }
@@ -87,6 +89,8 @@ const EditUserDetails = ({navigation, route}) => {
             /> 
             
             }
+            {
+                !isLoading ? 
             <Button 
                 variant='ghost'
                 width='90%'
@@ -95,6 +99,9 @@ const EditUserDetails = ({navigation, route}) => {
             >
                 Continue
             </Button>
+            :
+            <ActivityIndicator style={{marginTop:20}} color={'lightblue'}/>
+            }
             {
             flow[id]['isSkippable'] &&
             <Button
@@ -138,13 +145,11 @@ const flow = {
         title: 'Enter your professional title',
         field:'jobTitle',
         example: 'Journalist, Barista, Programmer',
-        isSkippable: true,
         onContinue: ({navigation}) => navigation.navigate('EditUserDetails', { id: 3 })
     },
     3: {
         title: 'Add a profile picture',
         field: 'avatar',
-        isSkippable: true,
         editAvatar: true
     },
     4: {
@@ -165,7 +170,7 @@ const flow = {
     'profile-jobTitle': {
         title: "Edit your job title",
         field: 'jobTitle',
-        example: 'Barista',
+        example: 'Journalist, Barista, Programmer',
         onContinue: ({userFunctions, navigation, inputValue}) => {
             userFunctions.editUserDetails({'jobTitle': inputValue});
             navigation.goBack();
@@ -175,7 +180,7 @@ const flow = {
         title: "Edit your bio",
         field: 'bio',
         multiline: true,
-        example: '',
+        example: 'I like long walks on the beach and talking about current events 😋',
         onContinue: ({userFunctions, navigation, inputValue}) => {
             userFunctions.editUserDetails({'bio': inputValue});
             navigation.goBack();

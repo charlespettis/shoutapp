@@ -84,9 +84,9 @@ const Post = props => {
                     <View style={{marginLeft:15,justifyContent:'space-between'}}>
                         <View style={{flexDirection:'row',alignItems:'center'}}>
                         <Text style={{color:player.id === props.id && !props.focused ? 'lightblue' : 'white',fontSize:16,marginBottom:5,fontWeight:'300'}}>{props.fullName} </Text>
-                        <Text style={{color:'white', color:'white',opacity:.7,fontSize:10, marginLeft:5}}>{timeSince(props.createdAt)}</Text>
+                        <Text style={{color:'white', opacity:.7,fontSize:10, marginLeft:5}}>{timeSince(props.createdAt)}</Text>
                         </View>
-                        <Text style={{color:'lightblue',marginBottom:5,fontWeight:'200'}}>@{props.username}</Text>
+                        <Text style={{color: player.id === props.id && !props.focused ? 'lightblue' : 'white',marginBottom:5,fontWeight:'200'}}>{props.jobTitle}</Text>
                     </View>
                 </View>
                 <View style={{flexDirection:'row',alignItems:'center'}}>

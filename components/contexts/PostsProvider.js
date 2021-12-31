@@ -1,13 +1,14 @@
 import React from 'react';
 import {createPost, getPostsByTopic, deletePost} from '../../api/post';
 import { UserContext } from './UserProvider';
+import { useToast, Box } from 'native-base';
 
 export const PostsContext = React.createContext();
 
 const PostsProvider = props => {
-    
-    const {userState, userFunctions} = React.useContext(UserContext);
 
+    const {userState, userFunctions} = React.useContext(UserContext);
+    const toast = useToast()
     const initialState = [];
 
     const [state, dispatch] = React.useReducer(
@@ -27,21 +28,50 @@ const PostsProvider = props => {
     const postFunctions = React.useMemo(
         ()=>({
             createPost: data => {
+                toast.show({
+                    render: () => {
+                        return(
+                        <Box bg={'orange.500'} px="2" py="1" rounded="sm" mb={5}>
+                            Processing Upload!
+                        </Box>
+            
+                        )
+                    }
+                })
                 createPost(data)
-                .then(res => {
-                    if(res){
+                .then(data => {
+                    if(data){
                         const obj = {
                             "User": {
-                                fullName: userState.fullName,
-                                avatar: userState.avatar,
-                                username: userState.username,
-                                id: userState.id
+                                ...userState
                             },
                             Likes: [],
-                            ...res
+                            ...data
                         }
-                        
+                        toast.show({
+                            render: () => {
+                                return(
+                                <Box bg={'emerald.500'} px="2" py="1" rounded="sm" mb={5}>
+                                    Successfully Uploaded!
+                                </Box>
+                    
+                                )
+                            }
+                        })
+        
                         dispatch({type:"ADD", data: obj })
+                    } else {
+                        toast.show({
+                            render: () => {
+                                return(
+                                <Box bg={'red.500'} px="2" py="1" rounded="sm" mb={5}>
+                                    Something went wrong! Remember: You can only post once per topic.
+                                </Box>
+                    
+                                )
+                            }
+                        })
+        
                     }
                 })
             },

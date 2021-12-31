@@ -45,6 +45,7 @@ const ViewTopic = ({navigation, route}) => {
             likes={item.Likes}
             navigation={navigation}
             createdAt={item.createdAt}
+            jobTitle={item["User"].jobTitle}
             userId={item["User"].id}
         />)
     }

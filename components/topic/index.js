@@ -14,6 +14,8 @@ const Topic = props => {
                 return '#ECFEAA'
             case "Sports":
                 return '#5C7457'
+            case "Finance":
+                return 'orange';
         }
     }
 

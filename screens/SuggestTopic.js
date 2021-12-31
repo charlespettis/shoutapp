@@ -50,6 +50,7 @@ const SuggestTopic = ({navigation, route}) => {
                     <Picker.Item label="Science" value='Science' />
                     <Picker.Item label="Politics" value='Politics' />
                     <Picker.Item label="Sports" value="Sports" />
+                    <Picker.Item label="Finance" value="Finance"/>
                 </Picker>
 
                 <Button onPress={submit} variant={'ghost'} size={'lg'} alignSelf={'flex-end'}>Submit</Button>

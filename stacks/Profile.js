@@ -8,6 +8,7 @@ import ReportProblem from '../screens/ReportProblem';
 import ViewFlags from '../screens/ViewFlags';
 import ViewLikes from '../screens/ViewLikes';
 import ViewRecentPosts from '../screens/ViewRecentPosts';
+import CommunityGuidelines from '../screens/CommunityGuidelines';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ const ProfileNavigator = () => {
           <Stack.Screen name="ViewFlags" component={ViewFlags} />
           <Stack.Screen name="ViewLikes" component={ViewLikes} />
           <Stack.Screen name="ViewRecentPosts" component={ViewRecentPosts} />
+          <Stack.Screen name='CommunityGuidelines' component={CommunityGuidelines} />
         </Stack.Navigator>
     )
 }

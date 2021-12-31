@@ -21,7 +21,7 @@ const UserAvatar = props => {
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
           aspect: [4, 3],
-          quality: 1,
+          quality: .5,
         });
     
         if (!result.cancelled) {

@@ -39,6 +39,7 @@ const ViewRecentPosts = ({navigation, route}) => {
                 fullName = {userState.fullName}
                 username = {userState.username}
                 avatar = {userState.avatar}
+                jobTitle={userState.jobTitle}
                 recording = {item.recording}
                 likes={item.likes ? item.likes : []}
                 navigation={navigation}
@@ -50,13 +51,15 @@ const ViewRecentPosts = ({navigation, route}) => {
     }
 
     return(
-        <SafeAreaView style={{flex:1,backgroundColor:'black'}}>
+        <SafeAreaView style={{flex:1,backgroundColor:'black',}}>
+            <View style={{paddingBottom:120}}>
             <Ionicons name="chevron-back" size={22} style={{margin:20}} color="white" onPress={()=>navigation.goBack()} />
             <FlatList 
                 data={data}
                 renderItem={renderItem}
                 ListEmptyComponent={Empty}
             />
+            </View>
         </SafeAreaView>
     )
 }

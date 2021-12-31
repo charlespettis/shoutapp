@@ -1,5 +1,5 @@
 import React from 'react';
-import {KeyboardAvoidingView, StyleSheet, Platform, ImageBackground} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, Platform, ImageBackground, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Text, Button, Input, Stack, Icon, Divider, FormControl} from 'native-base';
 import Logo from '../components/common/Logo';
 import {Ionicons} from '@expo/vector-icons';
@@ -8,6 +8,7 @@ import {checkCredentials} from '../api/user';
 
 const Register = ({navigation}) => {
     const [isPasswordShown, setIsPasswordShown] = React.useState(true);
+    const [isLoading, setIsLoading] = React.useState(false);
     const [userDetails, setUserDetails] = React.useState({
         username: '',
         email: '',
@@ -29,9 +30,10 @@ const Register = ({navigation}) => {
             alert('Please enter a password with atleast 6 characters and one uppercase character, lowercase character and number.');
             return;
         }
-
+        setIsLoading(true);
         checkCredentials(userDetails.username, userDetails.email)
         .then(res => {
+            setIsLoading(false)
             switch(res.status){
                 case 200:
                     userFunctions.updateUserInfo(userDetails);
@@ -138,16 +140,20 @@ const Register = ({navigation}) => {
                     as={<Ionicons onPress={() => setIsPasswordShown(!isPasswordShown)} name={isPasswordShown ? 'eye-outline' : 'eye'} />}
                 />
                 }/>
-                <Text style={{color:'white',opacity:.75,fontSize:10,width:'90%',alignSelf:'center'}}>
-                    By continuing, you agree to our Terms of Service and acknowledge that you have read our Privacy Policy.
+                <Text style={{color:'rgba(255,255,255,.75)',fontSize:10,width:'90%',alignSelf:'center'}}>
+                    By continuing, you agree to our <Text onPress={()=>navigation.navigate('TermsAndConditions')} style={{color:'white',alignSelf:'center',fontSize:10,fontWeight:'bold'}}> Terms of Service </Text>and acknowledge that you have read our <Text onPress={()=>navigation.navigate('PrivacyPolicy')} style={{color:'white',alignSelf:'center',fontSize:10,fontWeight:'bold'}}>Privacy Policy.</Text>
                 </Text>
 
-                <Button 
-                width={'90%'} 
-                onPress={createAccount}
-                variant='ghost'>
+                    {!isLoading ? 
+                                    <Button 
+                                    width={'90%'} 
+                                    onPress={createAccount}
+                                    variant='ghost'>
+                    
                     Create a new account
-                </Button>
+                    </Button>
+                     : <ActivityIndicator color={'lightblue'} size={22} />
+                    }
                 <Divider my="2" opacity={.1}/>
                 <Text fontSize='md' color="white">
                     Already have an account?

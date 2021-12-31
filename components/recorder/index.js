@@ -88,18 +88,17 @@ const Recorder = props => {
                     } else {
                         return [ newValue, ...prevState]
                     }
-                })                
-    
+                })    
             })
     
         },350)
 
     }
     const stopRecording = async () => {
+        await recording.stopAndUnloadAsync()
         if(props.onRecordingStop) props.onRecordingStop();
         setBarValues([]);
         playSoundEffect();
-        await recording.stopAndUnloadAsync()
         const uri = await recording.getURI()
         setRecordingPath(uri)
         setRecording(undefined);
@@ -148,6 +147,7 @@ const Recorder = props => {
             const { sound } = await Audio.Sound.createAsync(
                 require('../../assets/sounds/beep_down.wav')
             );
+            
             setSoundEffect(sound);
             return sound.playAsync();    
         } else {

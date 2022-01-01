@@ -134,7 +134,6 @@ const GlobalPlayerProvider = props => {
 
     const skip = () => {
         const index = state.queue.findIndex(e => e.id === state.id);
-        console.log(index);
         if(index > -1 && index !== state.queue.length - 1){
             const nextPost = state.queue[index+1];
             play(nextPost.recording);

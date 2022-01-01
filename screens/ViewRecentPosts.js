@@ -17,7 +17,6 @@ const ViewRecentPosts = ({navigation, route}) => {
         getPostsByUserId({count: 10})
         .then(data => {
             if(data){
-                console.log(data);
                 setData(data);
             }
         })

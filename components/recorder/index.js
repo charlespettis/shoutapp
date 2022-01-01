@@ -67,7 +67,6 @@ const Recorder = props => {
                 }
             )
             .catch(err => {
-                if(err) console.log(err);
                 throw new Error(err);
             })
             setRecording(recording);

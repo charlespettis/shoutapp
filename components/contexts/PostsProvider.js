@@ -28,18 +28,10 @@ const PostsProvider = props => {
     const postFunctions = React.useMemo(
         ()=>({
             createPost: data => {
-                toast.show({
-                    render: () => {
-                        return(
-                        <Box bg={'orange.500'} px="2" py="1" rounded="sm" mb={5}>
-                            Processing Upload!
-                        </Box>
-            
-                        )
-                    }
-                })
+                toast.show(PROCESSING_UPLOAD)
                 createPost(data)
                 .then(data => {
+                    console.log("DATA:", data);
                     if(data){
                         const obj = {
                             "User": {
@@ -48,29 +40,11 @@ const PostsProvider = props => {
                             Likes: [],
                             ...data
                         }
-                        toast.show({
-                            render: () => {
-                                return(
-                                <Box bg={'emerald.500'} px="2" py="1" rounded="sm" mb={5}>
-                                    Successfully Uploaded!
-                                </Box>
-                    
-                                )
-                            }
-                        })
+                        toast.show(SUCCESSFULLY_UPLOADED)
         
                         dispatch({type:"ADD", data: obj })
                     } else {
-                        toast.show({
-                            render: () => {
-                                return(
-                                <Box bg={'red.500'} px="2" py="1" rounded="sm" mb={5}>
-                                    Something went wrong! Remember: You can only post once per topic.
-                                </Box>
-                    
-                                )
-                            }
-                        })
+                        toast.show(ERROR_UPLOADING)
         
                     }
                 })
@@ -78,6 +52,7 @@ const PostsProvider = props => {
             getPostsByTopic: data => {
                 getPostsByTopic(data)
                 .then(posts => {
+                    console.log(posts);
                     dispatch({type: "GET", data: posts})
                 })
             },
@@ -101,5 +76,39 @@ const PostsProvider = props => {
         </PostsContext.Provider>
     )
 }
+
+const PROCESSING_UPLOAD = {
+    render: () => {
+        return(
+        <Box bg={'orange.500'} px="2" py="1" rounded="sm" mb={5}>
+            Processing Upload!
+        </Box>
+
+        )
+    }
+}
+
+const SUCCESSFULLY_UPLOADED = {
+    render: () => {
+        return(
+        <Box bg={'emerald.500'} px="2" py="1" rounded="sm" mb={5}>
+            Successfully Uploaded!
+        </Box>
+
+        )
+    }
+}
+
+const ERROR_UPLOADING = {
+    render: () => {
+        return(
+        <Box bg={'red.500'} px="2" py="1" rounded="sm" mb={5}>
+            Something went wrong! Remember: You can only post once per topic.
+        </Box>
+
+        )
+    }
+}
+
 
 export default PostsProvider;

@@ -22,7 +22,6 @@ const Post = props => {
     }
     
     React.useEffect(()=>{
-        console.log(userState);
         const index = props.likes.findIndex(e => e.UserId === userState.id);
         if(index > -1){
             setIsLiked(true);

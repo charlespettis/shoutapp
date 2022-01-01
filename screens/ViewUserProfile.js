@@ -31,7 +31,6 @@ const ViewUserProfile = ({navigation, route}) => {
     },[])
 
     const renderItem = ({item}) => {
-        console.log(item);
         return(
             <View style={{marginBottom:10}}>
             <Topic

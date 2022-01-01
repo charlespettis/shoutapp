@@ -21,7 +21,6 @@ export const createPost = ({recording, topicId}) => {
         }
     })
     .catch(err => {
-        console.log(err);
         throw new Error(err);
     })
 }

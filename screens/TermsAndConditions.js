@@ -23,7 +23,7 @@ const TermsAndConditions = ({navigation, route}) => {
         <View style={{padding:10,flex:1, backgroundColor:'black'}}>
             <ScrollView style={{flex:1}}>
                 <View style={{flex:1,paddingBottom:100}}>
-                    <Ionicons name='chevron-back' size={22} style={{marginLeft:0,marginTop:20,marginBottom:20}} color={'white'}  onPress={()=> navigation.goBack()}/>
+                    <Ionicons name='chevron-back' size={22} style={{marginLeft:0,marginTop:40,marginBottom:20}} color={'white'}  onPress={()=> navigation.goBack()}/>
                     <Text style={{color:'white',fontSize:22,marginBottom:10}}>
                         END USER LICENSE AGREEMENT
                     </Text>

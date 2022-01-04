@@ -1,16 +1,18 @@
 import React from 'react';
-import { View, Text, SafeAreaView, Image, FlatList } from 'react-native';
+import { View, Text, SafeAreaView, Image, FlatList, Alert } from 'react-native';
 import { GlobalPlayerContext } from '../components/contexts/GlobalPlayerProvider';
 import { getUserDetails } from '../api/user';
 import { env } from '../misc';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Topic from '../components/topic';
 import Post from '../components/post';
+import { UserContext } from '../components/contexts/UserProvider';
 
 const ViewUserProfile = ({navigation, route}) => {
     const {player, playerFunctions} = React.useContext(GlobalPlayerContext);
     const [userData, setUserData] = React.useState({});
-    
+    const {userFunctions, userState} = React.useContext(UserContext);
+
     React.useEffect(()=>{
         const lower = navigation.addListener('focus', () => {
             playerFunctions.lower();
@@ -56,9 +58,52 @@ const ViewUserProfile = ({navigation, route}) => {
         )
     }
 
+    const handleBlock = () => {
+        Alert.alert(
+            "Block User",
+            "Are you sure you'd like to block this user?",
+            [
+              {
+                text: "Cancel",
+                style: "cancel"
+              },
+              { text: "Confirm", onPress: block }
+            ]
+          );
+    }
+
+    const handleUnblock = () => {
+        Alert.alert(
+            "Unblock User",
+            "Are you sure you'd like to unblock this user?",
+            [
+              {
+                text: "Cancel",
+                style: "cancel"
+              },
+              { text: "Confirm", onPress: unblock }
+            ]
+          );
+
+    }
+
+    const unblock = () => {
+        userFunctions.unblock(userData.id);
+        navigation.goBack();
+    }
+
+    const block = () => {
+        userFunctions.block(userData.id)
+        navigation.goBack();
+    }
+
+
     return(
         <SafeAreaView style={{flex:1, backgroundColor:'black',}}>
-            <Ionicons onPress={()=>navigation.goBack()} name='chevron-back' size={26} color='white' style={{alignSelf:'flex-start',margin:20}} />
+            <View style={{margin:20,justifyContent:'space-between',alignItems:'center',flexDirection:'row'}}>
+            <Ionicons onPress={()=>navigation.goBack()} name='chevron-back' size={26} color='white' />
+            <Ionicons onPress={userState.blocked.includes(userData.id) ? handleUnblock : handleBlock} name={userState.blocked.includes(userData.id) ? 'remove-circle-outline' : 'close-circle-outline'} size={26} color='white' />
+            </View>
             <FlatList
                 data={userData["Posts"]}
                 keyExtractor={e => e.id}

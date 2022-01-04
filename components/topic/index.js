@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, Pressable, Text, Image, StyleSheet} from 'react-native';
+import {View, Pressable, Text, Image, StyleSheet, Linking} from 'react-native';
 import {env, timeSince} from '../../misc';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 const Topic = props => {
 
@@ -25,17 +26,40 @@ const Topic = props => {
         }
     }
 
+    const pressLink = async () => {
+        const supported = await Linking.canOpenURL(props.sourceUrl);
+        if(supported){
+            await Linking.openURL(props.sourceUrl);
+        } else {
+            alert('Invalid Url!');
+        }
+    }
+    let formattedSourceUrl;
+    if(props.sourceUrl){
+        formattedSourceUrl = props.sourceUrl.split("//")[1];
+    }
     return(
         <Pressable key={props.id} onPress={goToTopic} >
-        <View style={{minHeight:100,flexDirection:'row-reverse',justifyContent:'space-between',backgroundColor:'black',flex:1,padding:10}}>
-            <View style={{marginLeft:15,flexDirection:'column',flex:3}}>
+        <View style={{minHeight:100,flexDirection:'row',justifyContent:'space-between',backgroundColor:'black',flex:1,padding:10}}>
+    
+            <Image source={{uri: `${props.imageUri}`}} resizeMode='cover' style={{height:'100%',flex:1}}/>
+
+            <View style={{marginLeft:15,flexDirection:'column',flex:3,justifyContent:props.sourceUrl ? 'space-between' : 'flex-start'}}>
                 <View style={{flexDirection:'row',alignItems:'flex-end',marginBottom:5}}>
                     <Text style={{color:getColor()}}>{props.category}</Text>
                     <Text style={styles.timestamp}>{timeSince(props.timestamp)}</Text>
                 </View>
+
                 <Text style={{color:'white'}}>{props.title}</Text>
+
+                {formattedSourceUrl &&
+                <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
+                    <Ionicons name='link-outline' color={'white'} style={{marginRight:5}} />
+                    <Text numberOfLines={1} onPress={pressLink} style={{color:'lightblue', }}>{formattedSourceUrl.length > 30 ? `${formattedSourceUrl.slice(0,30)}...` : formattedSourceUrl}</Text>
+                </View>
+                }
+
             </View>
-            <Image source={{uri: `${props.imageUri}`}} resizeMode='cover' style={{height:'100%',flex:1}}/>
         </View>
         </Pressable>
     )

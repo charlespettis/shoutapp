@@ -2,10 +2,15 @@
   "expo": {
     "name": "Topic",
     "slug": "Topic",
-    "version": "1.0.0",
+    "icon": ".//ios/shout/Images.xcassets/AppIcon.appiconset/1024.png",
+    "version": "1.0.1",
     "assetBundlePatterns": [
       "**/*"
     ],
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "backgroundColor":"#111111"
+    },
     "ios": {
       "bundleIdentifier": "com.charlespettis12.Topic"
     }

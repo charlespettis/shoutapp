@@ -52,8 +52,10 @@ const PostsProvider = props => {
             getPostsByTopic: data => {
                 getPostsByTopic(data)
                 .then(posts => {
-                    console.log(posts);
-                    dispatch({type: "GET", data: posts})
+                    if(posts){
+                        console.log(posts);
+                        dispatch({type: "GET", data: posts})
+                    }
                 })
             },
             deletePost: ({id}) => {

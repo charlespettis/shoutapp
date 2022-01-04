@@ -16,6 +16,7 @@ const UserProvider = props => {
         jobTitle: '',
         avatar: '',
         admin: 0,
+        blocked: [],
         isLoggedIn:false
 
     }
@@ -70,6 +71,21 @@ const UserProvider = props => {
                     dispatch({type: "UPDATE", data: res})
                 })
             },
+            block: id => {
+                const updatedList = [...state.blocked, id];
+                storage.setBlocks(updatedList);
+                dispatch({type:"UPDATE", data :{blocked: updatedList}})
+            },
+            unblock: id => {
+                const index = state.blocked.findIndex(e => e === id);
+                if(index > -1){
+                    const updatedList = [...state.blocked]
+                    updatedList.splice(index, 1);
+                    console.log(updatedList);
+                    storage.setBlocks(updatedList);
+                    dispatch({type:"UPDATE", data: {blocked: updatedList}})
+                }
+            },
             logOut: () => {
                 storage.removeToken();
                 dispatch({type:"UPDATE", data: initialState})
@@ -83,8 +99,13 @@ const UserProvider = props => {
         verify()
         .then(data => {
             if(data){
-                data.isLoggedIn = true;
-                dispatch({type:"UPDATE", data: data})
+                storage.getBlocks()
+                .then(blocked => {
+                    data['blocked'] = blocked;
+                    data.isLoggedIn = true;
+                    dispatch({type:"UPDATE", data: data})
+    
+                })                
             }
             setIsLoading(false);
         })

@@ -98,7 +98,13 @@ const GlobalPlayerProvider = props => {
     const play = async recording => {
         await Audio.setAudioModeAsync({
             allowsRecordingIOS: false,
-            playsInSilentModeIOS: true
+            playsInSilentModeIOS: true,
+            staysActiveInBackground: true,
+            shouldDuckAndroid: false,
+            playThroughEarpieceAndroid:false,
+            interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+            interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+
         })
         const {sound} = await Audio.Sound.createAsync(
             {uri: recording}

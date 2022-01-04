@@ -1,6 +1,6 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { SafeAreaView} from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import Feed from '../screens/Feed';
 
 const Tab = createMaterialTopTabNavigator();

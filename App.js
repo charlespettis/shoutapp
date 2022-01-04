@@ -14,7 +14,7 @@ const App = () => {
       <UserProvider>
         <PostsProvider>
           <TopicsProvider>
-          <StatusBar barStyle='light-content' />
+          <StatusBar translucent={true} barStyle='light-content' />
                 <RootNavigator />
           </TopicsProvider>
         </PostsProvider>

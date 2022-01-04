@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, TextInput, Pressable,Keyboard,TouchableOpacity, SectionList,Image,KeyboardAvoidingView} from 'react-native';
+import {Text, View, TextInput, Pressable,Keyboard,TouchableOpacity, SectionList,Image,KeyboardAvoidingView, SafeAreaView} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {search} from '../api/search';
 import { env } from '../misc';
@@ -12,8 +12,6 @@ const Search = ({navigation, route}) => {
     const {player, playerFunctions} = React.useContext(GlobalPlayerContext);
 
     const dismiss = () => {
-        setSearchQuery("");
-        setData([]);
         Keyboard.dismiss();
         playerFunctions.raise();
     }
@@ -73,7 +71,8 @@ const Search = ({navigation, route}) => {
         }
     }
     return(
-        <KeyboardAvoidingView style={{flex:1,backgroundColor:'black'}}>
+        <SafeAreaView style={{flex:1,backgroundColor:'black'}}>
+        <KeyboardAvoidingView style={{flex:1}}>
             <View style={{width:'100%',height:70,backgroundColor:'#191919',justifyContent:'flex-end',paddingBottom:10}}>
                 <View style={{flexDirection:'row', alignItems:'center',alignSelf:'center'}}>   
                     <View style={{backgroundColor:'#2r42424',width:'80%',height:30, alignSelf:'center',borderRadius:4,alignItems:'center',flexDirection:'row'}}>
@@ -94,6 +93,7 @@ const Search = ({navigation, route}) => {
             
             />
         </KeyboardAvoidingView>
+        </SafeAreaView>
     )
 }
 

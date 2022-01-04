@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, FlatList,View, ActivityIndicator} from 'react-native';
+import {SafeAreaView, FlatList,View, ActivityIndicator, RefreshControl} from 'react-native';
 import TouchableIcon from '../components/common/TouchableIcon';
 import Topic from '../components/topic';
 import Post from '../components/post';
@@ -9,14 +9,18 @@ import {TopicsContext} from '../components/contexts/TopicsProvider';
 import { createPost } from '../api/post';
 import { PostsContext } from '../components/contexts/PostsProvider';
 import { GlobalPlayerContext } from '../components/contexts/GlobalPlayerProvider';
-
+import { UserContext } from '../components/contexts/UserProvider';
 const ViewTopic = ({navigation, route}) => {
-    const [isRecorderShown, setIsRecorderShown] = React.useState(false);
-    const [isRecording, setIsRecording] = React.useState(false);
     const {topics, topicsFunctions} = React.useContext(TopicsContext);
     const {posts, postFunctions} = React.useContext(PostsContext);
+    const {userFunctions, userState} = React.useContext(UserContext);
     const {player, playerFunctions} = React.useContext(GlobalPlayerContext);
     const [isLoading, setIsLoading] = React.useState(true);
+    const [isRecorderShown, setIsRecorderShown] = React.useState(false);
+    const [isRecording, setIsRecording] = React.useState(false);
+    const [isRefreshing, setIsRefreshing] = React.useState(false);
+    const [offset, setOffset] = React.useState(10);
+
     const getTopic = () => {
         const index = topics.findIndex(e => e.id === route.params.id);
         if(index > -1){
@@ -28,6 +32,7 @@ const ViewTopic = ({navigation, route}) => {
                 title={topics[index]['title']}
                 imageUri={topics[index]['image']}
                 timestamp={topics[index]['createdAt']}
+                sourceUrl={topics[index]['sourceUrl']}
                 />
                 </View>
             )
@@ -65,6 +70,7 @@ const ViewTopic = ({navigation, route}) => {
     }
 
     React.useEffect(()=>{
+        //get 15 and set count / offset ;)
         (
             async function(){
                 await postFunctions.getPostsByTopic({id: route.params.id, count: 10})
@@ -86,16 +92,38 @@ const ViewTopic = ({navigation, route}) => {
         } 
     },[navigation])
 
+    const handleRefresh = async () => {
+        setIsRefreshing(true);
+        await postFunctions.getPostsByTopic({id: route.params.id, count: 10})
+        setIsRefreshing(false);
+    }
+
+    const handleEndReached = async () => {
+        await postFunctions.getPostsByTopic({id: route.params.id, count:10, offset: offset})
+        setOffset(prevState => {return prevState + 10})
+    }
+
     return(
-        <SafeAreaView style={{flex:1,backgroundColor:'black'}}>
+        <View style={{flex:1,backgroundColor:'#2A2A2C'}}>
+        <SafeAreaView style={{flex:1}}>
             <Header onAdd={toggleRecorder} isRecorderShown={isRecorderShown} goBack={()=>{navigation.goBack()}}/>
+            <View style={{backgroundColor:'black', flex:1}}>
             {
             isLoading ? <ActivityIndicator size='small' /> :
             <FlatList
              stickyHeaderIndices={[0]}
+             onRefresh={handleRefresh}
+             onEndReached={({ distanceFromEnd }) => {
+                if(distanceFromEnd >= 0) {
+                    handleEndReached
+                }}}
+             refreshing={isRefreshing}
+             onEndReachedThreshold={.5}
              ListHeaderComponent={getTopic()}
-             data={posts}
+             data={posts.filter(e => !userState.blocked.includes(e["User"].id))}
              renderItem={renderItem}
+             indicatorStyle='white'
+             refreshControl={<RefreshControl onRefresh={handleRefresh} refreshing={isRefreshing} tintColor='white'/>}
              ListEmptyComponent={ <EmptyListComponent style={{paddingTop:'25%'}}/>}
             />
             }
@@ -109,8 +137,9 @@ const ViewTopic = ({navigation, route}) => {
             style={{paddingTop:20}}
             />
             }
-
+            </View>
         </SafeAreaView>
+        </View>
     )
 
 }
@@ -119,7 +148,7 @@ export default ViewTopic;
 
 const Header = props => {
     return(
-        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',margin:10}}>
+        <View style={{backgroundColor:'#2A2A2C',flexDirection:'row',alignItems:'center',justifyContent:'space-between',padding:10,}}>
             <TouchableIcon
             color="white"
             size={26}

@@ -17,7 +17,7 @@ const ViewSuggestedTopics = ({navigation, route}) => {
 
     const renderItem = ({item}) => {
         return(
-            <TopicApproval category ={item.category} id={item.id} image={item.image} title={item.title} />
+            <TopicApproval sourceUrl={item.sourceUrl} category ={item.category} id={item.id} image={item.image} title={item.title} />
         )
     }
 
@@ -33,7 +33,7 @@ const ViewSuggestedTopics = ({navigation, route}) => {
     )
 }
 
-const TopicApproval = ({category, id, image, title}) => {
+const TopicApproval = ({category, id, image, title, sourceUrl}) => {
 
     const handleApproval = () => {
         approveTopic({id: id});
@@ -46,6 +46,7 @@ const TopicApproval = ({category, id, image, title}) => {
             category={category}
             imageUri={image}
             title={title}
+            sourceUrl={sourceUrl}
         />
         <Ionicons onPress={handleApproval} style={{position:'absolute',left:'75%',top:'25%'}} name="thumbs-up" size={32} color='lightgreen' />
         </View>

@@ -25,8 +25,8 @@ export const createPost = ({recording, topicId}) => {
     })
 }
 
-export const getPostsByTopic = ({id, count}) => {
-    return fetch(`${proxy}/getPostsByTopic/${id}/${count}`, {
+export const getPostsByTopic = ({id, count, offset = 0}) => {
+    return fetch(`${proxy}/getPostsByTopic/${id}/${offset}/${count}`, {
         headers: {
             'Authorization': `Token ${storage.token}`
         }

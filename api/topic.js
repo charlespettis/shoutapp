@@ -11,7 +11,7 @@ export const suggestTopic = data => {
     formData.append('image', {type: 'image/*', uri: newImageUri, name:'image'});
     formData.append('title', data.title);
     formData.append('category', data.category);
-
+    if(data.sourceUrl) formData.append('sourceUrl', data.sourceUrl);
     return fetch(`${proxy}/suggestTopic`, {
         method: "POST",
         body: formData,

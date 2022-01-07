@@ -3,7 +3,7 @@
     "name": "Topic",
     "slug": "Topic",
     "icon": ".//ios/shout/Images.xcassets/AppIcon.appiconset/1024.png",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -18,9 +18,8 @@
   "name": "Topic",
   "ios": {
     "infoPlist": {
-      "UIBackgroundModes": [
-        "audio"
-      ]
+      "NSPhotoLibraryUsageDescription": "This app uses the photo library to select an image to be uploaded to Topic's servers and be used as the user's profile picture.",
+      "NSMicrophoneUsageDescription": "This app uses to microphone to record the users voice memo that they post to the server and other users can listen to and vote on."
     },
     "bundleIdentifier": "com.Topicapps.Topic",
     "buildNumber": "1.0.0"

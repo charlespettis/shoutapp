@@ -18,6 +18,8 @@ const PostsProvider = props => {
                     return action.data
                 case "ADD":
                     return [action.data, ...prevState]
+                case "GETMORE":
+                    return [...prevState, ...action.data]
                 
             }
         },
@@ -31,7 +33,6 @@ const PostsProvider = props => {
                 toast.show(PROCESSING_UPLOAD)
                 createPost(data)
                 .then(data => {
-                    console.log("DATA:", data);
                     if(data){
                         const obj = {
                             "User": {
@@ -53,8 +54,15 @@ const PostsProvider = props => {
                 getPostsByTopic(data)
                 .then(posts => {
                     if(posts){
-                        console.log(posts);
                         dispatch({type: "GET", data: posts})
+                    }
+                })
+            },
+            getMoreTopics: data => {
+                getPostsByTopic(data)
+                .then(posts => {
+                    if(posts){
+                        dispatch({type:"GETMORE", data: posts});
                     }
                 })
             },
@@ -68,6 +76,21 @@ const PostsProvider = props => {
                         dispatch({type:"GET", data: result})
                     }
                 })
+            },
+            like: data => {
+                let result = [...state];
+                let index = result.findIndex(e => e.id === data.id);
+                result[index]['Likes'].push({UserId: userState.id})
+                dispatch({type:'GET', data: result})
+                
+            },
+            unlike: data => {
+                let result = [...state];
+                let index = result.findIndex(e => e.id === data.id);
+                if(index > -1) {
+                    result[index]['Likes']=[];
+                    dispatch({type:'GET', data: result})
+                }
             }
         })
     )

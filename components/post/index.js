@@ -32,6 +32,11 @@ const Post = props => {
         like({id: props.id})
         .then(status => {
             if(status === 200){
+                if(isLiked){
+                    postFunctions.unlike({id:props.id})
+                } else {
+                    postFunctions.like({id:props.id})
+                }
                 setIsLiked(!isLiked);
             }
         })

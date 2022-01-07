@@ -50,7 +50,7 @@ const UserProvider = props => {
                 })
             },
             login: encodedCredentials => {
-                login(encodedCredentials)
+                return login(encodedCredentials)
                 .then(data => {
                     data['data']['isLoggedIn'] = true;
                     storage.setToken(data['token'])
@@ -81,7 +81,6 @@ const UserProvider = props => {
                 if(index > -1){
                     const updatedList = [...state.blocked]
                     updatedList.splice(index, 1);
-                    console.log(updatedList);
                     storage.setBlocks(updatedList);
                     dispatch({type:"UPDATE", data: {blocked: updatedList}})
                 }

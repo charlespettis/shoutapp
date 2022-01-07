@@ -49,7 +49,7 @@ const ViewUserProfile = ({navigation, route}) => {
                 jobTitle = {userData.jobTitle}
                 avatar = {userData.avatar}
                 recording = {item.recording}
-                likes={item.likes ? item.likes : []}
+                likes={item.Likes ? item.Likes : []}
                 navigation={navigation}
                 userId={userData.id}
                 createdAt={item.createdAt}
@@ -99,8 +99,9 @@ const ViewUserProfile = ({navigation, route}) => {
 
 
     return(
-        <SafeAreaView style={{flex:1, backgroundColor:'black',}}>
-            <View style={{margin:20,justifyContent:'space-between',alignItems:'center',flexDirection:'row'}}>
+        <SafeAreaView style={{flex:1, backgroundColor:'#2A2A2C',}}>
+            <View style={{backgroundColor:'black',flex:1}}>
+            <View style={{backgroundColor:'#2A2A2C', padding:10,justifyContent:'space-between',alignItems:'center',flexDirection:'row',marginBottom:20}}>
             <Ionicons onPress={()=>navigation.goBack()} name='chevron-back' size={26} color='white' />
             <Ionicons onPress={userState.blocked.includes(userData.id) ? handleUnblock : handleBlock} name={userState.blocked.includes(userData.id) ? 'remove-circle-outline' : 'close-circle-outline'} size={26} color='white' />
             </View>
@@ -121,6 +122,7 @@ const ViewUserProfile = ({navigation, route}) => {
                     </View>
                 }
             />
+            </View>
         </SafeAreaView>
     )
 }

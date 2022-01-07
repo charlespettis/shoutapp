@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView,ScrollView, View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {SafeAreaView,ScrollView, View, Text, StyleSheet, TouchableOpacity, Alert, ActivityIndicator} from 'react-native';
 import {List, ListItem} from '../components/list';
 import {UserContext} from '../components/contexts/UserProvider';
 import UserAvatar from '../components/common/UserAvatar';
@@ -11,6 +11,7 @@ const Profile = ({navigation, route}) => {
 
     const { userFunctions, userState } = React.useContext(UserContext);
     const {player, playerFunctions} = React.useContext(GlobalPlayerContext);
+    const [isUploading, setIsUploading] = React.useState(false);
 
     const logOut = () => {
         playerFunctions.stop();
@@ -46,15 +47,17 @@ const Profile = ({navigation, route}) => {
         })
     }
 
+    const editAvatar = e => {
+        userFunctions.editAvatar({avatar: e})
+    }
+
     return(
         <SafeAreaView style={{flex:1, backgroundColor:'black',alignItems:'center'}}>
             <ScrollView style={{flex:1,width:'100%',marginTop:20,}} contentContainerStyle={{alignItems:'center',paddingBottom:80}}>
-
                 <UserAvatar
-                onPickImage = {e => userFunctions.editAvatar({avatar: e})}
+                onPickImage = {e => editAvatar(e)}
                 source = { userState.avatar && {uri: userState.avatar} }
                 />
-
                 <Text style={{color:'white',fontSize:24,marginTop:20}}>{userState.fullName}</Text>
 
                 <TouchableOpacity onPress={() => navigation.navigate('EditUserDetails', {id:'profile-jobTitle'})}>

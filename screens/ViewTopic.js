@@ -99,7 +99,7 @@ const ViewTopic = ({navigation, route}) => {
     }
 
     const handleEndReached = async () => {
-        await postFunctions.getPostsByTopic({id: route.params.id, count:10, offset: offset})
+        await postFunctions.getMoreTopics({id: route.params.id, count:10, offset: offset})
         setOffset(prevState => {return prevState + 10})
     }
 

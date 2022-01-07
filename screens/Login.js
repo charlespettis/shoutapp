@@ -1,5 +1,5 @@
 import React from 'react';
-import {KeyboardAvoidingView, StyleSheet, Platform, Text} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, Platform, Text, ActivityIndicator} from 'react-native';
 import { Button, Input, Stack, Icon } from 'native-base';
 import Logo from '../components/common/Logo';
 import {Ionicons} from '@expo/vector-icons';

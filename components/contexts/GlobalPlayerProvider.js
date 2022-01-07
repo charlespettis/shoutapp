@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, Text, Dimensions, StyleSheet, Pressable,TouchableWithoutFeedback} from 'react-native';
+import {View, Image, Text, Dimensions, StyleSheet, Pressable,TouchableWithoutFeedback, SafeAreaView} from 'react-native';
 import {env} from '../../misc';
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import {Audio} from 'expo-av';
@@ -229,6 +229,7 @@ const GlobalPlayerProvider = props => {
                         </Pressable>
                     </View>
                 </View>
+                
                 }
             </GlobalPlayerContext.Provider>            
     )

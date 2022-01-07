@@ -14,9 +14,9 @@ const Stack = createNativeStackNavigator();
 
 const ProfileNavigator = () => {
     return(
-        <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName="Profile">
+        <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName="UserProfile">
             <Stack.Screen 
-            name="Profile" 
+            name="UserProfile" 
             component={Profile} 
             options={{tabBarIcon: ({color,size}) => <Ionicons name="person-outline" color={color} size={size}/>}}            
             />

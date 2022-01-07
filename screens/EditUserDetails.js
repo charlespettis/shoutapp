@@ -27,8 +27,12 @@ const EditUserDetails = ({navigation, route}) => {
                 setInputValue(null);
                 flow[id].onContinue({navigation: navigation, userFunctions: userFunctions, inputValue: inputValue});
             } else {
+                if(image){
                 setIsLoading(true)
                 userFunctions.createAccount()
+                } else {
+                    alert("Please select a profile picture.")
+                }
             }
         }
     }
@@ -142,7 +146,7 @@ const flow = {
         onContinue: ({navigation}) => navigation.navigate('EditUserDetails', { id: 2 })
     },
     2: {
-        title: 'Enter your professional title',
+        title: 'Enter your professional title or industry',
         field:'jobTitle',
         example: 'Journalist, Barista, Programmer',
         onContinue: ({navigation}) => navigation.navigate('EditUserDetails', { id: 3 })
@@ -168,7 +172,7 @@ const flow = {
         }
     },
     'profile-jobTitle': {
-        title: "Edit your job title",
+        title: "Edit your professional title or industry",
         field: 'jobTitle',
         example: 'Journalist, Barista, Programmer',
         onContinue: ({userFunctions, navigation, inputValue}) => {

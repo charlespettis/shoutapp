@@ -34,7 +34,7 @@ const ViewLikes = ({navigation, route}) => {
                     createdAt={item["Post"].createdAt}
                     jobTitle={item["Post"]["User"].jobTitle}
                     recording={item["Post"].recording}
-                    likes={[userState.id]}
+                    likes={[]}
                     liked
                 />
             </View>

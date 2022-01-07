@@ -2,7 +2,6 @@ import React from 'react';
 import {Text, View, TextInput, Pressable,Keyboard,TouchableOpacity, SectionList,Image,KeyboardAvoidingView, SafeAreaView} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {search} from '../api/search';
-import { env } from '../misc';
 import Topic from '../components/topic';
 import { GlobalPlayerContext } from '../components/contexts/GlobalPlayerProvider';
 const Search = ({navigation, route}) => {
@@ -71,9 +70,10 @@ const Search = ({navigation, route}) => {
         }
     }
     return(
-        <SafeAreaView style={{flex:1,backgroundColor:'black'}}>
+        <SafeAreaView style={{flex:1,backgroundColor:'#2A2A2C'}}>
+            <View style={{flex:1,backgroundColor:'black'}}>
         <KeyboardAvoidingView style={{flex:1}}>
-            <View style={{width:'100%',height:70,backgroundColor:'#191919',justifyContent:'flex-end',paddingBottom:10}}>
+            <View style={{width:'100%',height:70,backgroundColor:'#2A2A2C',justifyContent:'flex-end',paddingBottom:10}}>
                 <View style={{flexDirection:'row', alignItems:'center',alignSelf:'center'}}>   
                     <View style={{backgroundColor:'#2r42424',width:'80%',height:30, alignSelf:'center',borderRadius:4,alignItems:'center',flexDirection:'row'}}>
                         <Ionicons name='search' color='white' size={18} style={{paddingLeft:10,paddingRight:10}} />
@@ -93,6 +93,7 @@ const Search = ({navigation, route}) => {
             
             />
         </KeyboardAvoidingView>
+        </View>
         </SafeAreaView>
     )
 }

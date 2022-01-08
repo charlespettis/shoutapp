@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, View, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {SafeAreaView, View, Platform,StatusBar, ActivityIndicator} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {Input, Button, Text} from 'native-base';
 import UserAvatar from '../components/common/UserAvatar';
@@ -50,7 +50,7 @@ const SuggestTopic = ({navigation, route}) => {
         <>
         {
         !isSubmitted ? 
-        <SafeAreaView style={{backgroundColor:'black',flex:1}}>        
+        <SafeAreaView style={{backgroundColor:'black',flex:1,paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0}}>        
             <View style={{width:'90%',alignSelf:'center',alignItems:'flex-start',justifyContent:'space-evenly',marginBottom: 60,flex:1}}>    
                 <UserAvatar onPickImage = {e => setImage(e)} source={image && {uri: image}} style={{width:'30%', alignSelf:'center',}} imageStyle={{borderRadius:3}} />
                 <View style={{width:'100%'}}>
@@ -66,7 +66,7 @@ const SuggestTopic = ({navigation, route}) => {
                     <Picker.Item label="Finance" value="Finance"/>
                 </Picker>
                 <Text style={{color:'white',fontSize:10}}>
-                    *Please note that you are submitting a suggestion for a topic.  Whether or not it is made public is at the discretion of a modetator.
+                    Please note that you are submitting a suggestion for a topic.  Whether or not it is made public is at the discretion of a modetator.
                 </Text>
                 {
                 !isLoading?

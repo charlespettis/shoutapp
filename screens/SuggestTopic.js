@@ -66,7 +66,7 @@ const SuggestTopic = ({navigation, route}) => {
                     <Picker.Item label="Finance" value="Finance"/>
                 </Picker>
                 <Text style={{color:'white',fontSize:10}}>
-                    Please note that you are submitting a suggestion for a topic.  Whether or not it is made public is at the discretion of a modetator.
+                    *Please note that you are submitting a suggestion for a topic.  Whether or not it is made public is at the discretion of a modetator.
                 </Text>
                 {
                 !isLoading?

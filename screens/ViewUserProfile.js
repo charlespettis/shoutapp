@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, SafeAreaView, Image, FlatList, Alert } from 'react-native';
+import { View, Text, SafeAreaView, Image, FlatList, Alert, TouchableOpacity } from 'react-native';
 import { GlobalPlayerContext } from '../components/contexts/GlobalPlayerProvider';
 import { getUserDetails } from '../api/user';
 import { env } from '../misc';
@@ -103,7 +103,10 @@ const ViewUserProfile = ({navigation, route}) => {
             <View style={{backgroundColor:'black',flex:1}}>
             <View style={{backgroundColor:'#2A2A2C', padding:10,justifyContent:'space-between',alignItems:'center',flexDirection:'row',marginBottom:20}}>
             <Ionicons onPress={()=>navigation.goBack()} name='chevron-back' size={26} color='white' />
-            <Ionicons onPress={userState.blocked.includes(userData.id) ? handleUnblock : handleBlock} name={userState.blocked.includes(userData.id) ? 'remove-circle-outline' : 'close-circle-outline'} size={26} color='white' />
+            <TouchableOpacity onPress={userState.blocked.includes(userData.id) ? handleUnblock : handleBlock}>
+                <Text style={{fontWeight:'200',color:'white',marginRight:5}}>{userState.blocked.includes(userData.id) ? 'UNBLOCK' : 'BLOCK'}</Text>
+            </TouchableOpacity>
+            
             </View>
             <FlatList
                 data={userData["Posts"]}

@@ -9,6 +9,7 @@ import ViewUserProfile from '../screens/ViewUserProfile';
 import GlobalPlayerProvider from '../components/contexts/GlobalPlayerProvider';
 import PrivacyPolicy from '../screens/PrivacyPolicy';
 import TermsAndConditions from '../screens/TermsAndConditions';
+import { View, StatusBar, Platform } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +52,7 @@ const RootNavigator = () => {
             component={TermsAndConditions}
             />
           </Stack.Navigator>
+
           </GlobalPlayerProvider>
       </NavigationContainer>
     )

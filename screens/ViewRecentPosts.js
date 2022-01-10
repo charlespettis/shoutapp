@@ -40,7 +40,7 @@ const ViewRecentPosts = ({navigation, route}) => {
                 avatar = {userState.avatar}
                 jobTitle={userState.jobTitle}
                 recording = {item.recording}
-                likes={item.likes ? item.likes : []}
+                likes={item.Likes ? item.Likes : []}
                 navigation={navigation}
                 userId={userState.id}
                 createdAt={item.createdAt}
